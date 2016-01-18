@@ -52,7 +52,6 @@ public class AuthorizationBean implements Serializable {
             isLogged = true;
             return "profile?faces-redirect=true";
         } else {
-            username = null;
             password = null;
             // add message error (Incorrect username or password)
             return "signin";
