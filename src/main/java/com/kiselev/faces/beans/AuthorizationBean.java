@@ -9,6 +9,7 @@ import java.io.Serializable;
 public class AuthorizationBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    public boolean isLogged = false;
     private String username;
     private String password;
     private String secondPassword;
@@ -41,5 +42,23 @@ public class AuthorizationBean implements Serializable {
         this.secondPassword = secondPassword;
     }
 
+    public String login() {
+        // add database checking
+        if (true) {
+            isLogged = true;
+            return "profile?faces-redirect=true";
+        } else {
+            return "signin?faces-redirect=true";
+        }
+    }
 
+    public String signup() {
+        // add database checking
+        if (true) {
+            isLogged = true;
+            return "profile?faces-redirect=true";
+        } else {
+            return "signup?faces-redirect=true";
+        }
+    }
 }
