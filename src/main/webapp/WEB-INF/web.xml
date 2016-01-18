@@ -20,6 +20,18 @@
         <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
 
+    <!-- AuthorizationFilter -->
+    <filter>
+        <filter-name>AuthorizationFilter</filter-name>
+        <filter-class>com.kiselev.faces.filters.AuthorizationFilter
+        </filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>AuthorizationFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
     <!-- Pretty Faces Filter-->
     <filter>
         <filter-name>Pretty Filter</filter-name>
