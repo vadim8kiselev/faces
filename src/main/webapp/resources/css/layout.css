@@ -1,0 +1,85 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    background-color: teal;
+    width: 100%;
+    height: 70px;
+}
+
+.header-form {
+    background-color: transparent;
+    margin: 10px;
+    height: 50px;
+    width: 250px;
+    float: right;
+}
+
+.page-name {
+    background-color: transparent;
+    font-size: 35px;
+    margin: 15px;
+    color: black;
+}
+
+.header-button {
+    border: none;
+    width: 100px;
+    height: 50px;
+    margin-left: 25px;
+    font-size: 15px;
+    float: right;
+}
+
+.header-left-button {
+    background-color: dodgerblue;
+}
+
+.header-right-button {
+    background-color: dodgerblue;
+}
+
+.content {
+    background-color: aquamarine;
+    width: 100%;
+    height: 600px;
+}
+
+.authorization-form {
+    background-color: white;
+    padding-top: 10px;
+    margin: 0 auto;
+    width: 340px;
+    height: 330px;
+}
+
+.icon-logo {
+    margin-left: 140px;
+}
+
+.authorization-input-fields {
+    padding-top: 20px;
+    background-color: white;
+    margin-left: 40px;
+    width: 260px;
+    height: 200px;
+}
+
+.authorization-field {
+    border: none;
+    border-radius: 2px;
+    width: 260px;
+    height: 33px;
+    margin-bottom: 20px;
+}
+
+.authorization-text {
+    background-color: lightblue;
+}
+
+.authorization-button {
+    background-color: dodgerblue;
+}
+

@@ -9,9 +9,36 @@
     <h:outputStylesheet library="css" name="layout.css"/>
 </h:head>
 <h:body>
-    <h2>Initial login.xhtml</h2> <br/>
-    <h:form>
-        <h:commandButton value="Main page" action="index?faces-redirect=true"/>
-    </h:form>
+    <h:panelGroup styleClass="header" layout="block">
+        <h:outputText styleClass="page-name" value="login.xhtml"/>
+        <h:form styleClass="header-form">
+            <h:commandButton styleClass="header-right-button header-button"
+                             value="Main page"
+                             action="index?faces-redirect=true"/>
+        </h:form>
+    </h:panelGroup>
+    <h:panelGroup styleClass="content" layout="block">
+        <h:panelGroup styleClass="authorization-form" layout="block">
+            <h:graphicImage styleClass="icon-logo"
+                            value="/resources/images/java-news-logo-mid.png"/>
+            <h:form>
+                <h:panelGroup styleClass="authorization-input-fields"
+                              layout="block">
+                    <h:inputText
+                            styleClass="authorization-field authorization-text"
+                            value="#{authorizationBean.username}"
+                            required="true"/>
+                    <h:inputSecret
+                            styleClass="authorization-field authorization-text"
+                            value="#{authorizationBean.password}"
+                            required="true"/>
+                    <h:commandButton
+                            styleClass="authorization-field authorization-button"
+                            value="Log In"
+                            action="profile?faces-redirect=true"/>
+                </h:panelGroup>
+            </h:form>
+        </h:panelGroup>
+    </h:panelGroup>
 </h:body>
 </html>

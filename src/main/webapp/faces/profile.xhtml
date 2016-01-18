@@ -10,15 +10,13 @@
 </h:head>
 <h:body>
     <h:panelGroup styleClass="header" layout="block">
-        <h:outputText styleClass="page-name" value="index.xhtml"/>
+        <h:outputText styleClass="page-name"
+                      value="profile.xhtml Welcome, #{authorizationBean.username}"/>
         <h:form styleClass="header-form">
-            <h:commandButton styleClass="header-button header-left-button"
-                             value="Log in" action="login?faces-redirect=true"/>
-            <h:commandButton styleClass="header-button header-right-button"
-                             value="Sign up"
-                             action="signup?faces-redirect=true"/>
+            <h:commandButton styleClass="header-right-button header-button"
+                             value="Main page"
+                             action="index?faces-redirect=true"/>
         </h:form>
     </h:panelGroup>
-    <h:panelGroup styleClass="content" layout="block"/>
 </h:body>
 </html>
