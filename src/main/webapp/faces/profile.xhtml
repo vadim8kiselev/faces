@@ -13,7 +13,10 @@
         <h:outputText styleClass="page-name"
                       value="profile.xhtml Welcome, #{authorizationBean.username}"/>
         <h:form styleClass="header-form">
-            <h:commandButton styleClass="header-right-button header-button"
+            <h:commandButton styleClass="header-right-button header-button "
+                             value="Log out"
+                             action="logout?faces-redirect=true"/>
+            <h:commandButton styleClass="header-left-button header-button"
                              value="Main page"
                              action="index?faces-redirect=true"/>
         </h:form>
