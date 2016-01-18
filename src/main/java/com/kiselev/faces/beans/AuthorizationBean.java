@@ -1,5 +1,8 @@
 package com.kiselev.faces.beans;
 
+import com.kiselev.faces.dao.UserDAO;
+import com.kiselev.faces.dao.entities.UserEntity;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import java.io.Serializable;
@@ -42,22 +45,37 @@ public class AuthorizationBean implements Serializable {
         this.secondPassword = secondPassword;
     }
 
-    public String login() {
-        // add database checking
-        if (true) {
+    public String signin() {
+        UserEntity user = new UserEntity(username, password);
+
+        if (UserDAO.checkAccount(user)) {
             isLogged = true;
             return "profile?faces-redirect=true";
         } else {
-            return "signin?faces-redirect=true";
+            username = null;
+            password = null;
+            // add message error (Incorrect username or password)
+            return "signin";
         }
     }
 
     public String signup() {
-        // add database checking
-        if (true) {
-            isLogged = true;
-            return "profile?faces-redirect=true";
+        if (password.equals(secondPassword)) {
+            UserEntity user = new UserEntity(username, password);
+
+            if (!UserDAO.checkUsername(user)) {
+                isLogged = true;
+                UserDAO.addUser(user);
+                return "profile?faces-redirect=true";
+            } else {
+                username = null;
+                password = null;
+                secondPassword = null;
+                // add message error (Nickname is already taken)
+                return "signup";
+            }
         } else {
+            // add message error (Passwords aren't match)
             return "signup?faces-redirect=true";
         }
     }
