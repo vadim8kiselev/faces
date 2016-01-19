@@ -1,0 +1,72 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: white;
+    font-family: tahoma, arial, verdana, sans-serif, Lucida Sans;
+    font-size: 15px;
+    letter-spacing: -0.5px;
+    color: #333;
+}
+
+.icon-logo {
+    display: block;
+    margin-left: 140px;
+}
+
+.content {
+    width: 100%;
+    height: 600px;
+}
+
+.authorization-form {
+    padding-top: 80px;
+    margin: 0 auto;
+    width: 340px;
+    height: 360px;
+}
+
+.authorization-header {
+    background-color: transparent;
+    padding-top: 20px;
+    width: 100%;
+    height: 60px;
+    text-align: center;
+}
+
+.authorization-body {
+    background-color: aliceblue;
+    width: 100%;
+    height: 230px;
+}
+
+.authorization-input-fields {
+    padding-top: 44px;
+    margin-left: 40px;
+    height: 150px;
+}
+
+.authorization-field {
+    border-width: 1px;
+    height: 33px;
+    margin-bottom: 20px;
+}
+
+.authorization-text {
+    width: 247px;
+    background-color: white;
+    padding-left: 12px;
+}
+
+.authorization-error {
+    border-color: darkred;
+}
+
+.authorization-button {
+    width: 260px;
+    border: none;
+    background-color: #4779BE;
+}
+

@@ -6,23 +6,19 @@
 
 <h:head>
     <title>Faces</title>
-    <h:outputStylesheet library="css" name="layout.css"/>
+    <h:outputStylesheet library="css" name="authorization-page.css"/>
 </h:head>
 <h:body>
-    <h:panelGroup styleClass="header" layout="block">
-        <h:form styleClass="header-form">
-            <h:commandButton styleClass="header-right-button header-button"
-                             value="Main page"
-                             action="index?faces-redirect=true"/>
-        </h:form>
-    </h:panelGroup>
     <h:panelGroup styleClass="content" layout="block">
         <h:panelGroup styleClass="authorization-form" layout="block">
             <h:graphicImage styleClass="icon-logo"
                             value="/resources/images/authorization-logo.png"/>
-            <h:form>
-                <h:panelGroup styleClass="authorization-input-fields"
-                              layout="block">
+            <h:panelGroup styleClass="authorization-header" layout="block">
+                <h1>Sign up to Faces</h1>
+            </h:panelGroup>
+            <h:panelGroup styleClass="authorization-body" layout="block">
+                <h:form id="authorization-form"
+                        styleClass="authorization-input-fields">
                     <h:inputText
                             styleClass="authorization-field authorization-text"
                             value="#{authorizationBean.username}"
@@ -36,11 +32,12 @@
                             value="#{authorizationBean.secondPassword}"
                             required="true"/>
                     <h:commandButton
+                            id="button"
                             styleClass="authorization-field authorization-button"
                             value="Sign up"
                             action="#{authorizationBean.signup}"/>
-                </h:panelGroup>
-            </h:form>
+                </h:form>
+            </h:panelGroup>
         </h:panelGroup>
     </h:panelGroup>
 </h:body>
