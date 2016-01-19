@@ -40,7 +40,8 @@ public class AuthorizationFilter implements Filter {
                         .getContextPath() + "/profile");
 
             } else if (url.contains("logout")) {
-                request.getSession().removeAttribute("authorizationBean");
+                request.getSession(false).removeAttribute("authorizationBean");
+                request.getSession(false).invalidate();
                 response.sendRedirect(request.getServletContext()
                         .getContextPath() + "/");
 
