@@ -54,7 +54,7 @@ public class AuthorizationBean implements Serializable {
         } else {
             password = null;
             // add message error (Incorrect username or password)
-            return "signin";
+            return null;
         }
     }
 
@@ -71,11 +71,13 @@ public class AuthorizationBean implements Serializable {
                 password = null;
                 secondPassword = null;
                 // add message error (Nickname is already taken)
-                return "signup";
+                return null;
             }
         } else {
             // add message error (Passwords aren't match)
-            return "signup?faces-redirect=true";
+            password = null;
+            secondPassword = null;
+            return null;
         }
     }
 }
