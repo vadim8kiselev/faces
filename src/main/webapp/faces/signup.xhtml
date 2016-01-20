@@ -12,29 +12,27 @@
     <h:panelGroup styleClass="content" layout="block">
         <h:panelGroup styleClass="authorization-form" layout="block">
             <h:graphicImage styleClass="icon-logo"
-                            value="/resources/images/authorization-logo.png"/>
+                            value="/resources/images/authorization-logo.png"
+                            width="160" height="100"/>
             <h:panelGroup styleClass="authorization-header" layout="block">
                 <h1>Sign up to Faces</h1>
             </h:panelGroup>
-            <h:message
+            <h:panelGroup
                     styleClass="authorization-error authorization-error-message"
-                    for="authorization-form"/>
+                    layout="block"
+                    rendered="#{authorizationBean.message != null}">
+                <h:outputText value="#{authorizationBean.message}"/>
+            </h:panelGroup>
             <h:panelGroup styleClass="authorization-body" layout="block">
                 <h:form id="authorization-form"
                         styleClass="authorization-input-fields">
-                    <h:message for="username"/>
                     <h:inputText
-                            id="username"
                             styleClass="authorization-field authorization-text"
                             value="#{authorizationBean.username}"/>
-                    <h:message for="password"/>
                     <h:inputSecret
-                            id="password"
                             styleClass="authorization-field authorization-text"
                             value="#{authorizationBean.password}"/>
-                    <h:message for="secondPassword"/>
                     <h:inputSecret
-                            id="secondPassword"
                             styleClass="authorization-field authorization-text"
                             value="#{authorizationBean.secondPassword}"/>
                     <h:commandButton

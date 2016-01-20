@@ -3,10 +3,8 @@ package com.kiselev.faces.beans;
 import com.kiselev.faces.dao.UserDAO;
 import com.kiselev.faces.dao.entities.UserEntity;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
 import java.io.Serializable;
 
 @ManagedBean(name = "authorizationBean")
@@ -18,9 +16,18 @@ public class AuthorizationBean implements Serializable {
     private String username;
     private String password;
     private String secondPassword;
+    private String message;
 
     public AuthorizationBean() {
 
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public String getUsername() {
@@ -59,26 +66,11 @@ public class AuthorizationBean implements Serializable {
                 return "profile?faces-redirect=true";
             } else {
                 password = null;
-                FacesContext.getCurrentInstance().addMessage
-                        ("authorization-form",
-                                new FacesMessage("Incorrect username or " +
-                                        "password"));
+                message = "Incorrect username or password";
                 return null;
             }
         } else {
-
-            if ("".equals(username.trim())) {
-                FacesContext.getCurrentInstance().addMessage
-                        ("authorization-form:username",
-                                new FacesMessage("Username can't be blank"));
-                return null;
-            }
-            if ("".equals(password.trim())) {
-                FacesContext.getCurrentInstance().addMessage
-                        ("authorization-form:password",
-                                new FacesMessage("Password can't be blank"));
-                return null;
-            }
+            message = "Fields can't be blank";
             return null;
         }
     }
@@ -99,40 +91,24 @@ public class AuthorizationBean implements Serializable {
                     return "profile?faces-redirect=true";
                 } else {
                     username = null;
-                    FacesContext.getCurrentInstance()
-                            .addMessage("authorization-form",
-                                    new FacesMessage("Nickname is already " +
-                                            "taken"));
-
+                    message = "Nickname is already taken";
                     return null;
                 }
             } else {
-                FacesContext.getCurrentInstance()
-                        .addMessage("authorization-form",
-                                new FacesMessage("Passwords aren't match"));
+                message = "Passwords aren't match";
                 password = null;
                 secondPassword = null;
                 return null;
             }
         } else {
 
-            if ("".equals(username.trim())) {
-                FacesContext.getCurrentInstance().addMessage
-                        ("authorization-form:username",
-                                new FacesMessage("Username can't be blank"));
-                return null;
-            }
-            if ("".equals(password.trim())) {
-                FacesContext.getCurrentInstance().addMessage
-                        ("authorization-form:password",
-                                new FacesMessage("Password can't be blank"));
+            if ("".equals(username.trim()) || "".equals(password.trim())) {
+                message = "Fields can't be blank";
                 return null;
             }
 
             if ("".equals(secondPassword.trim())) {
-                FacesContext.getCurrentInstance().addMessage
-                        ("authorization-form",
-                                new FacesMessage("Passwords aren't match"));
+                message = "Passwords aren't match";
                 return null;
             }
 
