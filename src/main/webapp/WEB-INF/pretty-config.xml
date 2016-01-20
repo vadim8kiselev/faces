@@ -27,4 +27,9 @@
         <pattern value="/logout"/>
         <view-id value="/faces/logout.xhtml"/>
     </url-mapping>
+
+    <url-mapping id="logout">
+        <pattern value="/logout"/>
+        <view-id value="/faces/logout.xhtml"/>
+    </url-mapping>
 </pretty-config>
