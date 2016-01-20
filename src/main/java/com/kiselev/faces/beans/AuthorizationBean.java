@@ -3,8 +3,10 @@ package com.kiselev.faces.beans;
 import com.kiselev.faces.dao.UserDAO;
 import com.kiselev.faces.dao.entities.UserEntity;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import java.io.Serializable;
 
 @ManagedBean(name = "authorizationBean")
@@ -46,37 +48,94 @@ public class AuthorizationBean implements Serializable {
     }
 
     public String signin() {
-        UserEntity user = new UserEntity(username, password);
+        if (!"".equals(username.trim()) && !"".equals(password.trim())) {
+            username = username.trim();
+            password = password.trim();
 
-        if (UserDAO.checkAccount(user)) {
-            isLogged = true;
-            return "profile?faces-redirect=true";
+            UserEntity user = new UserEntity(username, password);
+
+            if (UserDAO.checkAccount(user)) {
+                isLogged = true;
+                return "profile?faces-redirect=true";
+            } else {
+                password = null;
+                FacesContext.getCurrentInstance().addMessage
+                        ("authorization-form",
+                                new FacesMessage("Incorrect username or " +
+                                        "password"));
+                return null;
+            }
         } else {
-            password = null;
-            // add message error (Incorrect username or password)
+
+            if ("".equals(username.trim())) {
+                FacesContext.getCurrentInstance().addMessage
+                        ("authorization-form:username",
+                                new FacesMessage("Username can't be blank"));
+                return null;
+            }
+            if ("".equals(password.trim())) {
+                FacesContext.getCurrentInstance().addMessage
+                        ("authorization-form:password",
+                                new FacesMessage("Password can't be blank"));
+                return null;
+            }
             return null;
         }
     }
 
     public String signup() {
-        if (password.equals(secondPassword)) {
-            UserEntity user = new UserEntity(username, password);
+        if (!"".equals(username.trim()) && !"".equals(password.trim())
+                && !"".equals(secondPassword.trim())) {
+            username = username.trim();
+            password = password.trim();
+            secondPassword = secondPassword.trim();
 
-            if (!UserDAO.checkUsername(user)) {
-                isLogged = true;
-                UserDAO.addUser(user);
-                return "profile?faces-redirect=true";
+            if (password.equals(secondPassword)) {
+                UserEntity user = new UserEntity(username, password);
+
+                if (!UserDAO.checkUsername(user)) {
+                    isLogged = true;
+                    UserDAO.addUser(user);
+                    return "profile?faces-redirect=true";
+                } else {
+                    username = null;
+                    FacesContext.getCurrentInstance()
+                            .addMessage("authorization-form",
+                                    new FacesMessage("Nickname is already " +
+                                            "taken"));
+
+                    return null;
+                }
             } else {
-                username = null;
+                FacesContext.getCurrentInstance()
+                        .addMessage("authorization-form",
+                                new FacesMessage("Passwords aren't match"));
                 password = null;
                 secondPassword = null;
-                // add message error (Nickname is already taken)
                 return null;
             }
         } else {
-            // add message error (Passwords aren't match)
-            password = null;
-            secondPassword = null;
+
+            if ("".equals(username.trim())) {
+                FacesContext.getCurrentInstance().addMessage
+                        ("authorization-form:username",
+                                new FacesMessage("Username can't be blank"));
+                return null;
+            }
+            if ("".equals(password.trim())) {
+                FacesContext.getCurrentInstance().addMessage
+                        ("authorization-form:password",
+                                new FacesMessage("Password can't be blank"));
+                return null;
+            }
+
+            if ("".equals(secondPassword.trim())) {
+                FacesContext.getCurrentInstance().addMessage
+                        ("authorization-form",
+                                new FacesMessage("Passwords aren't match"));
+                return null;
+            }
+
             return null;
         }
     }

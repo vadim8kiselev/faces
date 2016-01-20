@@ -16,21 +16,27 @@
             <h:panelGroup styleClass="authorization-header" layout="block">
                 <h1>Sign up to Faces</h1>
             </h:panelGroup>
+            <h:message
+                    styleClass="authorization-error authorization-error-message"
+                    for="authorization-form"/>
             <h:panelGroup styleClass="authorization-body" layout="block">
                 <h:form id="authorization-form"
                         styleClass="authorization-input-fields">
+                    <h:message for="username"/>
                     <h:inputText
+                            id="username"
                             styleClass="authorization-field authorization-text"
-                            value="#{authorizationBean.username}"
-                            required="true"/>
+                            value="#{authorizationBean.username}"/>
+                    <h:message for="password"/>
                     <h:inputSecret
+                            id="password"
                             styleClass="authorization-field authorization-text"
-                            value="#{authorizationBean.password}"
-                            required="true"/>
+                            value="#{authorizationBean.password}"/>
+                    <h:message for="secondPassword"/>
                     <h:inputSecret
+                            id="secondPassword"
                             styleClass="authorization-field authorization-text"
-                            value="#{authorizationBean.secondPassword}"
-                            required="true"/>
+                            value="#{authorizationBean.secondPassword}"/>
                     <h:commandButton
                             id="button"
                             styleClass="authorization-field authorization-button"
