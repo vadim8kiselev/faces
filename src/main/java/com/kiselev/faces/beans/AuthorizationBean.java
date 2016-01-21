@@ -64,6 +64,7 @@ public class AuthorizationBean implements Serializable {
     }
 
     public String signin() {
+        upMessage = null;
         if (!"".equals(username.trim()) && !"".equals(password.trim())) {
             username = username.trim();
             password = password.trim();
@@ -85,6 +86,7 @@ public class AuthorizationBean implements Serializable {
     }
 
     public String signup() {
+        inMessage = null;
         if (!"".equals(username.trim()) && !"".equals(password.trim())
                 && !"".equals(secondPassword.trim())) {
             username = username.trim();
