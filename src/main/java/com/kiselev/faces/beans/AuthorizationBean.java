@@ -16,18 +16,27 @@ public class AuthorizationBean implements Serializable {
     private String username;
     private String password;
     private String secondPassword;
-    private String message;
+    private String inMessage;
+    private String upMessage;
 
     public AuthorizationBean() {
 
     }
 
-    public String getMessage() {
-        return message;
+    public String getInMessage() {
+        return inMessage;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setInMessage(String inMessage) {
+        this.inMessage = inMessage;
+    }
+
+    public String getUpMessage() {
+        return upMessage;
+    }
+
+    public void setUpMessage(String upMessage) {
+        this.upMessage = upMessage;
     }
 
     public String getUsername() {
@@ -66,11 +75,11 @@ public class AuthorizationBean implements Serializable {
                 return "profile?faces-redirect=true";
             } else {
                 password = null;
-                message = "Incorrect username or password";
+                inMessage = "Incorrect username or password";
                 return null;
             }
         } else {
-            message = "Fields can't be blank";
+            inMessage = "Fields can't be blank";
             return null;
         }
     }
@@ -91,11 +100,11 @@ public class AuthorizationBean implements Serializable {
                     return "profile?faces-redirect=true";
                 } else {
                     username = null;
-                    message = "Nickname is already taken";
+                    upMessage = "Nickname is already taken";
                     return null;
                 }
             } else {
-                message = "Passwords aren't match";
+                upMessage = "Passwords aren't match";
                 password = null;
                 secondPassword = null;
                 return null;
@@ -103,12 +112,12 @@ public class AuthorizationBean implements Serializable {
         } else {
 
             if ("".equals(username.trim()) || "".equals(password.trim())) {
-                message = "Fields can't be blank";
+                upMessage = "Fields can't be blank";
                 return null;
             }
 
             if ("".equals(secondPassword.trim())) {
-                message = "Passwords aren't match";
+                upMessage = "Passwords aren't match";
                 return null;
             }
 
