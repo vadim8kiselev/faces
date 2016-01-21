@@ -27,24 +27,37 @@ public class AuthorizationFilter implements Filter {
 
         String url = request.getRequestURI();
 
-        if (session == null || !session.isLogged) {
+        if (session == null) {
             if (url.contains("profile") || url.contains("logout")) {
                 response.sendRedirect(request.getServletContext()
                         .getContextPath() + "/signin");
             } else {
                 chain.doFilter(req, res);
             }
+        } else if (!session.isLogged) {
+            if (!url.contains("sign")) {
+                session.setInMessage(null);
+                session.setUpMessage(null);
+            }
+            if (url.contains("signin")) {
+                session.setUpMessage(null);
+            }
+            if (url.contains("signup")) {
+                session.setInMessage(null);
+            }
+            session.setUsername(null);
+            chain.doFilter(req, res);
         } else {
             if (url.contains("signup") || url.contains("signin")) {
                 response.sendRedirect(request.getServletContext()
                         .getContextPath() + "/profile");
 
             } else if (url.contains("logout")) {
-                request.getSession(false).removeAttribute("authorizationBean");
+                request.getSession(false).removeAttribute
+                        ("authorizationBean");
                 request.getSession(false).invalidate();
                 response.sendRedirect(request.getServletContext()
                         .getContextPath() + "/");
-
             } else {
                 chain.doFilter(req, res);
             }

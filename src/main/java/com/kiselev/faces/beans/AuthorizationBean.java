@@ -64,7 +64,6 @@ public class AuthorizationBean implements Serializable {
     }
 
     public String signin() {
-        upMessage = null;
         if (!"".equals(username.trim()) && !"".equals(password.trim())) {
             username = username.trim();
             password = password.trim();
@@ -75,18 +74,16 @@ public class AuthorizationBean implements Serializable {
                 isLogged = true;
                 return "profile?faces-redirect=true";
             } else {
-                password = null;
                 inMessage = "Incorrect username or password";
                 return null;
             }
         } else {
-            inMessage = "Fields can't be blank";
+            inMessage = "This fields cannot be blank";
             return null;
         }
     }
 
     public String signup() {
-        inMessage = null;
         if (!"".equals(username.trim()) && !"".equals(password.trim())
                 && !"".equals(secondPassword.trim())) {
             username = username.trim();
@@ -101,25 +98,22 @@ public class AuthorizationBean implements Serializable {
                     UserDAO.addUser(user);
                     return "profile?faces-redirect=true";
                 } else {
-                    username = null;
-                    upMessage = "Nickname is already taken";
+                    upMessage = "This username is already taken";
                     return null;
                 }
             } else {
-                upMessage = "Passwords aren't match";
-                password = null;
-                secondPassword = null;
+                upMessage = "Passwords do not match";
                 return null;
             }
         } else {
 
             if ("".equals(username.trim()) || "".equals(password.trim())) {
-                upMessage = "Fields can't be blank";
+                upMessage = "This fields cannot be blank";
                 return null;
             }
 
             if ("".equals(secondPassword.trim())) {
-                upMessage = "Passwords aren't match";
+                upMessage = "Passwords do not match";
                 return null;
             }
 
