@@ -15,13 +15,13 @@
                             value="/resources/images/authorization-logo.png"
                             width="160" height="100"/>
             <h:panelGroup styleClass="authorization-header" layout="block">
-                <h1>Sign up to Faces</h1>
+                Sign up to Faces
             </h:panelGroup>
             <h:panelGroup
                     styleClass="authorization-error authorization-error-message"
                     layout="block"
-                    rendered="#{authorizationBean.message != null}">
-                <h:outputText value="#{authorizationBean.message}"/>
+                    rendered="#{authorizationBean.upMessage != null}">
+                <h:outputText value="#{authorizationBean.upMessage}"/>
             </h:panelGroup>
             <h:panelGroup styleClass="authorization-body" layout="block">
                 <h:form id="authorization-form"
@@ -41,6 +41,12 @@
                             value="Sign up"
                             action="#{authorizationBean.signup}"/>
                 </h:form>
+            </h:panelGroup>
+            <h:panelGroup styleClass="authorization-footer" layout="block">
+                Have an account on Faces? <h:link
+                    styleClass="authorization-link"
+                    outcome="signin"
+                    value="Sign in"/>
             </h:panelGroup>
         </h:panelGroup>
     </h:panelGroup>

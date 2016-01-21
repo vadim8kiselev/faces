@@ -1,13 +1,20 @@
 * {
     margin: 0;
     padding: 0;
+    cursor: default;
+    text-decoration: none;
 }
 
 body {
     background-color: white;
-    font: 15px Roboto, arial, sans-serif;
+    font-size: 31px;
+    font-family: "Open Sans", "Lucida Grande", "Helvetica Neue", Helvetica, Arial, sans-serif;
     letter-spacing: -0.5px;
-    color: #4e4e4e;
+    color: #5B5B5B;
+}
+
+input:focus {
+    outline-width: 0;
 }
 
 .icon-logo {
@@ -21,30 +28,29 @@ body {
 }
 
 .authorization-form {
-    padding-top: 80px;
+    padding-top: 52px;
     margin: 0 auto;
     width: 340px;
     height: 360px;
 }
 
 .authorization-header {
-    background-color: transparent;
-    padding-top: 10px;
+    padding-top: 5px;
     width: 100%;
-    height: 50px;
+    height: 53px;
     text-align: center;
 }
 
 .authorization-error {
-    background-color: #fcdede;
-    font-size: 16px;
+    background-color: #5b5b5b;
+    font-size: 17px;
     width: 100%;
     height: 35px;
 }
 
 .authorization-error-message {
     padding-top: 15px;
-    color: #911;
+    color: white;
     text-align: center;
 }
 
@@ -73,13 +79,23 @@ body {
     border: none;
 }
 
-.authorization-error {
-    border-color: darkred;
-}
-
 .authorization-button {
     width: 260px;
     border: none;
-    background-color: #ececec;
+    background-color: #eaeaea;
+}
+
+.authorization-footer {
+    margin-top: 15px;
+    background-color: #f5f5f5;
+    width: 100%;
+    height: 34px;
+    font-size: 15px;
+    text-align: center;
+    padding-top: 16px;
+}
+
+.authorization-link {
+    color: black;
 }
 
