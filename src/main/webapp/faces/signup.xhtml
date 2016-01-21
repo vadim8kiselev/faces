@@ -23,14 +23,18 @@
         <h:panelGroup styleClass="auth-body" layout="block">
             <h:form id="authorization-form"
                     styleClass="auth-input-fields">
+                <h:outputLabel value="Username" styleClass="auth-label"/>
                 <h:inputText
                         styleClass="auth-field auth-text"
                         autocomplete="off"
                         value="#{authorizationBean.username}"/>
+                <h:outputLabel value="Password" styleClass="auth-label"/>
                 <h:inputSecret
                         styleClass="auth-field auth-text"
                         autocomplete="off"
                         value="#{authorizationBean.password}"/>
+                <h:outputLabel value="Confirm password"
+                               styleClass="auth-label"/>
                 <h:inputSecret
                         styleClass="auth-field auth-text"
                         autocomplete="off"
