@@ -28,13 +28,14 @@ public class AuthorizationFilter implements Filter {
         String url = request.getRequestURI();
 
         if (session == null) {
-            if (url.contains("profile") || url.contains("logout")) {
+            if (url.contains("logout")) {
                 response.sendRedirect(request.getServletContext()
-                        .getContextPath() + "/signin");
+                        .getContextPath() + "/");
             } else {
                 chain.doFilter(req, res);
             }
-        } else if (!session.isLogged) {
+        } else if (!session.isLogged()) {
+
             if (!url.contains("sign")) {
                 session.setInMessage(null);
                 session.setUpMessage(null);
@@ -47,17 +48,14 @@ public class AuthorizationFilter implements Filter {
             }
             session.setUsername(null);
             chain.doFilter(req, res);
-        } else {
-            if (url.contains("signup") || url.contains("signin")) {
-                response.sendRedirect(request.getServletContext()
-                        .getContextPath() + "/profile");
 
-            } else if (url.contains("logout")) {
-                request.getSession(false).removeAttribute
-                        ("authorizationBean");
-                request.getSession(false).invalidate();
+        } else {
+            if (url.contains("signup") || url.contains("signin") ||
+                    url.contains("index") || url.contains("profile")) {
+
                 response.sendRedirect(request.getServletContext()
-                        .getContextPath() + "/");
+                        .getContextPath() + "/id" +
+                        session.getId());
             } else {
                 chain.doFilter(req, res);
             }

@@ -41,8 +41,5 @@
     <filter-mapping>
         <filter-name>Pretty Filter</filter-name>
         <url-pattern>/*</url-pattern>
-        <dispatcher>FORWARD</dispatcher>
-        <dispatcher>REQUEST</dispatcher>
-        <dispatcher>ERROR</dispatcher>
     </filter-mapping>
 </web-app>
