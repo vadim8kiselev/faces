@@ -5,6 +5,8 @@ import com.kiselev.faces.dao.entities.UserEntity;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 import java.io.Serializable;
 
 @ManagedBean(name = "authorizationBean")
@@ -12,12 +14,13 @@ import java.io.Serializable;
 public class AuthorizationBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    public boolean isLogged = false;
+    private boolean logged = false;
     private String username;
     private String password;
     private String secondPassword;
     private String inMessage;
     private String upMessage;
+    private Long id;
 
     public AuthorizationBean() {
 
@@ -63,6 +66,22 @@ public class AuthorizationBean implements Serializable {
         this.secondPassword = secondPassword;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public boolean isLogged() {
+        return logged;
+    }
+
+    public void setLogged(boolean logged) {
+        this.logged = logged;
+    }
+
     public String signin() {
         if (!"".equals(username.trim()) && !"".equals(password.trim())) {
             username = username.trim();
@@ -70,9 +89,10 @@ public class AuthorizationBean implements Serializable {
 
             UserEntity user = new UserEntity(username, password);
 
-            if (UserDAO.checkAccount(user)) {
-                isLogged = true;
-                return "profile?faces-redirect=true";
+            if ((id = UserDAO.getId(user)) != null) {
+                logged = true;
+
+                return "/faces/profile.xhtml?faces-redirect=true&id=" + id;
             } else {
                 inMessage = "Incorrect username or password";
                 return null;
@@ -94,9 +114,9 @@ public class AuthorizationBean implements Serializable {
                 UserEntity user = new UserEntity(username, password);
 
                 if (!UserDAO.checkUsername(user)) {
-                    isLogged = true;
-                    UserDAO.addUser(user);
-                    return "profile?faces-redirect=true";
+                    logged = true;
+                    id = UserDAO.addUser(user);
+                    return "/faces/profile.xhtml?faces-redirect=true&id=" + id;
                 } else {
                     upMessage = "This username is already taken";
                     return null;
@@ -119,5 +139,21 @@ public class AuthorizationBean implements Serializable {
 
             return null;
         }
+    }
+
+    public String homePage() {
+        if (logged)
+            return "/faces/profile.xhtml?faces-redirect=true&id=" + id;
+        else
+            return "/faces/index.xhtml?faces-redirect=true";
+    }
+
+    public String logout() {
+        logged = false;
+        HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+                .getExternalContext().getSession(false);
+        session.removeAttribute("authorizationBean");
+        session.invalidate();
+        return "/faces/logout.xhtml?faces-redirect=true";
     }
 }

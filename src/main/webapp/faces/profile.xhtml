@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html">
 
@@ -11,14 +9,20 @@
 <h:body>
     <h:panelGroup styleClass="header" layout="block">
         <h:outputText styleClass="page-name"
-                      value="Welcome, #{authorizationBean.username}"/>
+                      value="Welcome, #{profileBean.getUsernameById(request.getAttribute('id'))}"/>
         <h:form styleClass="header-form">
-            <h:commandButton styleClass="header-right-button header-button "
-                             value="Log out"
-                             action="logout?faces-redirect=true"/>
             <h:commandButton styleClass="header-left-button header-button"
-                             value="Main page"
-                             action="index?faces-redirect=true"/>
+                             value="My page"
+                             action="#{authorizationBean.homePage}"
+                             rendered="#{authorizationBean.logged}"/>
+            <h:commandButton styleClass="header-right-button header-button"
+                             value="Log out"
+                             action="#{authorizationBean.logout}"
+                             rendered="#{authorizationBean.logged}"/>
+            <h:commandButton styleClass="header-right-button header-button"
+                             value="Sign in"
+                             action="/faces/signin.xhtml?faces-redirect=true"
+                             rendered="#{!authorizationBean.logged}"/>
         </h:form>
     </h:panelGroup>
 </h:body>

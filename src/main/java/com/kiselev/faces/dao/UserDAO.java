@@ -11,6 +11,8 @@ public class UserDAO {
             Persistence.createEntityManagerFactory("faces")
                     .createEntityManager();
 
+    private static Long count = getCount();
+
     public static boolean checkUsername(UserEntity user) {
         try {
             manager.createQuery("" +
@@ -25,24 +27,45 @@ public class UserDAO {
         }
     }
 
-    public static boolean checkAccount(UserEntity user) {
+    public static Long getId(UserEntity user) {
         try {
-            manager.createQuery("" +
-                    "SELECT user.username, user.password " +
+            return (Long) manager.createQuery("" +
+                    "SELECT user.id " +
                     "FROM UserEntity user " +
                     "WHERE username = :username AND password = :password")
                     .setParameter("username", user.getUsername())
                     .setParameter("password", user.getPassword())
                     .getSingleResult();
-            return true;
         } catch (NoResultException e) {
-            return false;
+            return null;
         }
     }
 
-    public static void addUser(UserEntity user) {
+    public static Long getCount() {
+        return (Long) manager.createQuery("" +
+                "SELECT COUNT(*) " +
+                "FROM UserEntity user")
+                .getSingleResult();
+    }
+
+    public static Long addUser(UserEntity user) {
         manager.getTransaction().begin();
         manager.merge(user);
         manager.getTransaction().commit();
+        return count = getCount();
+    }
+
+    public static String getUsername(Long id) {
+
+        if (id < 1 || id > count)
+            return null;
+
+        return (String) manager.createQuery("" +
+                "SELECT user.username " +
+                "FROM UserEntity user " +
+                "WHERE id = :id")
+                .setParameter("id", id)
+                .getSingleResult();
+
     }
 }
