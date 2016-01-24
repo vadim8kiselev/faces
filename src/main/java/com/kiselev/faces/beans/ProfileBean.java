@@ -2,25 +2,33 @@ package com.kiselev.faces.beans;
 
 import com.kiselev.faces.dao.UserDAO;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
 
 @ManagedBean(name = "profileBean")
-@ViewScoped
+@RequestScoped
 public class ProfileBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    private Long id;
+    private String username;
+
     public ProfileBean() {
     }
 
-    /* get profile */
-    public String getUsernameById(Object userId) {
+    @PostConstruct
+    public void init() {
+        id = new Long(FacesContext.getCurrentInstance().getExternalContext()
+                .getRequestParameterMap().get("id"));
+    }
+
+    public String getUsername() {
         try {
-            Long id = new Long((String) userId);
-            String username = UserDAO.getUsername(id);
+            username = UserDAO.getUsername(id);
 
             if (username == null)
                 throw new NumberFormatException();
@@ -34,5 +42,9 @@ public class ProfileBean implements Serializable {
                             "/faces/error.xhtml?faces-redirect=true");
             return null;
         }
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
