@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     cursor: default;
+    overflow: hidden;
 }
 
 html {
@@ -21,14 +22,6 @@ body {
     font-size: 31px;
     font-family: "Open Sans", "Lucida Grande", "Helvetica Neue", Helvetica, Arial, sans-serif;
     letter-spacing: -0.5px;
-}
-
-/* Mobile */
-/* ADD or max-height: ${form lower bound}*/
-@media (max-width: 430px) {
-    body {
-        background: none;
-    }
 }
 
 /* PC */
@@ -56,10 +49,6 @@ body {
     }
 }
 
-input:focus {
-    outline-width: 0;
-}
-
 .auth-form {
     padding-top: 100px;
 }
@@ -70,6 +59,29 @@ input:focus {
 
 .auth-footer {
     opacity: 0.9;
+}
+
+/* Mobile */
+@media (max-width: 430px), (max-height: 545px) {
+    body {
+        background: none;
+    }
+
+    .auth-form {
+        padding-top: 35px;
+    }
+
+    .auth-body {
+        opacity: 1;
+    }
+
+    .auth-footer {
+        opacity: 1;
+    }
+}
+
+input:focus {
+    outline-width: 0;
 }
 
 .content {
