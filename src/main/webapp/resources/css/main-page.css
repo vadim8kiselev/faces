@@ -1,45 +1,111 @@
 * {
     margin: 0;
     padding: 0;
+    cursor: default;
+}
+
+html {
+    height: 100%;
+    background-color: #f9f9f9;
 }
 
 body {
-    background-color: #f8f8f8;
+    height: 100%;
+    background: url("/resources/images/main-background.jpg") no-repeat;
+
+    -moz-background-size: 1135px auto;
+    -webkit-background-size: 1135px auto;
+    -o-background-size: 1135px auto;
+    background-size: 1135px auto;
+
+    font-size: 31px;
+    font-family: "Open Sans", "Lucida Grande", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    letter-spacing: -0.5px;
 }
 
-.header {
-    background-color: #4779BE;
-    width: 100%;
-    height: 70px;
+/* Mobile */
+/* ADD or max-height: ${form lower bound}*/
+@media (max-width: 430px) {
+    body {
+        background: none;
+    }
 }
 
-.header-form {
-    background-color: transparent;
-    margin: 10px;
-    height: 50px;
-    width: 250px;
-    float: right;
+/* PC */
+@media (max-width: 600px) {
+    body {
+        background: url("/resources/images/main-background.jpg") no-repeat center fixed;
+    }
 }
 
-.header-button {
-    border: none;
-    width: 100px;
-    height: 50px;
-    margin-left: 25px;
-    font-size: 15px;
-    float: right;
+@media (max-height: 682px) {
+    body {
+        -moz-background-size: 1135px 683px;
+        -webkit-background-size: 1135px 683px;
+        -o-background-size: 1135px 683px;
+        background-size: 1135px 683px;
+    }
 }
 
-.header-left-button {
-    background-color: white;
+@media (min-height: 700px) {
+    body {
+        -moz-background-size: cover;
+        -webkit-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+    }
 }
 
-.header-right-button {
-    background-color: white;
+input:focus {
+    outline-width: 0;
+}
+
+.auth-form {
+    padding-top: 100px;
+}
+
+.auth-body {
+    opacity: 0.9;
+}
+
+.auth-footer {
+    opacity: 0.9;
 }
 
 .content {
+    padding-top: 150px;
+    margin: 0 auto;
+    width: 300px;
+    height: auto;
+    padding-bottom: 15px;
+}
+
+.main-form {
     width: 100%;
-    height: 600px;
+    height: auto;
+    color: #5b5b5b;
+    font-size: 15px;
+    text-align: center;
+}
+
+.main-button {
+    background-color: aliceblue;
+    color: black;
+    width: 100%;
+    height: 40px;
+    margin-bottom: 15px;
+    border: none;
+}
+
+.main-link {
+    text-decoration: none;
+    color: black;
+}
+
+.footer-link {
+    text-decoration: none;
+    color: #4779BE;
+    padding-left: 20px;
+    font-size: 17px;
 }
 

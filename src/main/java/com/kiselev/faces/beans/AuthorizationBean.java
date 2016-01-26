@@ -119,25 +119,25 @@ public class AuthorizationBean implements Serializable {
                     return "/faces/profile.xhtml?faces-redirect=true&id=" + id;
                 } else {
                     upMessage = "This username is already taken";
-                    return null;
+                    return "/faces/signup.xhtml?faces-redirect=true";
                 }
             } else {
                 upMessage = "Passwords do not match";
-                return null;
+                return "/faces/signup.xhtml?faces-redirect=true";
             }
         } else {
 
             if ("".equals(username.trim()) || "".equals(password.trim())) {
                 upMessage = "This fields cannot be blank";
-                return null;
+                return "/faces/signup.xhtml?faces-redirect=true";
             }
 
             if ("".equals(secondPassword.trim())) {
                 upMessage = "Passwords do not match";
-                return null;
+                return "/faces/signup.xhtml?faces-redirect=true";
             }
 
-            return null;
+            return "/faces/signup.xhtml?faces-redirect=true";
         }
     }
 
