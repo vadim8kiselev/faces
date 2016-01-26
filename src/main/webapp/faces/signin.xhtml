@@ -4,13 +4,10 @@
 
 <h:head>
     <title>Faces</title>
-    <h:outputStylesheet library="css" name="authorization-page.css"/>
+    <h:outputStylesheet library="css" name="main-page.css"/>
 </h:head>
 <h:body>
     <h:panelGroup styleClass="auth-form" layout="block">
-        <h:graphicImage styleClass="auth-logo"
-                        value="/resources/images/authorization-logo.png"
-                        width="160" height="100"/>
         <h:panelGroup styleClass="auth-header" layout="block">
             Sign in to Faces
         </h:panelGroup>
@@ -44,7 +41,7 @@
             New to Faces?
             <h:link styleClass="auth-link"
                     value="Create an account"
-                    outcome="/faces/signup.xhtml?faces-redirect=true"/>
+                    outcome="/faces/index.xhtml?faces-redirect=true"/>
         </h:panelGroup>
     </h:panelGroup>
 </h:body>

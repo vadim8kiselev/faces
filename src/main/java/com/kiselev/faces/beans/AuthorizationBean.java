@@ -116,28 +116,28 @@ public class AuthorizationBean implements Serializable {
                 if (!UserDAO.checkUsername(user)) {
                     logged = true;
                     id = UserDAO.addUser(user);
-                    return "/faces/profile.xhtml?faces-redirect=true&id=" + id;
+                    return "/faces/index.xhtml?faces-redirect=true&id=" + id;
                 } else {
                     upMessage = "This username is already taken";
-                    return "/faces/signup.xhtml?faces-redirect=true";
+                    return "/faces/index.xhtml?faces-redirect=true";
                 }
             } else {
                 upMessage = "Passwords do not match";
-                return "/faces/signup.xhtml?faces-redirect=true";
+                return "/faces/index.xhtml?faces-redirect=true";
             }
         } else {
 
             if ("".equals(username.trim()) || "".equals(password.trim())) {
                 upMessage = "This fields cannot be blank";
-                return "/faces/signup.xhtml?faces-redirect=true";
+                return "/faces/index.xhtml?faces-redirect=true";
             }
 
             if ("".equals(secondPassword.trim())) {
                 upMessage = "Passwords do not match";
-                return "/faces/signup.xhtml?faces-redirect=true";
+                return "/faces/index.xhtml?faces-redirect=true";
             }
 
-            return "/faces/signup.xhtml?faces-redirect=true";
+            return "/faces/index.xhtml?faces-redirect=true";
         }
     }
 
@@ -145,7 +145,7 @@ public class AuthorizationBean implements Serializable {
         if (logged)
             return "/faces/profile.xhtml?faces-redirect=true&id=" + id;
         else
-            return "/faces/index.xhtml?faces-redirect=true";
+            return "/faces/signin.xhtml?faces-redirect=true";
     }
 
     public String logout() {

@@ -13,11 +13,6 @@
         <view-id value="/faces/signin.xhtml"/>
     </url-mapping>
 
-    <url-mapping id="signup">
-        <pattern value="/signup"/>
-        <view-id value="/faces/signup.xhtml"/>
-    </url-mapping>
-
     <url-mapping id="profile">
         <pattern value="/id#{id}"/>
         <view-id value="/faces/profile.xhtml"/>

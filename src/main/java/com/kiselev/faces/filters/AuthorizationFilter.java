@@ -35,23 +35,23 @@ public class AuthorizationFilter implements Filter {
                 chain.doFilter(req, res);
             }
         } else if (!session.isLogged()) {
-
-            if (!url.contains("sign")) {
+            if (!url.contains("signin") && !(url.charAt(url.length() - 1) ==
+                    '/')) {
                 session.setInMessage(null);
                 session.setUpMessage(null);
             }
             if (url.contains("signin")) {
                 session.setUpMessage(null);
             }
-            if (url.contains("signup")) {
+            if (url.charAt(url.length() - 1) == '/') {
                 session.setInMessage(null);
             }
             session.setUsername(null);
             chain.doFilter(req, res);
 
         } else {
-            if (url.contains("signup") || url.contains("signin") ||
-                    url.contains("index") || url.contains("profile")) {
+            if ((url.charAt(url.length() - 1) == '/') ||
+                    url.contains("profile") || url.contains("signin")) {
 
                 response.sendRedirect(request.getServletContext()
                         .getContextPath() + "/id" +
