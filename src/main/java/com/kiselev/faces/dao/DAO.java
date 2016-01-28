@@ -3,17 +3,19 @@ package com.kiselev.faces.dao;
 import com.kiselev.faces.dao.entities.UserEntity;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 
-public class UserDAO {
-    private static EntityManager manager =
-            Persistence.createEntityManagerFactory("faces")
-                    .createEntityManager();
+public class DAO {
+
+    private static EntityManagerFactory factory =
+            Persistence.createEntityManagerFactory("faces");
 
     private static Long count = getCount();
 
     public static boolean checkUsername(UserEntity user) {
+        EntityManager manager = factory.createEntityManager();
         try {
             manager.createQuery("" +
                     "SELECT user.username " +
@@ -24,10 +26,13 @@ public class UserDAO {
             return true;
         } catch (NoResultException e) {
             return false;
+        } finally {
+            manager.close();
         }
     }
 
     public static Long getId(UserEntity user) {
+        EntityManager manager = factory.createEntityManager();
         try {
             return (Long) manager.createQuery("" +
                     "SELECT user.id " +
@@ -38,34 +43,51 @@ public class UserDAO {
                     .getSingleResult();
         } catch (NoResultException e) {
             return null;
+        } finally {
+            manager.close();
         }
     }
 
-    public static Long getCount() {
-        return (Long) manager.createQuery("" +
-                "SELECT COUNT(*) " +
-                "FROM UserEntity user")
-                .getSingleResult();
+    private static Long getCount() {
+        EntityManager manager = factory.createEntityManager();
+        try {
+            return (Long) manager.createQuery("" +
+                    "SELECT COUNT(*) " +
+                    "FROM UserEntity user")
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        } finally {
+            manager.close();
+        }
     }
 
     public static Long addUser(UserEntity user) {
+        EntityManager manager = factory.createEntityManager();
         manager.getTransaction().begin();
         manager.merge(user);
         manager.getTransaction().commit();
+        manager.close();
         return count = getCount();
     }
 
     public static String getUsername(Long id) {
-
-        if (id < 1 || id > count)
+        EntityManager manager = factory.createEntityManager();
+        try {
+            return (String) manager.createQuery("" +
+                    "SELECT user.username " +
+                    "FROM UserEntity user " +
+                    "WHERE id = :id")
+                    .setParameter("id", id)
+                    .getSingleResult();
+        } catch (NoResultException e) {
             return null;
+        } finally {
+            manager.close();
+        }
+    }
 
-        return (String) manager.createQuery("" +
-                "SELECT user.username " +
-                "FROM UserEntity user " +
-                "WHERE id = :id")
-                .setParameter("id", id)
-                .getSingleResult();
-
+    public static boolean isValidId(Long id) {
+        return id >= 1 && id <= count;
     }
 }
