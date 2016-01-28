@@ -1,6 +1,6 @@
 package com.kiselev.faces.beans;
 
-import com.kiselev.faces.dao.UserDAO;
+import com.kiselev.faces.dao.DAO;
 import com.kiselev.faces.dao.entities.UserEntity;
 
 import javax.faces.bean.ManagedBean;
@@ -24,6 +24,14 @@ public class AuthorizationBean implements Serializable {
 
     public AuthorizationBean() {
 
+    }
+
+    private void resetData() {
+        username = null;
+        password = null;
+        secondPassword = null;
+        inMessage = null;
+        upMessage = null;
     }
 
     public String getInMessage() {
@@ -89,9 +97,9 @@ public class AuthorizationBean implements Serializable {
 
             UserEntity user = new UserEntity(username, password);
 
-            if ((id = UserDAO.getId(user)) != null) {
+            if ((id = DAO.getId(user)) != null) {
                 logged = true;
-
+                resetData();
                 return "/faces/profile.xhtml?faces-redirect=true&id=" + id;
             } else {
                 inMessage = "Incorrect username or password";
@@ -113,9 +121,10 @@ public class AuthorizationBean implements Serializable {
             if (password.equals(secondPassword)) {
                 UserEntity user = new UserEntity(username, password);
 
-                if (!UserDAO.checkUsername(user)) {
+                if (!DAO.checkUsername(user)) {
                     logged = true;
-                    id = UserDAO.addUser(user);
+                    id = DAO.addUser(user);
+                    resetData();
                     return "/faces/index.xhtml?faces-redirect=true&id=" + id;
                 } else {
                     upMessage = "This username is already taken";
