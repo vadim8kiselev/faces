@@ -22,16 +22,18 @@
                     styleClass="auth-input-fields">
                 <h:outputLabel value="Username" styleClass="auth-label"/>
                 <h:inputText
+                        id="signin-username-field"
                         styleClass="auth-field auth-text"
                         autocomplete="off"
                         value="#{authorizationBean.username}"/>
                 <h:outputLabel value="Password" styleClass="auth-label"/>
                 <h:inputSecret
+                        id="signin-password-field"
                         styleClass="auth-field auth-text"
                         autocomplete="off"
                         value="#{authorizationBean.password}"/>
                 <h:commandButton
-                        id="button"
+                        id="signin-button"
                         styleClass="auth-field auth-button"
                         value="Log In"
                         action="#{authorizationBean.signin}"/>
@@ -39,7 +41,8 @@
         </h:panelGroup>
         <h:panelGroup styleClass="auth-unit auth-footer" layout="block">
             New to Faces?
-            <h:link styleClass="auth-link"
+            <h:link id="signin-outcome-link"
+                    styleClass="auth-link"
                     value="Create an account"
                     outcome="/faces/index.xhtml?faces-redirect=true"/>
         </h:panelGroup>

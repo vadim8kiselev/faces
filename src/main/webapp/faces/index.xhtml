@@ -22,22 +22,25 @@
                     styleClass="auth-input-fields">
                 <h:outputLabel value="Username" styleClass="auth-label"/>
                 <h:inputText
+                        id="signup-username-field"
                         styleClass="auth-field auth-text"
                         autocomplete="off"
                         value="#{authorizationBean.username}"/>
                 <h:outputLabel value="Password" styleClass="auth-label"/>
                 <h:inputSecret
+                        id="signup-password-field"
                         styleClass="auth-field auth-text"
                         autocomplete="off"
                         value="#{authorizationBean.password}"/>
                 <h:outputLabel value="Confirm password"
                                styleClass="auth-label"/>
                 <h:inputSecret
+                        id="signup-confirm-password-field"
                         styleClass="auth-field auth-text"
                         autocomplete="off"
                         value="#{authorizationBean.secondPassword}"/>
                 <h:commandButton
-                        id="button"
+                        id="signup-button"
                         styleClass="auth-field auth-button"
                         value="Sign up"
                         action="#{authorizationBean.signup}"/>
@@ -45,7 +48,8 @@
         </h:panelGroup>
         <h:panelGroup styleClass="auth-unit auth-footer" layout="block">
             Have an account on Faces?
-            <h:link styleClass="auth-link"
+            <h:link id="signup-outcome-link"
+                    styleClass="auth-link"
                     value="Sign in"
                     outcome="/faces/signin.xhtml?faces-redirect=true"/>
         </h:panelGroup>
