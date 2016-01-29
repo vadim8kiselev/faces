@@ -42,7 +42,7 @@ public class AuthenticationFilter implements javax.servlet.Filter {
                 session.setInMessage(null);
                 session.setUpMessage(null);
 
-                if (url.contains("error") || url.contains("settings")) {
+                if (url.contains("settings")) {
                     response.sendRedirect(request.getServletContext()
                             .getContextPath() + "/signin");
                 }
