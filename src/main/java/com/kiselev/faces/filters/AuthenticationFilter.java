@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class AuthorizationFilter implements Filter {
+public class AuthenticationFilter implements javax.servlet.Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -26,38 +26,46 @@ public class AuthorizationFilter implements Filter {
                 .getAttribute("authorizationBean");
 
         String url = request.getRequestURI();
+        boolean isRootURL = (url.charAt(url.length() - 1) == '/');
 
         if (session == null) {
-            if (url.contains("logout")) {
+            if (url.contains("error")) {
                 response.sendRedirect(request.getServletContext()
-                        .getContextPath() + "/");
+                        .getContextPath() + "/signin");
             } else {
                 chain.doFilter(req, res);
             }
+
         } else if (!session.isLogged()) {
-            if (!url.contains("signin") && !(url.charAt(url.length() - 1) ==
-                    '/')) {
+
+            if (!url.contains("signin") && !isRootURL) {
                 session.setInMessage(null);
                 session.setUpMessage(null);
+
+                if (url.contains("error")) {
+                    response.sendRedirect(request.getServletContext()
+                            .getContextPath() + "/signin");
+                }
             }
             if (url.contains("signin")) {
                 session.setUpMessage(null);
             }
-            if (url.charAt(url.length() - 1) == '/') {
+            if (isRootURL) {
                 session.setInMessage(null);
             }
             session.setUsername(null);
             chain.doFilter(req, res);
 
         } else {
-            if ((url.charAt(url.length() - 1) == '/') ||
-                    url.contains("profile") || url.contains("signin")) {
-
+            if (isRootURL || url.contains("signin")) {
                 response.sendRedirect(request.getServletContext()
-                        .getContextPath() + "/id" +
-                        session.getId());
-            } else {
+                        .getContextPath() + "/id" + session.getId());
+            } else if (url.contains("id")) {
                 chain.doFilter(req, res);
+
+            } else {
+                response.sendRedirect(request.getServletContext()
+                        .getContextPath() + "/error");
             }
         }
     }
