@@ -29,7 +29,7 @@ public class AuthenticationFilter implements javax.servlet.Filter {
         boolean isRootURL = (url.charAt(url.length() - 1) == '/');
 
         if (session == null) {
-            if (url.contains("error")) {
+            if (url.contains("error") || url.contains("settings")) {
                 response.sendRedirect(request.getServletContext()
                         .getContextPath() + "/signin");
             } else {
@@ -42,7 +42,7 @@ public class AuthenticationFilter implements javax.servlet.Filter {
                 session.setInMessage(null);
                 session.setUpMessage(null);
 
-                if (url.contains("error")) {
+                if (url.contains("error") || url.contains("settings")) {
                     response.sendRedirect(request.getServletContext()
                             .getContextPath() + "/signin");
                 }
@@ -60,12 +60,14 @@ public class AuthenticationFilter implements javax.servlet.Filter {
             if (isRootURL || url.contains("signin")) {
                 response.sendRedirect(request.getServletContext()
                         .getContextPath() + "/id" + session.getId());
-            } else if (url.contains("id")) {
+            } else if (url.contains("id") || url.contains("settings")) {
                 chain.doFilter(req, res);
 
-            } else {
+            } else if (!url.contains("error")) {
                 response.sendRedirect(request.getServletContext()
                         .getContextPath() + "/error");
+            } else {
+                chain.doFilter(req, res);
             }
         }
     }

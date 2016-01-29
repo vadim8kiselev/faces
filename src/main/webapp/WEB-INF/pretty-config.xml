@@ -17,6 +17,11 @@
         <pattern value="/id#{id}"/>
         <view-id value="/faces/profile.xhtml"/>
     </url-mapping>
+    
+    <url-mapping id="settings">
+        <pattern value="/settings"/>
+        <view-id value="/faces/settings.xhtml"/>
+    </url-mapping>
 
     <url-mapping id="error">
         <pattern value="/error"/>
