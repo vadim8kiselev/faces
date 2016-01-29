@@ -163,6 +163,6 @@ public class AuthorizationBean implements Serializable {
                 .getExternalContext().getSession(false);
         session.removeAttribute("authorizationBean");
         session.invalidate();
-        return "/faces/logout.xhtml?faces-redirect=true";
+        return "/faces/signin.xhtml?faces-redirect=true";
     }
 }

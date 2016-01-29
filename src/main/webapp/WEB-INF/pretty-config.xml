@@ -18,11 +18,6 @@
         <view-id value="/faces/profile.xhtml"/>
     </url-mapping>
 
-    <url-mapping id="logout">
-        <pattern value="/logout"/>
-        <view-id value="/faces/logout.xhtml"/>
-    </url-mapping>
-
     <url-mapping id="error">
         <pattern value="/error"/>
         <view-id value="/faces/error.xhtml"/>
