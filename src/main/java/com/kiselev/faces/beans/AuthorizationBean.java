@@ -1,11 +1,12 @@
 package com.kiselev.faces.beans;
 
 import com.kiselev.faces.dao.DAO;
-import com.kiselev.faces.dao.entities.UserEntity;
+import com.kiselev.faces.dao.entities.ProfileEntity;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.persistence.PersistenceException;
 import javax.servlet.http.HttpSession;
 import java.io.Serializable;
 
@@ -95,7 +96,7 @@ public class AuthorizationBean implements Serializable {
             username = username.trim();
             password = password.trim();
 
-            UserEntity user = new UserEntity(username, password);
+            ProfileEntity user = new ProfileEntity(username, password);
 
             if ((id = DAO.getId(user)) != null) {
                 logged = true;
@@ -119,14 +120,14 @@ public class AuthorizationBean implements Serializable {
             secondPassword = secondPassword.trim();
 
             if (password.equals(secondPassword)) {
-                UserEntity user = new UserEntity(username, password);
+                ProfileEntity user = new ProfileEntity(username, password);
 
-                if (!DAO.checkUsername(user)) {
-                    logged = true;
+                try {
                     id = DAO.addUser(user);
+                    logged = true;
                     resetData();
                     return "/faces/index.xhtml?faces-redirect=true&id=" + id;
-                } else {
+                } catch (PersistenceException e) {
                     upMessage = "This username is already taken";
                     return "/faces/index.xhtml?faces-redirect=true";
                 }

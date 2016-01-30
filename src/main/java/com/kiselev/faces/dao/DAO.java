@@ -1,11 +1,8 @@
 package com.kiselev.faces.dao;
 
-import com.kiselev.faces.dao.entities.UserEntity;
+import com.kiselev.faces.dao.entities.ProfileEntity;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.NoResultException;
-import javax.persistence.Persistence;
+import javax.persistence.*;
 
 public class DAO {
 
@@ -14,29 +11,12 @@ public class DAO {
 
     private static Long count = getCount();
 
-    public static boolean checkUsername(UserEntity user) {
-        EntityManager manager = factory.createEntityManager();
-        try {
-            manager.createQuery("" +
-                    "SELECT user.username " +
-                    "FROM UserEntity user " +
-                    "WHERE username = :name")
-                    .setParameter("name", user.getUsername())
-                    .getSingleResult();
-            return true;
-        } catch (NoResultException e) {
-            return false;
-        } finally {
-            manager.close();
-        }
-    }
-
-    public static Long getId(UserEntity user) {
+    public static Long getId(ProfileEntity user) {
         EntityManager manager = factory.createEntityManager();
         try {
             return (Long) manager.createQuery("" +
                     "SELECT user.id " +
-                    "FROM UserEntity user " +
+                    "FROM ProfileEntity user " +
                     "WHERE username = :username AND password = :password")
                     .setParameter("username", user.getUsername())
                     .setParameter("password", user.getPassword())
@@ -53,7 +33,7 @@ public class DAO {
         try {
             return (Long) manager.createQuery("" +
                     "SELECT COUNT(*) " +
-                    "FROM UserEntity user")
+                    "FROM ProfileEntity user")
                     .getSingleResult();
         } catch (NoResultException e) {
             return null;
@@ -62,7 +42,7 @@ public class DAO {
         }
     }
 
-    public static Long addUser(UserEntity user) {
+    public static Long addUser(ProfileEntity user) throws PersistenceException {
         EntityManager manager = factory.createEntityManager();
         manager.getTransaction().begin();
         manager.merge(user);
@@ -71,15 +51,14 @@ public class DAO {
         return count = getCount();
     }
 
-    public static String getUsername(Long id) {
+    public static ProfileEntity getProfile(Long id) {
         EntityManager manager = factory.createEntityManager();
         try {
-            return (String) manager.createQuery("" +
-                    "SELECT user.username " +
-                    "FROM UserEntity user " +
-                    "WHERE id = :id")
-                    .setParameter("id", id)
+            return (ProfileEntity) manager
+                    .createQuery("FROM ProfileEntity user " +
+                            "WHERE id = :id").setParameter("id", id)
                     .getSingleResult();
+
         } catch (NoResultException e) {
             return null;
         } finally {
