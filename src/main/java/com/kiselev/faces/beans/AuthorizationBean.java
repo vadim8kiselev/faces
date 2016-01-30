@@ -126,7 +126,7 @@ public class AuthorizationBean implements Serializable {
                     id = DAO.addUser(user);
                     logged = true;
                     resetData();
-                    return "/faces/index.xhtml?faces-redirect=true&id=" + id;
+                    return "/faces/profile.xhtml?faces-redirect=true&id=" + id;
                 } catch (PersistenceException e) {
                     upMessage = "This username is already taken";
                     return "/faces/index.xhtml?faces-redirect=true";
