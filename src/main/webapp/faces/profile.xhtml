@@ -4,26 +4,238 @@
 
 <h:head>
     <title>Faces</title>
-    <h:outputStylesheet library="css" name="layout.css"/>
+    <h:outputStylesheet library="css" name="profile.css"/>
 </h:head>
 <h:body>
-    <h:panelGroup styleClass="header" layout="block">
-        <h:outputText styleClass="page-name"
-                      value="Welcome, #{profileBean.username}"/>
-        <h:form styleClass="header-form">
-            <h:commandButton styleClass="header-left-button header-button"
-                             value="My page"
-                             action="#{authorizationBean.homePage}"
-                             rendered="#{authorizationBean.logged}"/>
-            <h:commandButton styleClass="header-right-button header-button"
-                             value="Log out"
-                             action="#{authorizationBean.logout}"
-                             rendered="#{authorizationBean.logged}"/>
-            <h:commandButton styleClass="header-right-button header-button"
-                             value="Sign in"
-                             action="/faces/signin.xhtml?faces-redirect=true"
-                             rendered="#{!authorizationBean.logged}"/>
-        </h:form>
+    <!-- Wrapper -->
+    <h:panelGroup styleClass="wrapper" layout="block">
+        <!-- Header -->
+        <h:panelGroup styleClass="header" layout="block">
+            <h:graphicImage styleClass="header-logo"
+                            value="/resources/images/profile-logo.png"
+                            width="90" height="50"/>
+            <h:outputText id="page-name"
+                          styleClass="page-name"
+                          value="The Faces"/>
+            <h:form id="header-form" styleClass="header-form">
+                <h:commandButton id="my-page-button"
+                                 styleClass="header-left-button header-button"
+                                 value="My page"
+                                 action="#{authorizationBean.homePage}"
+                                 rendered="#{authorizationBean.logged}"/>
+                <h:commandButton id="logout-button"
+                                 styleClass="header-right-button header-button"
+                                 value="Log out"
+                                 action="#{authorizationBean.logout}"
+                                 rendered="#{authorizationBean.logged}"/>
+                <h:commandButton id="signin-button"
+                                 styleClass="header-right-button header-button"
+                                 value="Sign in"
+                                 action="/faces/signin.xhtml?faces-redirect=true"
+                                 rendered="#{!authorizationBean.logged}"/>
+            </h:form>
+        </h:panelGroup>
+
+        <!-- Page -->
+        <h:panelGroup styleClass="content" layout="block">
+            <!-- Main block -->
+            <h:panelGroup styleClass="main-block" layout="block">
+                <!-- Photo block -->
+                <h:panelGroup styleClass="photo-block" layout="block">
+                    <!-- Photo -->
+                    <h:panelGroup styleClass="photo" layout="block">
+                        <h:graphicImage id="photo" styleClass="photo-img"
+                                        value=""
+                                        width="200" height="300"/>
+                    </h:panelGroup>
+                    <h:panelGroup styleClass="setting" layout="block"
+                                  rendered="#{profileBean.id.equals(authorizationBean.id)}">
+                        <h:link id="settings"
+                                styleClass="settings-link"
+                                value="Edit profile"
+                                outcome="/faces/settings.xhtml?faces-redirect=true"/>
+                    </h:panelGroup>
+
+                </h:panelGroup>
+
+                <!-- Information -->
+                <h:panelGroup styleClass="information-block" layout="block">
+
+                    <!-- Header -->
+                    <h:panelGroup styleClass="information-header"
+                                  layout="block">
+                        <!-- Fullname -->
+                        <h:outputText styleClass="information-unit-value"
+                                      value="#{profileBean.firstName}"/>
+                    </h:panelGroup>
+
+                    <!-- Body -->
+                    <h:panelGroup styleClass="information-body" layout="block"
+                                  rendered="#{!profileBean.informationIsEmpty()}">
+                        <!-- Birthday -->
+                        <h:panelGroup styleClass="information-unit"
+                                      layout="block"
+                                      rendered="#{profileBean.birthday != null}">
+                            <h:panelGroup
+                                    styleClass="information-unit-label-wrapper"
+                                    layout="block">
+                                <h:outputLabel
+                                        styleClass="information-unit-label"
+                                        value="Birthday:"/>
+                            </h:panelGroup>
+                            <h:panelGroup
+                                    styleClass="information-unit-value-wrapper"
+                                    layout="block">
+                                <h:outputText
+                                        styleClass="information-unit-value"
+                                        value="#{profileBean.birthday}"/>
+                            </h:panelGroup>
+                        </h:panelGroup>
+
+                        <!-- Hometown -->
+                        <h:panelGroup styleClass="information-unit"
+                                      layout="block"
+                                      rendered="#{profileBean.hometown != null}">
+                            <h:panelGroup
+                                    styleClass="information-unit-label-wrapper"
+                                    layout="block">
+                                <h:outputLabel
+                                        styleClass="information-unit-label"
+                                        value="Hometown:"/>
+                            </h:panelGroup>
+                            <h:panelGroup
+                                    styleClass="information-unit-value-wrapper"
+                                    layout="block">
+                                <h:outputText
+                                        styleClass="information-unit-value"
+                                        value="#{profileBean.hometown}"/>
+                            </h:panelGroup>
+                        </h:panelGroup>
+
+                        <!-- Email -->
+                        <h:panelGroup styleClass="information-unit"
+                                      layout="block"
+                                      rendered="#{profileBean.email != null}">
+                            <h:panelGroup
+                                    styleClass="information-unit-label-wrapper"
+                                    layout="block">
+                                <h:outputLabel
+                                        styleClass="information-unit-label"
+                                        value="Email:"/>
+                            </h:panelGroup>
+                            <h:panelGroup
+                                    styleClass="information-unit-value-wrapper"
+                                    layout="block">
+                                <h:outputText
+                                        styleClass="information-unit-value"
+                                        value="#{profileBean.email}"/>
+                            </h:panelGroup>
+                        </h:panelGroup>
+
+                        <!-- Phone -->
+                        <h:panelGroup styleClass="information-unit"
+                                      layout="block"
+                                      rendered="#{profileBean.phone != null}">
+                            <h:panelGroup
+                                    styleClass="information-unit-label-wrapper"
+                                    layout="block">
+                                <h:outputLabel
+                                        styleClass="information-unit-label"
+                                        value="Phone:"/>
+                            </h:panelGroup>
+                            <h:panelGroup
+                                    styleClass="information-unit-value-wrapper"
+                                    layout="block">
+                                <h:outputText
+                                        styleClass="information-unit-value"
+                                        value="#{profileBean.phone}"/>
+                            </h:panelGroup>
+                        </h:panelGroup>
+                    </h:panelGroup>
+
+                    <!-- Empty information block -->
+                    <h:panelGroup styleClass="information-body" layout="block"
+                                  rendered="#{profileBean.informationIsEmpty() and
+                                   profileBean.id.equals(authorizationBean.id)}">
+                        <h:panelGroup styleClass="information-empty-message"
+                                      layout="block">
+                            <h:outputText styleClass=""
+                                          value="Information is empty"/>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </h:panelGroup>
+            </h:panelGroup>
+
+            <!-- Links block -->
+            <h:panelGroup styleClass="links-block" layout="block">
+                <h:panelGroup styleClass="links-content" layout="block">
+                    <!-- Emails block -->
+                    <h:panelGroup styleClass="links-unit" layout="block">
+                        <!-- Links content button -->
+                        <h:panelGroup styleClass="links-unit-header emails"
+                                      layout="block">
+                            <h:outputText styleClass="links-unit-header-value"
+                                          value="Emails"/>
+                        </h:panelGroup>
+
+                        <!-- Links content-->
+                        <h:panelGroup styleClass="links-unit-body"
+                                      layout="block">
+                            <!-- Links table -->
+                        </h:panelGroup>
+                    </h:panelGroup>
+
+                    <!-- Social networks block -->
+                    <h:panelGroup styleClass="links-unit" layout="block">
+                        <!-- Links content button -->
+                        <h:panelGroup
+                                styleClass="links-unit-header social-networks"
+                                layout="block">
+                            <h:outputText styleClass="links-unit-header-value"
+                                          value="Social networks"/>
+                        </h:panelGroup>
+
+                        <!-- Links content-->
+                        <h:panelGroup styleClass="links-unit-body"
+                                      layout="block">
+                            <!-- Links table -->
+                        </h:panelGroup>
+                    </h:panelGroup>
+
+                    <!-- Multimedia block -->
+                    <h:panelGroup styleClass="links-unit" layout="block">
+                        <!-- Links content button -->
+                        <h:panelGroup styleClass="links-unit-header multimedia"
+                                      layout="block">
+                            <h:outputText styleClass="links-unit-header-value"
+                                          value="Multimedia"/>
+                        </h:panelGroup>
+
+                        <!-- Links content-->
+                        <h:panelGroup styleClass="links-unit-body"
+                                      layout="block">
+                            <!-- Links table -->
+                        </h:panelGroup>
+                    </h:panelGroup>
+
+                    <!-- Others block -->
+                    <h:panelGroup styleClass="links-unit" layout="block">
+                        <!-- Links content button -->
+                        <h:panelGroup styleClass="links-unit-header others"
+                                      layout="block">
+                            <h:outputText styleClass="links-unit-header-value"
+                                          value="Others"/>
+                        </h:panelGroup>
+
+                        <!-- Links content-->
+                        <h:panelGroup styleClass="links-unit-body"
+                                      layout="block">
+                            <!-- Links table -->
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </h:panelGroup>
+            </h:panelGroup>
+        </h:panelGroup>
     </h:panelGroup>
 </h:body>
 </html>
