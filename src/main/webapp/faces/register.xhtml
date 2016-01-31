@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+    <title>Faces</title>
+    <h:outputStylesheet library="css" name="main-page.css"/>
+</h:head>
+<h:body>
+    <h:panelGroup styleClass="auth-form" layout="block">
+        <h:panelGroup styleClass="auth-header" layout="block">
+            Complete registration
+        </h:panelGroup>
+        <h:panelGroup
+                styleClass="auth-unit auth-error auth-error-message"
+                layout="block"
+                rendered="#{authorizationBean.upMessage != null}">
+            <h:outputText value="#{authorizationBean.upMessage}"/>
+        </h:panelGroup>
+        <h:panelGroup styleClass="auth-body" layout="block">
+            <h:form id="authorization-form"
+                    styleClass="auth-input-fields">
+                <h:panelGroup styleClass="auth-label-wrapper" layout="block">
+                    <h:outputLabel value="First name" styleClass="auth-label"/>
+                </h:panelGroup>
+                <h:inputText
+                        id="register-first-name-field"
+                        styleClass="auth-field auth-text"
+                        autocomplete="off"
+                        value="#{authorizationBean.firstName}"/>
+                <h:panelGroup styleClass="auth-label-wrapper" layout="block">
+                    <h:outputLabel value="Last name" styleClass="auth-label"/>
+                </h:panelGroup>
+                <h:inputText
+                        id="register-last-name-field"
+                        styleClass="auth-field auth-text"
+                        autocomplete="off"
+                        value="#{authorizationBean.lastName}"/>
+                <h:panelGroup styleClass="auth-label-wrapper" layout="block">
+                    <h:outputLabel value="URL photo (optionally)"
+                                   styleClass="auth-label"/>
+                </h:panelGroup>
+                <h:inputText
+                        id="register-photo-field"
+                        styleClass="auth-field auth-text"
+                        autocomplete="off"
+                        value="#{authorizationBean.photo}"/>
+                <h:commandButton
+                        id="register-button"
+                        styleClass="auth-field auth-button"
+                        value="Complete registration"
+                        action="#{authorizationBean.register()}"/>
+            </h:form>
+        </h:panelGroup>
+    </h:panelGroup>
+</h:body>
+</html>

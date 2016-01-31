@@ -22,6 +22,7 @@ public class DAO {
                     .setParameter("password", user.getPassword())
                     .getSingleResult();
         } catch (NoResultException e) {
+            e.printStackTrace();
             return null;
         } finally {
             manager.close();
@@ -36,6 +37,7 @@ public class DAO {
                     "FROM ProfileEntity user")
                     .getSingleResult();
         } catch (NoResultException e) {
+            e.printStackTrace();
             return null;
         } finally {
             manager.close();
@@ -45,7 +47,7 @@ public class DAO {
     public static Long addUser(ProfileEntity user) throws PersistenceException {
         EntityManager manager = factory.createEntityManager();
         manager.getTransaction().begin();
-        manager.merge(user);
+        manager.persist(user);
         manager.getTransaction().commit();
         manager.close();
         return count = getCount();
@@ -60,7 +62,50 @@ public class DAO {
                     .getSingleResult();
 
         } catch (NoResultException e) {
+            e.printStackTrace();
             return null;
+        } finally {
+            manager.close();
+        }
+    }
+
+    public static boolean isRegistered(Long id) {
+        EntityManager manager = factory.createEntityManager();
+        try {
+            return manager.createQuery("" +
+                    "SELECT user.firstName " +
+                    "FROM ProfileEntity user " +
+                    "WHERE id = :id").setParameter("id", id)
+                    .getSingleResult() != null;
+        } catch (NoResultException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            manager.close();
+        }
+    }
+
+    public static void register(Long id, String firstName, String lastName,
+                                String photo) {
+        EntityManager manager = factory.createEntityManager();
+        try {
+            ProfileEntity profile = getProfile(id);
+            if (profile == null) {
+                return;
+            }
+
+            profile.setFirstName(firstName);
+            profile.setLastName(lastName);
+            if (photo != null && !"".equals(photo.trim())) {
+                profile.setPhoto(photo);
+            }
+
+            manager.getTransaction().begin();
+            manager.merge(profile);
+            manager.getTransaction().commit();
+
+        } catch (NoResultException e) {
+            e.printStackTrace();
         } finally {
             manager.close();
         }

@@ -27,4 +27,9 @@
         <pattern value="/error"/>
         <view-id value="/faces/error.xhtml"/>
     </url-mapping>
+
+    <url-mapping id="register">
+        <pattern value="/register"/>
+        <view-id value="/faces/register.xhtml"/>
+    </url-mapping>
 </pretty-config>

@@ -29,7 +29,8 @@ public class AuthenticationFilter implements javax.servlet.Filter {
         boolean isRootURL = (url.charAt(url.length() - 1) == '/');
 
         if (session == null) {
-            if (url.contains("error") || url.contains("settings")) {
+            if (url.contains("error") || url.contains("settings") ||
+                    url.contains("register")) {
                 response.sendRedirect(request.getServletContext()
                         .getContextPath() + "/signin");
             } else {
@@ -42,7 +43,7 @@ public class AuthenticationFilter implements javax.servlet.Filter {
                 session.setInMessage(null);
                 session.setUpMessage(null);
 
-                if (url.contains("settings")) {
+                if (url.contains("settings") || url.contains("register")) {
                     response.sendRedirect(request.getServletContext()
                             .getContextPath() + "/signin");
                 }
@@ -57,17 +58,25 @@ public class AuthenticationFilter implements javax.servlet.Filter {
             chain.doFilter(req, res);
 
         } else {
-            if (isRootURL || url.contains("signin")) {
+            if (!url.contains("/register") && !session.isRegistered()) {
                 response.sendRedirect(request.getServletContext()
-                        .getContextPath() + "/id" + session.getId());
-            } else if (url.contains("id") || url.contains("settings")) {
+                        .getContextPath() + "/register");
+            } else if (url.contains("/register") && !session.isRegistered()) {
                 chain.doFilter(req, res);
 
-            } else if (!url.contains("error")) {
-                response.sendRedirect(request.getServletContext()
-                        .getContextPath() + "/error");
-            } else {
-                chain.doFilter(req, res);
+            } else if (session.isRegistered()) {
+                if (isRootURL || url.contains("signin")) {
+                    response.sendRedirect(request.getServletContext()
+                            .getContextPath() + "/id" + session.getId());
+                } else if (url.contains("id") || url.contains("settings")) {
+                    chain.doFilter(req, res);
+
+                } else if (!url.contains("error")) {
+                    response.sendRedirect(request.getServletContext()
+                            .getContextPath() + "/error");
+                } else {
+                    chain.doFilter(req, res);
+                }
             }
         }
     }
