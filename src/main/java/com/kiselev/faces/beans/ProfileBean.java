@@ -50,6 +50,12 @@ public class ProfileBean implements Serializable {
                 this.email = model.getEmail();
                 this.phone = model.getPhone();
                 this.photo = model.getPhoto();
+            } else {
+                FacesContext.getCurrentInstance()
+                        .getApplication().getNavigationHandler()
+                        .handleNavigation(FacesContext.getCurrentInstance(),
+                                null,
+                                "/faces/error.xhtml?faces-redirect=true");
             }
         }
     }
