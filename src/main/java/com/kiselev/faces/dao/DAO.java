@@ -21,8 +21,8 @@ public class DAO {
                     .setParameter("username", user.getUsername())
                     .setParameter("password", user.getPassword())
                     .getSingleResult();
-        } catch (NoResultException e) {
-            e.printStackTrace();
+        } catch (NoResultException error) {
+            error.printStackTrace();
             return null;
         } finally {
             manager.close();
@@ -36,8 +36,8 @@ public class DAO {
                     "SELECT COUNT(*) " +
                     "FROM ProfileEntity user")
                     .getSingleResult();
-        } catch (NoResultException e) {
-            e.printStackTrace();
+        } catch (NoResultException error) {
+            error.printStackTrace();
             return null;
         } finally {
             manager.close();
@@ -61,8 +61,8 @@ public class DAO {
                             "WHERE id = :id").setParameter("id", id)
                     .getSingleResult();
 
-        } catch (NoResultException e) {
-            e.printStackTrace();
+        } catch (NoResultException error) {
+            error.printStackTrace();
             return null;
         } finally {
             manager.close();
@@ -77,8 +77,8 @@ public class DAO {
                     "FROM ProfileEntity user " +
                     "WHERE id = :id").setParameter("id", id)
                     .getSingleResult() != null;
-        } catch (NoResultException e) {
-            e.printStackTrace();
+        } catch (NoResultException error) {
+            error.printStackTrace();
             return false;
         } finally {
             manager.close();
@@ -96,7 +96,7 @@ public class DAO {
 
             profile.setFirstName(firstName);
             profile.setLastName(lastName);
-            if (photo != null && !"".equals(photo.trim())) {
+            if (!photo.equals("")) {
                 profile.setPhoto(photo);
             }
 
@@ -104,8 +104,8 @@ public class DAO {
             manager.merge(profile);
             manager.getTransaction().commit();
 
-        } catch (NoResultException e) {
-            e.printStackTrace();
+        } catch (NoResultException error) {
+            error.printStackTrace();
         } finally {
             manager.close();
         }
