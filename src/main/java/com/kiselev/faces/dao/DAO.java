@@ -44,13 +44,19 @@ public class DAO {
         }
     }
 
-    public static Long addUser(ProfileEntity user) throws PersistenceException {
+    public static Long addUser(ProfileEntity user) {
         EntityManager manager = factory.createEntityManager();
-        manager.getTransaction().begin();
-        manager.persist(user);
-        manager.getTransaction().commit();
-        manager.close();
-        return count = getCount();
+        try {
+            manager.getTransaction().begin();
+            manager.persist(user);
+            manager.getTransaction().commit();
+            return count = getCount();
+        } catch (PersistenceException error) {
+            error.printStackTrace();
+            return null;
+        } finally {
+            manager.close();
+        }
     }
 
     public static ProfileEntity getProfile(Long id) {
