@@ -29,8 +29,7 @@ public class AuthenticationFilter implements javax.servlet.Filter {
         boolean isRootURL = (url.charAt(url.length() - 1) == '/');
 
         if (session == null) {
-            if (url.contains("error") || url.contains("settings") ||
-                    url.contains("register")) {
+            if (url.contains("settings") || url.contains("register")) {
                 response.sendRedirect(request.getServletContext()
                         .getContextPath() + "/signin");
             } else {
