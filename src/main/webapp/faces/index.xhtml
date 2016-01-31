@@ -20,20 +20,26 @@
         <h:panelGroup styleClass="auth-body" layout="block">
             <h:form id="authorization-form"
                     styleClass="auth-input-fields">
-                <h:outputLabel value="Username" styleClass="auth-label"/>
+                <h:panelGroup styleClass="auth-label-wrapper" layout="block">
+                    <h:outputLabel value="Username" styleClass="auth-label"/>
+                </h:panelGroup>
                 <h:inputText
                         id="signup-username-field"
                         styleClass="auth-field auth-text"
                         autocomplete="off"
                         value="#{authorizationBean.username}"/>
-                <h:outputLabel value="Password" styleClass="auth-label"/>
+                <h:panelGroup styleClass="auth-label-wrapper" layout="block">
+                    <h:outputLabel value="Password" styleClass="auth-label"/>
+                </h:panelGroup>
                 <h:inputSecret
                         id="signup-password-field"
                         styleClass="auth-field auth-text"
                         autocomplete="off"
                         value="#{authorizationBean.password}"/>
-                <h:outputLabel value="Confirm password"
-                               styleClass="auth-label"/>
+                <h:panelGroup styleClass="auth-label-wrapper" layout="block">
+                    <h:outputLabel value="Confirm password"
+                                   styleClass="auth-label"/>
+                </h:panelGroup>
                 <h:inputSecret
                         id="signup-confirm-password-field"
                         styleClass="auth-field auth-text"
@@ -43,7 +49,7 @@
                         id="signup-button"
                         styleClass="auth-field auth-button"
                         value="Sign up"
-                        action="#{authorizationBean.signup}"/>
+                        action="#{authorizationBean.signup()}"/>
             </h:form>
         </h:panelGroup>
         <h:panelGroup styleClass="auth-unit auth-footer" layout="block">
