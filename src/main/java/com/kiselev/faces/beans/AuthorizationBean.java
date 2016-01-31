@@ -203,7 +203,7 @@ public class AuthorizationBean implements Serializable {
                     checkPhoto();
 
                 } catch (IOException error) {
-                    photo = null;
+                    photo = "";
                     upMessage = error.getMessage();
                     return "/faces/register.xhtml?faces-redirect=true";
                 }

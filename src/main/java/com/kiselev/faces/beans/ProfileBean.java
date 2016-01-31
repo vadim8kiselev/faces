@@ -83,7 +83,7 @@ public class ProfileBean implements Serializable {
     }
 
     public String getPhoto() {
-        return (photo == null) ? "" : photo;
+        return photo;
     }
 
     public void setPhoto(String photo) {
