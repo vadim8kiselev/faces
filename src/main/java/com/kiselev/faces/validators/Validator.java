@@ -17,7 +17,6 @@ public class Validator {
     }
 
     public static String validationUsername(String username) {
-
         if (username.length() < 5) {
             return "Username must contains at least 5 characters";
         }
@@ -30,7 +29,6 @@ public class Validator {
                 !username.matches("^[a-zA-Z0-9][a-zA-Z0-9\\.]+[a-zA-Z0-9]$")) {
             return "Username can contains letters, digits and one dot";
         }
-
         return null;
     }
 
@@ -49,17 +47,14 @@ public class Validator {
     }
 
     public static String validationPassword(String password) {
-
         if (password.length() < 6) {
             return "Password must contains at least 6 characters";
         }
-
         return null;
     }
 
     public static String passwordsAreEquals(
             String password, String secondPassword) {
-
         if (!password.equals(secondPassword)) {
             return "Passwords do not match";
         }
@@ -67,7 +62,6 @@ public class Validator {
     }
 
     public static String validationFullName(String firstName, String lastName) {
-
         if (firstName.length() < 2 || lastName.length() < 2 ||
                 firstName.length() > 35 || lastName.length() > 35) {
             return "Use your full and real name";
@@ -75,22 +69,21 @@ public class Validator {
 
         if (!firstName.matches("^[\\u00c0-\\u01ffA-ZА-Я]" +
                 "[\\u00c0-\\u01ffa-zA-Zа-яА-Я'\\-]+$") ||
-
                 !lastName.matches("^[\\u00c0-\\u01ffA-ZА-Я]" +
                         "[\\u00c0-\\u01ffa-zA-Zа-яА-Я'\\-]+$")) {
             return "Use your real name";
         }
-
         return null;
     }
 
     public static String validationPhoto(String photo) {
-
         if (!photo.matches("^(https?|ftp)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;" +
                 "]*[-a-zA-Z0-9+&@#/%=~_|]")) {
             return "Invalid url";
         }
+
         BufferedImage image;
+
         try {
             URL url = new URL(photo);
             image = ImageIO.read(url);
@@ -105,7 +98,6 @@ public class Validator {
         if (image.getWidth() > 200 || image.getHeight() > 300) {
             return "It must be less than 200x300";
         }
-
         return null;
     }
 
