@@ -47,7 +47,6 @@ public class ProfileEntity {
         this.password = DigestUtils.md5Hex(DigestUtils.md5Hex(password) +
                 "salt");
         this.creationDate = new Date();
-        this.firstName = "Unknown";
     }
 
     public ProfileEntity() {
