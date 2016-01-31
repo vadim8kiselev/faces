@@ -15,13 +15,17 @@ import java.io.Serializable;
 public class AuthorizationBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     private boolean logged = false;
     private boolean registered = false;
+
     private String username;
     private String password;
     private String secondPassword;
+
     private String inMessage;
     private String upMessage;
+
     private Long id;
     private String firstName;
     private String lastName;
@@ -30,7 +34,6 @@ public class AuthorizationBean implements Serializable {
     public AuthorizationBean() {
 
     }
-
 
     public boolean isRegistered() {
         return registered;
@@ -126,10 +129,12 @@ public class AuthorizationBean implements Serializable {
 
         if ((inMessage = Validator
                 .fieldsAreNotBlank(username, password)) == null) {
+
             ProfileEntity user = new ProfileEntity(username, password);
 
             if ((inMessage = Validator
                     .validationSignInId(id = DAO.getId(user))) == null) {
+
                 login();
                 registered = DAO.isRegistered(id);
                 return "/faces/profile.xhtml?faces-redirect=true&id=" + id;
@@ -159,10 +164,12 @@ public class AuthorizationBean implements Serializable {
 
             if ((upMessage = Validator
                     .passwordsAreEquals(password, secondPassword)) == null) {
+
                 ProfileEntity user = new ProfileEntity(username, password);
 
                 if ((upMessage = Validator
                         .validationSignUpId(id = DAO.addUser(user))) == null) {
+
                     login();
                     return "/faces/register.xhtml?faces-redirect=true";
                 } else {
@@ -203,6 +210,7 @@ public class AuthorizationBean implements Serializable {
 
             if (Validator.fieldsAreNotBlank(photo) == null &&
                     (upMessage = Validator.validationPhoto(photo)) != null) {
+
                 photo = "";
                 return null;
             }
@@ -214,15 +222,6 @@ public class AuthorizationBean implements Serializable {
             return null;
         }
 
-    }
-
-    private void login() {
-        logged = true;
-        username = null;
-        password = null;
-        secondPassword = null;
-        inMessage = null;
-        upMessage = null;
     }
 
     public String homePage() {
@@ -239,5 +238,14 @@ public class AuthorizationBean implements Serializable {
         session.removeAttribute("authorizationBean");
         session.invalidate();
         return "/faces/signin.xhtml?faces-redirect=true";
+    }
+
+    private void login() {
+        logged = true;
+        username = null;
+        password = null;
+        secondPassword = null;
+        inMessage = null;
+        upMessage = null;
     }
 }
