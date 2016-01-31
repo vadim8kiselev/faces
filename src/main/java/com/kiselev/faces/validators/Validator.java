@@ -4,82 +4,87 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class Validator {
 
-    public static String fieldsAreNotBlank(String... fields) {
+    public static String fieldsAreNotBlank(Locale locale, String... fields) {
         for (String field : fields) {
             if (field.equals("")) {
-                return "This fields cannot be blank";
+                return getMessage(locale, "error_blank");
             }
         }
         return null;
     }
 
-    public static String validationUsername(String username) {
+    public static String validationUsername(Locale locale, String username) {
         if (username.length() < 5) {
-            return "Username must contains at least 5 characters";
+            return getMessage(locale, "error_username_min");
         }
 
         if (username.length() > 33) {
-            return "Username must not be longer than 33 characters";
+            return getMessage(locale, "error_username_max");
         }
 
         if (countOfCharacters(username, '.') > 1 ||
                 !username.matches("^[a-zA-Z0-9][a-zA-Z0-9\\.]+[a-zA-Z0-9]$")) {
-            return "Username can contains letters, digits and one dot";
+            return getMessage(locale, "error_incorrect_username");
         }
         return null;
     }
 
-    public static String validationSignInId(Long id) {
+    public static String validationSignInId(Locale locale, Long id) {
         if (id == null) {
-            return "Incorrect username or password";
+            return getMessage(locale, "error_incorrect_data");
         }
         return null;
     }
 
-    public static String validationSignUpId(Long id) {
+    public static String validationSignUpId(Locale locale, Long id) {
         if (id == null) {
-            return "This username is already taken";
+            return getMessage(locale, "error_username_taken");
         }
         return null;
     }
 
-    public static String validationPassword(String password) {
+    public static String validationPassword(Locale locale, String password) {
         if (password.length() < 6) {
-            return "Password must contains at least 6 characters";
+            return getMessage(locale, "error_password_min");
         }
         return null;
     }
 
-    public static String passwordsAreEquals(
-            String password, String secondPassword) {
+    public static String passwordsAreEquals(Locale locale,
+                                            String password,
+                                            String secondPassword) {
         if (!password.equals(secondPassword)) {
-            return "Passwords do not match";
+            return getMessage(locale, "error_password_match");
         }
         return null;
     }
 
-    public static String validationFullName(String firstName, String lastName) {
+    public static String validationFullName(Locale locale,
+                                            String firstName,
+                                            String lastName) {
         if (firstName.length() < 2 || lastName.length() < 2 ||
                 firstName.length() > 35 || lastName.length() > 35) {
-            return "Use your full and real name";
+            return getMessage(locale, "error_length_name");
         }
 
         if (!firstName.matches("^[\\u00c0-\\u01ffA-ZА-Я]" +
                 "[\\u00c0-\\u01ffa-zA-Zа-яА-Я'\\-]+$") ||
                 !lastName.matches("^[\\u00c0-\\u01ffA-ZА-Я]" +
                         "[\\u00c0-\\u01ffa-zA-Zа-яА-Я'\\-]+$")) {
-            return "Use your real name";
+            return getMessage(locale, "error_real_name");
         }
         return null;
     }
 
-    public static String validationPhoto(String photo) {
+    public static String validationPhoto(Locale locale, String photo) {
         if (!photo.matches("^(https?|ftp)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;" +
                 "]*[-a-zA-Z0-9+&@#/%=~_|]")) {
-            return "Invalid url";
+            return getMessage(locale, "error_url");
         }
 
         BufferedImage image;
@@ -88,29 +93,35 @@ public class Validator {
             URL url = new URL(photo);
             image = ImageIO.read(url);
         } catch (IOException error) {
-            return "Invalid url";
+            return getMessage(locale, "error_url");
         }
 
         if (image == null) {
-            return "Invalid url";
+            return getMessage(locale, "error_url");
         }
 
         if (image.getWidth() > 200 || image.getHeight() > 300) {
-            return "It must be less than 200x300";
+            return getMessage(locale, "error_size");
         }
         return null;
     }
 
-    public static String unhandledError() {
-        return "Unhandled error";
+    public static String unhandledError(Locale locale) {
+        return getMessage(locale, "error_unhandled");
     }
 
-    private static int countOfCharacters(String username, char symbol) {
+    private static int countOfCharacters(String username, char
+            symbol) {
         int count = 0;
         for (int index = 0; index < username.length(); index++)
             if (username.charAt(index) == symbol) {
                 count++;
             }
         return count;
+    }
+
+    private static String getMessage(Locale locale, String key) {
+        return ResourceBundle.getBundle("internationalization.messages", locale)
+                .getString(key);
     }
 }

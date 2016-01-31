@@ -9,6 +9,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import java.io.Serializable;
+import java.util.Locale;
 
 @ManagedBean(name = "authorizationBean")
 @SessionScoped
@@ -31,8 +32,23 @@ public class AuthorizationBean implements Serializable {
     private String lastName;
     private String photo;
 
+    private Locale locale = FacesContext.getCurrentInstance()
+            .getExternalContext().getRequestLocale();
+
     public AuthorizationBean() {
 
+    }
+
+    public Locale getLocale() {
+        return locale;
+    }
+
+    public String getLanguage() {
+        return locale.getLanguage();
+    }
+
+    public void setLanguage(String language) {
+        this.locale = new Locale(language);
     }
 
     public boolean isRegistered() {
@@ -128,12 +144,13 @@ public class AuthorizationBean implements Serializable {
         password = password.trim();
 
         if ((inMessage = Validator
-                .fieldsAreNotBlank(username, password)) == null) {
+                .fieldsAreNotBlank(locale, username, password)) == null) {
 
             ProfileEntity user = new ProfileEntity(username, password);
 
             if ((inMessage = Validator
-                    .validationSignInId(id = DAO.getId(user))) == null) {
+                    .validationSignInId(locale, id = DAO.getId(user))) ==
+                    null) {
 
                 login();
                 registered = DAO.isRegistered(id);
@@ -151,24 +168,24 @@ public class AuthorizationBean implements Serializable {
         password = password.trim();
         secondPassword = secondPassword.trim();
 
-        if ((upMessage = Validator.fieldsAreNotBlank(username,
+        if ((upMessage = Validator.fieldsAreNotBlank(locale, username,
                 password, secondPassword)) == null) {
 
-            if ((upMessage = Validator.validationUsername(username)) != null) {
+            if ((upMessage = Validator.validationUsername(locale, username)) != null) {
                 return "/faces/index.xhtml?faces-redirect=true";
             }
 
-            if ((upMessage = Validator.validationPassword(password)) != null) {
+            if ((upMessage = Validator.validationPassword(locale, password)) != null) {
                 return "/faces/index.xhtml?faces-redirect=true";
             }
 
             if ((upMessage = Validator
-                    .passwordsAreEquals(password, secondPassword)) == null) {
+                    .passwordsAreEquals(locale, password, secondPassword)) == null) {
 
                 ProfileEntity user = new ProfileEntity(username, password);
 
                 if ((upMessage = Validator
-                        .validationSignUpId(id = DAO.addUser(user))) == null) {
+                        .validationSignUpId(locale, id = DAO.addUser(user))) == null) {
 
                     login();
                     return "/faces/register.xhtml?faces-redirect=true";
@@ -181,16 +198,16 @@ public class AuthorizationBean implements Serializable {
         } else {
 
             if ((upMessage = Validator
-                    .fieldsAreNotBlank(username, password)) != null) {
+                    .fieldsAreNotBlank(locale, username, password)) != null) {
                 return null;
             }
 
             if ((upMessage = Validator
-                    .fieldsAreNotBlank(secondPassword)) != null) {
+                    .fieldsAreNotBlank(locale, secondPassword)) != null) {
                 return null;
             }
 
-            upMessage = Validator.unhandledError();
+            upMessage = Validator.unhandledError(locale);
             return null;
         }
     }
@@ -200,16 +217,16 @@ public class AuthorizationBean implements Serializable {
         lastName = lastName.trim();
         photo = photo.trim();
 
-        if ((upMessage = Validator.fieldsAreNotBlank(firstName,
+        if ((upMessage = Validator.fieldsAreNotBlank(locale, firstName,
                 lastName)) == null) {
 
             if ((upMessage = Validator
-                    .validationFullName(firstName, lastName)) != null) {
+                    .validationFullName(locale, firstName, lastName)) != null) {
                 return null;
             }
 
-            if (Validator.fieldsAreNotBlank(photo) == null &&
-                    (upMessage = Validator.validationPhoto(photo)) != null) {
+            if (Validator.fieldsAreNotBlank(locale, photo) == null &&
+                    (upMessage = Validator.validationPhoto(locale, photo)) != null) {
 
                 photo = "";
                 return null;

@@ -20,17 +20,17 @@
             <h:form id="header-form" styleClass="header-form">
                 <h:commandButton id="my-page-button"
                                  styleClass="header-left-button header-button"
-                                 value="My page"
+                                 value="#{message['profile_header_ownpage']}"
                                  action="#{authorizationBean.homePage}"
                                  rendered="#{authorizationBean.logged}"/>
                 <h:commandButton id="logout-button"
                                  styleClass="header-right-button header-button"
-                                 value="Log out"
+                                 value="#{message['profile_header_logout']}"
                                  action="#{authorizationBean.logout}"
                                  rendered="#{authorizationBean.logged}"/>
                 <h:commandButton id="signin-button"
                                  styleClass="header-right-button header-button"
-                                 value="Sign in"
+                                 value="#{message['profile_header_signin']}"
                                  action="/faces/signin.xhtml?faces-redirect=true"
                                  rendered="#{!authorizationBean.logged}"/>
             </h:form>
@@ -48,11 +48,12 @@
                                         value="#{profileBean.photo}"
                                         width="200" height="300"/>
                     </h:panelGroup>
+                    <!-- Settings -->
                     <h:panelGroup styleClass="setting" layout="block"
                                   rendered="#{profileBean.id.equals(authorizationBean.id)}">
                         <h:link id="settings"
                                 styleClass="settings-link"
-                                value="Edit profile"
+                                value="#{message['profile_information_settings']}"
                                 outcome="/faces/settings.xhtml?faces-redirect=true"/>
                     </h:panelGroup>
 
@@ -81,7 +82,7 @@
                                     layout="block">
                                 <h:outputLabel
                                         styleClass="information-unit-label"
-                                        value="Birthday:"/>
+                                        value="#{message['profile_information_birthday']}"/>
                             </h:panelGroup>
                             <h:panelGroup
                                     styleClass="information-unit-value-wrapper"
@@ -101,7 +102,7 @@
                                     layout="block">
                                 <h:outputLabel
                                         styleClass="information-unit-label"
-                                        value="Hometown:"/>
+                                        value="#{message['profile_information_hometown']}"/>
                             </h:panelGroup>
                             <h:panelGroup
                                     styleClass="information-unit-value-wrapper"
@@ -121,7 +122,7 @@
                                     layout="block">
                                 <h:outputLabel
                                         styleClass="information-unit-label"
-                                        value="Email:"/>
+                                        value="#{message['profile_information_email']}"/>
                             </h:panelGroup>
                             <h:panelGroup
                                     styleClass="information-unit-value-wrapper"
@@ -141,7 +142,7 @@
                                     layout="block">
                                 <h:outputLabel
                                         styleClass="information-unit-label"
-                                        value="Phone:"/>
+                                        value="#{message['profile_information_phone']}"/>
                             </h:panelGroup>
                             <h:panelGroup
                                     styleClass="information-unit-value-wrapper"
@@ -160,7 +161,7 @@
                         <h:panelGroup styleClass="information-empty-message"
                                       layout="block">
                             <h:outputText styleClass=""
-                                          value="Information is empty"/>
+                                          value="#{message['profile_information_empty']}"/>
                         </h:panelGroup>
                     </h:panelGroup>
                 </h:panelGroup>
@@ -175,7 +176,7 @@
                         <h:panelGroup styleClass="links-unit-header emails"
                                       layout="block">
                             <h:outputText styleClass="links-unit-header-value"
-                                          value="Emails"/>
+                                          value="#{message['profile_emails']}"/>
                         </h:panelGroup>
 
                         <!-- Links content-->
@@ -192,7 +193,7 @@
                                 styleClass="links-unit-header social-networks"
                                 layout="block">
                             <h:outputText styleClass="links-unit-header-value"
-                                          value="Social networks"/>
+                                          value="#{message['profile_social_networks']}"/>
                         </h:panelGroup>
 
                         <!-- Links content-->
@@ -208,7 +209,7 @@
                         <h:panelGroup styleClass="links-unit-header multimedia"
                                       layout="block">
                             <h:outputText styleClass="links-unit-header-value"
-                                          value="Multimedia"/>
+                                          value="#{message['profile_multimedia']}"/>
                         </h:panelGroup>
 
                         <!-- Links content-->
@@ -224,7 +225,7 @@
                         <h:panelGroup styleClass="links-unit-header others"
                                       layout="block">
                             <h:outputText styleClass="links-unit-header-value"
-                                          value="Others"/>
+                                          value="#{message['profile_others']}"/>
                         </h:panelGroup>
 
                         <!-- Links content-->

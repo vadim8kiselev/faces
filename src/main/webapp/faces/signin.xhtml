@@ -1,55 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
 
-<h:head>
-    <title>Faces</title>
-    <h:outputStylesheet library="css" name="main-page.css"/>
-</h:head>
-<h:body>
-    <h:panelGroup styleClass="auth-form" layout="block">
-        <h:panelGroup styleClass="auth-header" layout="block">
-            Sign in to Faces
+<f:view locale="#{authorizationBean.locale}" encoding="UTF-8"
+        contentType="text/html">
+    <h:head>
+        <title>Faces</title>
+        <h:outputStylesheet library="css" name="main-page.css"/>
+    </h:head>
+    <h:body>
+        <h:panelGroup styleClass="auth-form" layout="block">
+            <h:panelGroup styleClass="auth-header" layout="block">
+                <h:outputText value="#{message['signin_welcome']}"/>
+            </h:panelGroup>
+            <h:panelGroup
+                    styleClass="auth-unit auth-error auth-error-message"
+                    layout="block"
+                    rendered="#{authorizationBean.inMessage != null}">
+                <h:outputText value="#{authorizationBean.inMessage}"/>
+            </h:panelGroup>
+            <h:panelGroup styleClass="auth-body" layout="block">
+
+
+                <!--
+                <h:form>
+                    <h:selectOneMenu value="#{authorizationBean.language}"
+                                     onchange="submit()">
+                        <f:selectItem itemValue="en" itemLabel="English"/>
+                        <f:selectItem itemValue="ru" itemLabel="Russian"/>
+                    </h:selectOneMenu>
+                </h:form>
+                -->
+
+                <h:form id="authorization-form"
+                        styleClass="auth-input-fields">
+                    <h:panelGroup styleClass="auth-label-wrapper"
+                                  layout="block">
+                        <h:outputLabel value="#{message['username_label']}"
+                                       styleClass="auth-label"/>
+                    </h:panelGroup>
+                    <h:inputText
+                            id="signin-username-field"
+                            styleClass="auth-field auth-text"
+                            autocomplete="off"
+                            value="#{authorizationBean.username}"/>
+                    <h:panelGroup styleClass="auth-label-wrapper"
+                                  layout="block">
+                        <h:outputLabel value="#{message['password_label']}"
+                                       styleClass="auth-label"/>
+                    </h:panelGroup>
+                    <h:inputSecret
+                            id="signin-password-field"
+                            styleClass="auth-field auth-text"
+                            autocomplete="off"
+                            value="#{authorizationBean.password}"/>
+                    <h:commandButton
+                            id="signin-button"
+                            styleClass="auth-field auth-button"
+                            value="#{message['signin_button']}"
+                            action="#{authorizationBean.signin()}"/>
+                </h:form>
+            </h:panelGroup>
+            <h:panelGroup styleClass="auth-unit auth-footer" layout="block">
+                <h:outputText value="#{message['signin_message']} "/>
+                <h:link id="signin-outcome-link"
+                        styleClass="auth-link"
+                        value="#{message['signin_link']}"
+                        outcome="/faces/index.xhtml?faces-redirect=true"/>
+            </h:panelGroup>
         </h:panelGroup>
-        <h:panelGroup
-                styleClass="auth-unit auth-error auth-error-message"
-                layout="block"
-                rendered="#{authorizationBean.inMessage != null}">
-            <h:outputText value="#{authorizationBean.inMessage}"/>
-        </h:panelGroup>
-        <h:panelGroup styleClass="auth-body" layout="block">
-            <h:form id="authorization-form"
-                    styleClass="auth-input-fields">
-                <h:panelGroup styleClass="auth-label-wrapper" layout="block">
-                    <h:outputLabel value="Username" styleClass="auth-label"/>
-                </h:panelGroup>
-                <h:inputText
-                        id="signin-username-field"
-                        styleClass="auth-field auth-text"
-                        autocomplete="off"
-                        value="#{authorizationBean.username}"/>
-                <h:panelGroup styleClass="auth-label-wrapper" layout="block">
-                    <h:outputLabel value="Password" styleClass="auth-label"/>
-                </h:panelGroup>
-                <h:inputSecret
-                        id="signin-password-field"
-                        styleClass="auth-field auth-text"
-                        autocomplete="off"
-                        value="#{authorizationBean.password}"/>
-                <h:commandButton
-                        id="signin-button"
-                        styleClass="auth-field auth-button"
-                        value="Log In"
-                        action="#{authorizationBean.signin()}"/>
-            </h:form>
-        </h:panelGroup>
-        <h:panelGroup styleClass="auth-unit auth-footer" layout="block">
-            New to Faces?
-            <h:link id="signin-outcome-link"
-                    styleClass="auth-link"
-                    value="Create an account"
-                    outcome="/faces/index.xhtml?faces-redirect=true"/>
-        </h:panelGroup>
-    </h:panelGroup>
-</h:body>
+    </h:body>
+</f:view>
 </html>

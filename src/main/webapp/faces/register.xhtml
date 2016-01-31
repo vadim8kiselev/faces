@@ -9,7 +9,7 @@
 <h:body>
     <h:panelGroup styleClass="auth-form" layout="block">
         <h:panelGroup styleClass="auth-header" layout="block">
-            Complete registration
+            <h:outputText value="#{message['register_welcome']}"/>
         </h:panelGroup>
         <h:panelGroup
                 styleClass="auth-unit auth-error auth-error-message"
@@ -21,7 +21,9 @@
             <h:form id="authorization-form"
                     styleClass="auth-input-fields">
                 <h:panelGroup styleClass="auth-label-wrapper" layout="block">
-                    <h:outputLabel value="First name" styleClass="auth-label"/>
+                    <h:outputLabel
+                            value="#{message['register_first_name_label']}"
+                            styleClass="auth-label"/>
                 </h:panelGroup>
                 <h:inputText
                         id="register-first-name-field"
@@ -29,7 +31,9 @@
                         autocomplete="off"
                         value="#{authorizationBean.firstName}"/>
                 <h:panelGroup styleClass="auth-label-wrapper" layout="block">
-                    <h:outputLabel value="Last name" styleClass="auth-label"/>
+                    <h:outputLabel
+                            value="#{message['register_last_name_label']}"
+                            styleClass="auth-label"/>
                 </h:panelGroup>
                 <h:inputText
                         id="register-last-name-field"
@@ -37,7 +41,7 @@
                         autocomplete="off"
                         value="#{authorizationBean.lastName}"/>
                 <h:panelGroup styleClass="auth-label-wrapper" layout="block">
-                    <h:outputLabel value="URL photo (optionally)"
+                    <h:outputLabel value="#{message['register_photo_label']}"
                                    styleClass="auth-label"/>
                 </h:panelGroup>
                 <h:inputText
@@ -48,7 +52,7 @@
                 <h:commandButton
                         id="register-button"
                         styleClass="auth-field auth-button"
-                        value="Complete registration"
+                        value="#{message['register_button']}"
                         action="#{authorizationBean.register()}"/>
             </h:form>
         </h:panelGroup>
