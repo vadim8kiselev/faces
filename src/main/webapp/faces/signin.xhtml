@@ -20,13 +20,17 @@
         <h:panelGroup styleClass="auth-body" layout="block">
             <h:form id="authorization-form"
                     styleClass="auth-input-fields">
-                <h:outputLabel value="Username" styleClass="auth-label"/>
+                <h:panelGroup styleClass="auth-label-wrapper" layout="block">
+                    <h:outputLabel value="Username" styleClass="auth-label"/>
+                </h:panelGroup>
                 <h:inputText
                         id="signin-username-field"
                         styleClass="auth-field auth-text"
                         autocomplete="off"
                         value="#{authorizationBean.username}"/>
-                <h:outputLabel value="Password" styleClass="auth-label"/>
+                <h:panelGroup styleClass="auth-label-wrapper" layout="block">
+                    <h:outputLabel value="Password" styleClass="auth-label"/>
+                </h:panelGroup>
                 <h:inputSecret
                         id="signin-password-field"
                         styleClass="auth-field auth-text"
@@ -36,7 +40,7 @@
                         id="signin-button"
                         styleClass="auth-field auth-button"
                         value="Log In"
-                        action="#{authorizationBean.signin}"/>
+                        action="#{authorizationBean.signin()}"/>
             </h:form>
         </h:panelGroup>
         <h:panelGroup styleClass="auth-unit auth-footer" layout="block">
