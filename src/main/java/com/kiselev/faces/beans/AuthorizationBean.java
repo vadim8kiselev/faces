@@ -211,9 +211,7 @@ public class AuthorizationBean implements Serializable {
             DAO.register(id, firstName, lastName, photo);
             registered = true;
             return "/faces/profile.xhtml?faces-redirect=true&id=" + id;
-        } else
-
-        {
+        } else {
             upMessage = "Full name cannot be blank";
             return "/faces/register.xhtml?faces-redirect=true";
         }
@@ -237,24 +235,24 @@ public class AuthorizationBean implements Serializable {
     }
 
     private void checkPhoto() throws IOException, IllegalArgumentException {
-        if (!photo.matches("^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;" +
+        if (!photo.matches("^(https?|ftp)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;" +
                 "]*[-a-zA-Z0-9+&@#/%=~_|]")) {
             throw new MalformedURLException("Invalid url");
         }
 
         URL url = new URL(photo);
-        BufferedImage img;
+        BufferedImage image;
         try {
-            img = ImageIO.read(url);
+            image = ImageIO.read(url);
         } catch (IOException error) {
             throw new IOException("Invalid url");
         }
 
-        if (img == null) {
+        if (image == null) {
             throw new IOException("Invalid url");
         }
 
-        if (img.getWidth() > 200 || img.getHeight() > 300) {
+        if (image.getWidth() > 200 || image.getHeight() > 300) {
             throw new IOException("It must be less than 200x300");
         }
     }
