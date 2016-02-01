@@ -17,6 +17,7 @@ public class ProfileBean implements Serializable {
 
     private Long id;
     private String username;
+    private String urlName;
     private String fullName;
     private java.util.Date birthday;
     private String hometown;
@@ -29,14 +30,14 @@ public class ProfileBean implements Serializable {
 
     @PostConstruct
     public void init() {
-        String idParam = FacesContext.getCurrentInstance().getExternalContext()
+        String requestID = FacesContext.getCurrentInstance().getExternalContext()
                 .getRequestParameterMap().get("id");
-        String usernameParam = FacesContext.getCurrentInstance()
+        String requestUrlName = FacesContext.getCurrentInstance()
                 .getExternalContext()
-                .getRequestParameterMap().get("username");
+                .getRequestParameterMap().get("urlname");
 
-        if (idParam != null) {
-            id = new Long(idParam);
+        if (requestID != null) {
+            id = new Long(requestID);
 
             if (!DAO.isValidId(id)) {
                 redirect("/signin");
@@ -46,14 +47,14 @@ public class ProfileBean implements Serializable {
                 convertEntity(model);
             }
 
-        } else if (usernameParam != null) {
-            username = usernameParam;
+        } else if (requestUrlName != null) {
+            urlName = requestUrlName;
 
-            if (!DAO.isValidUsername(username)) {
+            if (!DAO.isValidUrlName(urlName)) {
                 redirect("/error");
             } else {
 
-                ProfileEntity model = DAO.getProfile(username);
+                ProfileEntity model = DAO.getProfile(urlName);
                 convertEntity(model);
             }
         } else {
@@ -64,10 +65,10 @@ public class ProfileBean implements Serializable {
 
     private void convertEntity(ProfileEntity profile) {
         if (profile != null) {
-            this.username = profile.getUsername();
+            this.username = profile.getUserName();
+            this.urlName = profile.getUrlName();
             this.fullName = profile.getFirstName() + " " +
                     profile.getLastName();
-
             this.birthday = profile.getBirthday();
             this.hometown = profile.getHometown();
             this.email = profile.getEmail();
@@ -86,12 +87,6 @@ public class ProfileBean implements Serializable {
                         null, "/faces" + url + ".xhtml?faces-redirect=true");
     }
 
-    public boolean informationIsEmpty() {
-        return ((username != null) || (birthday != null) || (hometown !=
-                null) ||
-                (email != null) || (phone != null));
-    }
-
     public Long getId() {
         return id;
     }
@@ -100,20 +95,28 @@ public class ProfileBean implements Serializable {
         this.id = id;
     }
 
-    public String getFirstName() {
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getUrlName() {
+        return urlName;
+    }
+
+    public void setUrlName(String urlName) {
+        this.urlName = urlName;
+    }
+
+    public String getFullName() {
         return fullName;
     }
 
-    public void setFirstName(String firstName) {
-        this.fullName = firstName;
-    }
-
-    public String getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(String photo) {
-        this.photo = photo;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public java.util.Date getBirthday() {
@@ -148,11 +151,16 @@ public class ProfileBean implements Serializable {
         this.phone = phone;
     }
 
-    public String getUsername() {
-        return username;
+    public String getPhoto() {
+        return photo;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    public boolean informationIsEmpty() {
+        return ((birthday != null) || (hometown != null) ||
+                (email != null) || (phone != null));
     }
 }

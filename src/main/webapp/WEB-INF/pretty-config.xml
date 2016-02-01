@@ -34,7 +34,7 @@
     </url-mapping>
 
     <url-mapping id="profile">
-        <pattern value="/#{username}"/>
+        <pattern value="/#{urlname}"/>
         <view-id value="/faces/profile.xhtml"/>
     </url-mapping>
 </pretty-config>

@@ -18,7 +18,7 @@ public class DAO {
                     "SELECT user.id " +
                     "FROM ProfileEntity user " +
                     "WHERE username = :username AND password = :password")
-                    .setParameter("username", user.getUsername())
+                    .setParameter("username", user.getUserName())
                     .setParameter("password", user.getPassword())
                     .getSingleResult();
         } catch (NoResultException error) {
@@ -71,13 +71,13 @@ public class DAO {
         }
     }
 
-    public static ProfileEntity getProfile(String username) {
+    public static ProfileEntity getProfile(String urlName) {
         EntityManager manager = factory.createEntityManager();
         try {
             return (ProfileEntity) manager
                     .createQuery("FROM ProfileEntity user " +
-                            "WHERE username = :username")
-                    .setParameter("username", username)
+                            "WHERE urlname = :urlName")
+                    .setParameter("urlName", urlName)
                     .getSingleResult();
 
         } catch (NoResultException error) {
@@ -132,14 +132,14 @@ public class DAO {
         return id >= 1 && id <= count;
     }
 
-    public static boolean isValidUsername(String username) {
+    public static boolean isValidUrlName(String urlName) {
         EntityManager manager = factory.createEntityManager();
         try {
             manager.createQuery("" +
-                    "SELECT user.username " +
+                    "SELECT user.urlname " +
                     "FROM ProfileEntity user " +
-                    "WHERE username = :username")
-                    .setParameter("username", username)
+                    "WHERE urlname = :urlName")
+                    .setParameter("urlName", urlName)
                     .getSingleResult();
             return true;
         } catch (NoResultException error) {

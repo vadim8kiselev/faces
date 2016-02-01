@@ -15,6 +15,9 @@ public class ProfileEntity {
     @Column(name = "username", nullable = false)
     private String username;
 
+    @Column(name = "url_name")
+    private String urlname;
+
     @Column(name = "password", nullable = false)
     private String password;
 
@@ -60,12 +63,20 @@ public class ProfileEntity {
         this.id = id;
     }
 
-    public String getUsername() {
+    public String getUserName() {
         return username;
     }
 
-    public void setUsername(String username) {
+    public void setUserName(String username) {
         this.username = username;
+    }
+
+    public String getUrlName() {
+        return urlname;
+    }
+
+    public void setUrlName(String urlname) {
+        this.urlname = urlname;
     }
 
     public String getPassword() {
