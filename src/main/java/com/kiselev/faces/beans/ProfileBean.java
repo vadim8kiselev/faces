@@ -18,7 +18,8 @@ public class ProfileBean implements Serializable {
     private Long id;
     private String username;
     private String urlName;
-    private String fullName;
+    private String firstName;
+    private String lastName;
     private java.util.Date birthday;
     private String hometown;
     private String email;
@@ -67,8 +68,8 @@ public class ProfileBean implements Serializable {
         if (profile != null) {
             this.username = profile.getUserName();
             this.urlName = profile.getUrlName();
-            this.fullName = profile.getFirstName() + " " +
-                    profile.getLastName();
+            this.firstName = profile.getFirstName();
+            this.lastName =  profile.getLastName();
             this.birthday = profile.getBirthday();
             this.hometown = profile.getHometown();
             this.email = profile.getEmail();
@@ -111,12 +112,20 @@ public class ProfileBean implements Serializable {
         this.urlName = urlName;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public java.util.Date getBirthday() {
