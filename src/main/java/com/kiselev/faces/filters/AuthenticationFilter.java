@@ -31,6 +31,10 @@ public class AuthenticationFilter implements javax.servlet.Filter {
         String url = request.getRequestURI();
         boolean isRootURL = (url.charAt(url.length() - 1) == '/');
 
+        if (url.contains("resource")){
+            chain.doFilter(req, res);
+        }
+
         if (session == null) {
             if (url.contains("settings") || url.contains("register")) {
                 redirect("/signin");
