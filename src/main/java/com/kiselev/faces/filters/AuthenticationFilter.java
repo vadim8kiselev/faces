@@ -31,7 +31,7 @@ public class AuthenticationFilter implements javax.servlet.Filter {
         String url = request.getRequestURI();
         boolean isRootURL = (url.charAt(url.length() - 1) == '/');
 
-        if (url.contains("resource")){
+        if (url.contains("resource") || url.contains("favicon")) {
             chain.doFilter(req, res);
         }
 
@@ -80,17 +80,13 @@ public class AuthenticationFilter implements javax.servlet.Filter {
 
                 } else if (!url.contains("error")) {
                     redirect("/error");
-
-                } else {
-                    chain.doFilter(req, res);
                 }
             }
         }
     }
 
     private void redirect(String url) throws IOException {
-        response.sendRedirect(request.getServletContext()
-                .getContextPath() + url);
+        response.sendRedirect(request.getContextPath() + url);
     }
 
     @Override
