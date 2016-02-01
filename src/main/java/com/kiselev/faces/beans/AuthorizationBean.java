@@ -149,8 +149,7 @@ public class AuthorizationBean implements Serializable {
             ProfileEntity user = new ProfileEntity(username, password);
 
             if ((inMessage = Validator
-                    .validationSignInId(locale, id = DAO.getId(user))) ==
-                    null) {
+                    .validationSignInId(locale, id = DAO.getId(user))) == null) {
 
                 login();
                 registered = DAO.isRegistered(id);
