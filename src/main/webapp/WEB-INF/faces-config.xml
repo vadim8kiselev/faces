@@ -7,7 +7,6 @@
         version="2.0">
     <application>
         <locale-config>
-            <default-locale>en_US</default-locale>
             <supported-locale>en_US</supported-locale>
             <supported-locale>ru_RU</supported-locale>
         </locale-config>
