@@ -22,7 +22,6 @@ public class DAO {
                     .setParameter("password", user.getPassword())
                     .getSingleResult();
         } catch (NoResultException error) {
-            error.printStackTrace();
             return null;
         } finally {
             manager.close();
@@ -37,7 +36,6 @@ public class DAO {
                     "FROM ProfileEntity user")
                     .getSingleResult();
         } catch (NoResultException error) {
-            error.printStackTrace();
             return null;
         } finally {
             manager.close();
@@ -52,7 +50,6 @@ public class DAO {
             manager.getTransaction().commit();
             return count = getCount();
         } catch (PersistenceException error) {
-            error.printStackTrace();
             return null;
         } finally {
             manager.close();
@@ -68,7 +65,22 @@ public class DAO {
                     .getSingleResult();
 
         } catch (NoResultException error) {
-            error.printStackTrace();
+            return null;
+        } finally {
+            manager.close();
+        }
+    }
+
+    public static ProfileEntity getProfile(String username) {
+        EntityManager manager = factory.createEntityManager();
+        try {
+            return (ProfileEntity) manager
+                    .createQuery("FROM ProfileEntity user " +
+                            "WHERE username = :username")
+                    .setParameter("username", username)
+                    .getSingleResult();
+
+        } catch (NoResultException error) {
             return null;
         } finally {
             manager.close();
@@ -84,7 +96,6 @@ public class DAO {
                     "WHERE id = :id").setParameter("id", id)
                     .getSingleResult() != null;
         } catch (NoResultException error) {
-            error.printStackTrace();
             return false;
         } finally {
             manager.close();
@@ -119,5 +130,22 @@ public class DAO {
 
     public static boolean isValidId(Long id) {
         return id >= 1 && id <= count;
+    }
+
+    public static boolean isValidUsername(String username) {
+        EntityManager manager = factory.createEntityManager();
+        try {
+            manager.createQuery("" +
+                    "SELECT user.username " +
+                    "FROM ProfileEntity user " +
+                    "WHERE username = :username")
+                    .setParameter("username", username)
+                    .getSingleResult();
+            return true;
+        } catch (NoResultException error) {
+            return false;
+        } finally {
+            manager.close();
+        }
     }
 }

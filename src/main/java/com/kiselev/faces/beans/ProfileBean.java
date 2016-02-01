@@ -29,35 +29,61 @@ public class ProfileBean implements Serializable {
 
     @PostConstruct
     public void init() {
-        id = new Long(FacesContext.getCurrentInstance().getExternalContext()
-                .getRequestParameterMap().get("id"));
+        String idParam = FacesContext.getCurrentInstance().getExternalContext()
+                .getRequestParameterMap().get("id");
+        String usernameParam = FacesContext.getCurrentInstance()
+                .getExternalContext()
+                .getRequestParameterMap().get("username");
 
-        if (!DAO.isValidId(id)) {
-            FacesContext.getCurrentInstance()
-                    .getApplication().getNavigationHandler()
-                    .handleNavigation(FacesContext.getCurrentInstance(), null,
-                            "/faces/error.xhtml?faces-redirect=true");
-        } else {
-            ProfileEntity model = DAO.getProfile(id);
-            if (model != null) {
-                this.username = model.getUsername();
-                this.fullName = model.getFirstName() +
-                        ((model.getLastName() == null) ?
-                                "" :
-                                " " + model.getLastName());
-                this.birthday = model.getBirthday();
-                this.hometown = model.getHometown();
-                this.email = model.getEmail();
-                this.phone = model.getPhone();
-                this.photo = model.getPhoto();
+        if (idParam != null) {
+            id = new Long(idParam);
+
+            if (!DAO.isValidId(id)) {
+                redirect("/signin");
             } else {
-                FacesContext.getCurrentInstance()
-                        .getApplication().getNavigationHandler()
-                        .handleNavigation(FacesContext.getCurrentInstance(),
-                                null,
-                                "/faces/error.xhtml?faces-redirect=true");
+
+                ProfileEntity model = DAO.getProfile(id);
+                convertEntity(model);
             }
+
+        } else if (usernameParam != null) {
+            username = usernameParam;
+
+            if (!DAO.isValidUsername(username)) {
+                redirect("/error");
+            } else {
+
+                ProfileEntity model = DAO.getProfile(username);
+                convertEntity(model);
+            }
+        } else {
+            redirect("/error");
         }
+
+    }
+
+    private void convertEntity(ProfileEntity profile) {
+        if (profile != null) {
+            this.username = profile.getUsername();
+            this.fullName = profile.getFirstName() + " " +
+                    profile.getLastName();
+
+            this.birthday = profile.getBirthday();
+            this.hometown = profile.getHometown();
+            this.email = profile.getEmail();
+            this.phone = profile.getPhone();
+            this.photo = profile.getPhoto();
+
+        } else {
+            redirect("/error");
+        }
+    }
+
+    private void redirect(String url) {
+        FacesContext.getCurrentInstance()
+                .getApplication().getNavigationHandler()
+                .handleNavigation(FacesContext.getCurrentInstance(),
+                        null, "/faces" + url + ".xhtml?faces-redirect=true");
     }
 
     public boolean informationIsEmpty() {
