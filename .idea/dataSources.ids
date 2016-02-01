@@ -10,8 +10,8 @@
       <schema id="2" parent="1" name="public">
         <object-id>2200</object-id>
         <comment>standard public schema</comment>
-        <introspection-state-number>774</introspection-state-number>
-        <introspection-timestamp>2016-01-30.02:21:32.959</introspection-timestamp>
+        <introspection-state-number>905</introspection-state-number>
+        <introspection-timestamp>2016-02-01.14:27:28.477</introspection-timestamp>
       </schema>
       <sequence id="3" parent="2" name="hibernate_sequence">
         <object-id>16394</object-id>
@@ -22,75 +22,79 @@
         <state-number>767</state-number>
       </sequence>
       <table id="5" parent="2" name="profiles">
-        <object-id>16484</object-id>
-        <state-number>774</state-number>
+        <object-id>16524</object-id>
+        <state-number>905</state-number>
       </table>
       <column id="6" parent="5" name="id">
-        <state-number>774</state-number>
+        <state-number>905</state-number>
         <mandatory>1</mandatory>
         <data-type>integer</data-type>
         <default-expression>nextval(&apos;ids&apos;::regclass)</default-expression>
       </column>
       <column id="7" parent="5" name="username">
-        <state-number>774</state-number>
+        <state-number>905</state-number>
         <mandatory>1</mandatory>
         <data-type>char(24)</data-type>
       </column>
       <column id="8" parent="5" name="password">
-        <state-number>774</state-number>
+        <state-number>905</state-number>
         <mandatory>1</mandatory>
         <data-type>char(32)</data-type>
       </column>
-      <column id="9" parent="5" name="creation_date">
-        <state-number>774</state-number>
+      <column id="9" parent="5" name="url_name">
+        <state-number>905</state-number>
+        <data-type>char(24)</data-type>
+      </column>
+      <column id="10" parent="5" name="creation_date">
+        <state-number>905</state-number>
         <data-type>timestamp</data-type>
       </column>
-      <column id="10" parent="5" name="first_name">
-        <state-number>774</state-number>
+      <column id="11" parent="5" name="first_name">
+        <state-number>905</state-number>
         <data-type>char(24)</data-type>
       </column>
-      <column id="11" parent="5" name="last_name">
-        <state-number>774</state-number>
+      <column id="12" parent="5" name="last_name">
+        <state-number>905</state-number>
         <data-type>char(24)</data-type>
       </column>
-      <column id="12" parent="5" name="birthday">
-        <state-number>774</state-number>
+      <column id="13" parent="5" name="birthday">
+        <state-number>905</state-number>
         <data-type>timestamp</data-type>
       </column>
-      <column id="13" parent="5" name="hometown">
-        <state-number>774</state-number>
+      <column id="14" parent="5" name="hometown">
+        <state-number>905</state-number>
         <data-type>char(24)</data-type>
       </column>
-      <column id="14" parent="5" name="email">
-        <state-number>774</state-number>
+      <column id="15" parent="5" name="email">
+        <state-number>905</state-number>
         <data-type>char(50)</data-type>
       </column>
-      <column id="15" parent="5" name="phone">
-        <state-number>774</state-number>
+      <column id="16" parent="5" name="phone">
+        <state-number>905</state-number>
         <data-type>char(24)</data-type>
       </column>
-      <column id="16" parent="5" name="photo">
-        <state-number>774</state-number>
+      <column id="17" parent="5" name="photo">
+        <state-number>905</state-number>
         <data-type>text</data-type>
       </column>
-      <index id="17" parent="5" name="profiles_pkey">
-        <object-id>16491</object-id>
+      <index id="18" parent="5" name="profiles_pkey">
+        <object-id>16531</object-id>
         <columns>id</columns>
         <desc-columns></desc-columns>
         <unique>1</unique>
       </index>
-      <index id="18" parent="5" name="profiles_username_key">
-        <object-id>16493</object-id>
+      <index id="19" parent="5" name="profiles_username_key">
+        <object-id>16533</object-id>
         <columns>username</columns>
         <desc-columns></desc-columns>
         <unique>1</unique>
       </index>
-      <key id="19" parent="5" name="profiles_pkey">
+      <key id="20" parent="5" name="profiles_pkey">
         <columns>id</columns>
         <underlying-index>profiles_pkey</underlying-index>
         <primary>1</primary>
       </key>
-      <key id="20" parent="5" name="profiles_username_key">
+      <key id="21" parent="5" name="profiles_username_key">
         <columns>username</columns>
         <underlying-index>profiles_username_key</underlying-index>
       </key>
