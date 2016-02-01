@@ -9,6 +9,9 @@ import java.io.IOException;
 
 public class AuthenticationFilter implements javax.servlet.Filter {
 
+    HttpServletRequest request = null;
+    HttpServletResponse response = null;
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
@@ -19,8 +22,8 @@ public class AuthenticationFilter implements javax.servlet.Filter {
                          ServletResponse res, FilterChain chain)
             throws ServletException, IOException {
 
-        HttpServletRequest request = (HttpServletRequest) req;
-        HttpServletResponse response = (HttpServletResponse) res;
+        request = (HttpServletRequest) req;
+        response = (HttpServletResponse) res;
 
         AuthorizationBean session = (AuthorizationBean) request.getSession()
                 .getAttribute("authorizationBean");
@@ -30,8 +33,7 @@ public class AuthenticationFilter implements javax.servlet.Filter {
 
         if (session == null) {
             if (url.contains("settings") || url.contains("register")) {
-                response.sendRedirect(request.getServletContext()
-                        .getContextPath() + "/signin");
+                redirect("/signin");
             } else {
                 chain.doFilter(req, res);
             }
@@ -43,41 +45,48 @@ public class AuthenticationFilter implements javax.servlet.Filter {
                 session.setUpMessage(null);
 
                 if (url.contains("settings") || url.contains("register")) {
-                    response.sendRedirect(request.getServletContext()
-                            .getContextPath() + "/signin");
+                    redirect("/signin");
                 }
-            }
-            if (url.contains("signin")) {
+            } else if (url.contains("signin")) {
                 session.setUpMessage(null);
-            }
-            if (isRootURL) {
+                session.setUsername(null);
+            } else if (isRootURL) {
                 session.setInMessage(null);
+                session.setUsername(null);
             }
-            session.setUsername(null);
+
             chain.doFilter(req, res);
 
         } else {
             if (!url.contains("/register") && !session.isRegistered()) {
-                response.sendRedirect(request.getServletContext()
-                        .getContextPath() + "/register");
+                redirect("/register");
+
             } else if (url.contains("/register") && !session.isRegistered()) {
                 chain.doFilter(req, res);
 
             } else if (session.isRegistered()) {
                 if (isRootURL || url.contains("signin")) {
-                    response.sendRedirect(request.getServletContext()
-                            .getContextPath() + "/id" + session.getId());
-                } else if (url.contains("id") || url.contains("settings")) {
+                    redirect("/id" + session.getId());
+
+                } else if (url.contains("id") ||
+                        url.contains("settings") ||
+                        url.contains("error")) {
+
                     chain.doFilter(req, res);
 
                 } else if (!url.contains("error")) {
-                    response.sendRedirect(request.getServletContext()
-                            .getContextPath() + "/error");
+                    redirect("/error");
+
                 } else {
                     chain.doFilter(req, res);
                 }
             }
         }
+    }
+
+    private void redirect(String url) throws IOException {
+        response.sendRedirect(request.getServletContext()
+                .getContextPath() + url);
     }
 
     @Override
