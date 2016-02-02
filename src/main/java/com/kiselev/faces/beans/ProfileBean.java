@@ -171,7 +171,7 @@ public class ProfileBean implements Serializable {
     }
 
     public boolean informationIsEmpty() {
-        return ((birthday != null) && (hometown != null) &&
-                (email != null) && (phone != null));
+        return ((birthday == null) && (hometown == null) &&
+                (email == null) && (phone == null));
     }
 }
