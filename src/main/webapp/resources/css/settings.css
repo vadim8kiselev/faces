@@ -28,6 +28,11 @@ input:focus {
     outline-width: 0;
 }
 
+input, textarea {
+    -webkit-appearance: none;
+    -webkit-border-radius: 0;
+}
+
 .settings-frame {
     margin: 5% auto;
     width: 90%;
