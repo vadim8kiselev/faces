@@ -1,11 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
 
-<h:head>
-    <title>Faces</title>
-    <h:outputStylesheet library="css" name="settings.css"/>
-</h:head>
-<h:body>
-</h:body>
+<f:view locale="#{authorizationBean.locale}" encoding="UTF-8"
+        contentType="text/html">
+    <h:head>
+        <title>Faces</title>
+        <h:outputStylesheet library="css" name="settings.css"/>
+    </h:head>
+    <h:body>
+        <h:panelGroup styleClass="settings-frame" layout="block">
+            <h:panelGroup styleClass="settings-body" layout="block">
+
+                <h:panelGroup
+                        layout="block"
+                        rendered="#{profileBean.photo != null}">
+                    <h:outputText value="#{profileBean.photo}"/>
+                </h:panelGroup>
+                <h:form styleClass="settings-form">
+                    <!-- First name -->
+                    <h:panelGroup
+                            styleClass="settings-unit"
+                            layout="block">
+                        <h:panelGroup styleClass="settings-unit-label-wrapper"
+                                      layout="block">
+                            <h:outputLabel styleClass="settings-unit-label"
+                                           value="First name:"/>
+                            <h:inputText styleClass="settings-unit-field"
+                                         value="#{profileBean.firstName}"/>
+                        </h:panelGroup>
+                    </h:panelGroup>
+
+                    <!-- Last name -->
+                    <h:panelGroup
+                            styleClass="settings-unit"
+                            layout="block">
+                        <h:panelGroup styleClass="settings-unit-label-wrapper"
+                                      layout="block">
+                            <h:outputLabel styleClass="settings-unit-label"
+                                           value="Last name:"/>
+                            <h:inputText styleClass="settings-unit-field"
+                                         value="#{profileBean.lastName}"/>
+                        </h:panelGroup>
+                    </h:panelGroup>
+
+                    <!-- Birthday -->
+                    <!-- Deprecated -->
+                    <h:panelGroup
+                            styleClass="settings-unit"
+                            layout="block">
+                        <h:panelGroup styleClass="settings-unit-label-wrapper"
+                                      layout="block">
+                            <h:outputLabel styleClass="settings-unit-label"
+                                           value="Birthday: (fix me)"/>
+                            <h:inputText styleClass="settings-unit-field"
+                                         value="#{profileBean.birthday}"
+                                         converter="javax.faces.DateTime"/>
+                        </h:panelGroup>
+                    </h:panelGroup>
+
+                    <!-- Hometown -->
+                    <h:panelGroup
+                            styleClass="settings-unit"
+                            layout="block">
+                        <h:panelGroup styleClass="settings-unit-label-wrapper"
+                                      layout="block">
+                            <h:outputLabel styleClass="settings-unit-label"
+                                           value="Hometown:"/>
+                            <h:inputText styleClass="settings-unit-field"
+                                         value="#{profileBean.hometown}"/>
+                        </h:panelGroup>
+                    </h:panelGroup>
+
+                    <!-- Email -->
+                    <!-- Deprecated -->
+                    <h:panelGroup
+                            styleClass="settings-unit"
+                            layout="block">
+                        <h:panelGroup styleClass="settings-unit-label-wrapper"
+                                      layout="block">
+                            <h:outputLabel styleClass="settings-unit-label"
+                                           value="Email: (fix me)"/>
+                            <h:inputText styleClass="settings-unit-field"
+                                         value="#{profileBean.email}"/>
+                        </h:panelGroup>
+                    </h:panelGroup>
+
+                    <!-- Phone -->
+                    <h:panelGroup
+                            styleClass="settings-unit"
+                            layout="block">
+                        <h:panelGroup styleClass="settings-unit-label-wrapper"
+                                      layout="block">
+                            <h:outputLabel styleClass="settings-unit-label"
+                                           value="Phone:"/>
+                            <h:inputText styleClass="settings-unit-field"
+                                         value="#{profileBean.phone}"/>
+                        </h:panelGroup>
+                    </h:panelGroup>
+
+                    <!-- Photo -->
+                    <!-- Deprecated -->
+                    <h:panelGroup
+                            styleClass="settings-unit"
+                            layout="block">
+                        <h:panelGroup styleClass="settings-unit-label-wrapper"
+                                      layout="block">
+                            <h:outputLabel styleClass="settings-unit-label"
+                                           value="Photo: (fix me)"/>
+                            <h:inputText styleClass="settings-unit-field"
+                                         value="#{profileBean.photo}"/>
+                        </h:panelGroup>
+                    </h:panelGroup>
+
+                    <h:commandButton styleClass="settings-button" value="Save"
+                                     action="#{profileBean.save}"/>
+                </h:form>
+            </h:panelGroup>
+        </h:panelGroup>
+    </h:body>
+</f:view>
 </html>

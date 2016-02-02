@@ -51,12 +51,13 @@
                     <!-- Settings -->
                     <h:panelGroup styleClass="setting" layout="block"
                                   rendered="#{profileBean.id.equals(authorizationBean.id)}">
-                        <h:link id="settings"
-                                styleClass="settings-link"
-                                value="#{message['profile_information_settings']}"
-                                outcome="/faces/settings.xhtml?faces-redirect=true"/>
+                        <h:form>
+                            <h:commandButton id="settings"
+                                             styleClass="settings-link"
+                                             value="#{message['profile_information_settings']}"
+                                             action="#{authorizationBean.settings}"/>
+                        </h:form>
                     </h:panelGroup>
-
                 </h:panelGroup>
 
                 <!-- Information -->
@@ -67,7 +68,7 @@
                                   layout="block">
                         <!-- Fullname -->
                         <h:outputText styleClass="information-unit-value"
-                                      value="#{profileBean.fullName}"/>
+                                      value="#{profileBean.firstName} #{profileBean.lastName}"/>
                     </h:panelGroup>
 
                     <!-- Body -->

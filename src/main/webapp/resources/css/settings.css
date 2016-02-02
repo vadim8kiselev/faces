@@ -1,4 +1,84 @@
 * {
     margin: 0;
     padding: 0;
+    cursor: default;
+    overflow: hidden;
 }
+
+html {
+    height: 100%;
+    background-color: #f9f9f9;
+}
+
+body {
+    height: 100%;
+    background: url("/resources/images/settings-page.jpg") no-repeat bottom center fixed;
+
+    -moz-background-size: contain;
+    -webkit-background-size: contain;
+    -o-background-size: contain;
+    background-size: contain;
+
+    font-size: 28px;
+    font-family: "Open Sans", "Lucida Grande", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    letter-spacing: -0.5px;
+}
+
+input:focus {
+    outline-width: 0;
+}
+
+.settings-frame {
+    margin: 5% auto;
+    width: 90%;
+    height: 80%;
+    background-color: rgba(238,238,238,.8);
+}
+
+.settings-body {
+    padding: 30px;
+    margin: 4% auto;
+    width: 85%;
+    height: 71%;
+}
+
+.settings-form {
+    margin: 0 auto;
+    width: 450px;
+}
+
+.settings-unit {
+    background-color: rgba(95, 158, 160, .7);
+    width: 400px;
+    height: 33px;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.settings-unit-label-wrapper {
+    float: left;
+    width: 100%;
+}
+
+.settings-unit-label {
+    color: #626262;
+    font-size: 15px;
+    letter-spacing: 0;
+}
+
+.settings-unit-field {
+    float: right;
+    background-color: #ffffff;
+    height: 33px;
+    border: none;
+    width: 248px;
+    padding-left: 12px;
+}
+
+.settings-unit-button {
+    width: 260px;
+    margin-top: 25px;
+    margin-bottom: 15px;
+    background-color: #eaeaea;
+}
+

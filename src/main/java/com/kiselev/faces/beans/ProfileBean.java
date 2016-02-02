@@ -42,6 +42,7 @@ public class ProfileBean implements Serializable {
 
             if (!DAO.isValidId(id)) {
                 redirect("/signin");
+
             } else {
 
                 ProfileEntity model = DAO.getProfile(id);
@@ -58,10 +59,7 @@ public class ProfileBean implements Serializable {
                 ProfileEntity model = DAO.getProfile(urlName);
                 convertEntity(model);
             }
-        } else {
-            redirect("/error");
         }
-
     }
 
     private void convertEntity(ProfileEntity profile) {
@@ -69,7 +67,7 @@ public class ProfileBean implements Serializable {
             this.username = profile.getUserName();
             this.urlName = profile.getUrlName();
             this.firstName = profile.getFirstName();
-            this.lastName =  profile.getLastName();
+            this.lastName = profile.getLastName();
             this.birthday = profile.getBirthday();
             this.hometown = profile.getHometown();
             this.email = profile.getEmail();
@@ -86,6 +84,10 @@ public class ProfileBean implements Serializable {
                 .getApplication().getNavigationHandler()
                 .handleNavigation(FacesContext.getCurrentInstance(),
                         null, "/faces" + url + ".xhtml?faces-redirect=true");
+    }
+
+    public String save() {
+        return null;
     }
 
     public Long getId() {
@@ -169,7 +171,7 @@ public class ProfileBean implements Serializable {
     }
 
     public boolean informationIsEmpty() {
-        return ((birthday != null) || (hometown != null) ||
-                (email != null) || (phone != null));
+        return ((birthday != null) && (hometown != null) &&
+                (email != null) && (phone != null));
     }
 }
