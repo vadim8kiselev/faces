@@ -94,7 +94,9 @@ input:focus {
 }
 
 .settings-link {
+    background-color: transparent;
     color: dodgerblue;
+    border: none;
 }
 
 .information-block {
@@ -139,7 +141,7 @@ input:focus {
 }
 
 .information-unit-label-wrapper {
-    width: 23%;
+    width: 30%;
     float: left;
 }
 
@@ -148,7 +150,7 @@ input:focus {
 }
 
 .information-unit-value-wrapper {
-    width: 77%;
+    width: 70%;
     float: right;
 }
 
