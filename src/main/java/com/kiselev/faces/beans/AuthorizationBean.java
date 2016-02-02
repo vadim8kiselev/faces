@@ -2,7 +2,7 @@ package com.kiselev.faces.beans;
 
 import com.kiselev.faces.dao.DAO;
 import com.kiselev.faces.dao.entities.ProfileEntity;
-import com.kiselev.faces.validators.AuthenticationValidator;
+import com.kiselev.faces.validators.Validator;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -143,12 +143,12 @@ public class AuthorizationBean implements Serializable {
         username = username.trim();
         password = password.trim();
 
-        if ((inMessage = AuthenticationValidator
+        if ((inMessage = Validator
                 .fieldsAreNotBlank(locale, username, password)) == null) {
 
             ProfileEntity user = new ProfileEntity(username, password);
 
-            if ((inMessage = AuthenticationValidator
+            if ((inMessage = Validator
                     .validationSignInId(locale, id = DAO.getId(user))) == null) {
 
                 login();
@@ -167,23 +167,23 @@ public class AuthorizationBean implements Serializable {
         password = password.trim();
         secondPassword = secondPassword.trim();
 
-        if ((upMessage = AuthenticationValidator.fieldsAreNotBlank(locale, username,
+        if ((upMessage = Validator.fieldsAreNotBlank(locale, username,
                 password, secondPassword)) == null) {
 
-            if ((upMessage = AuthenticationValidator.validationUsername(locale, username)) != null) {
+            if ((upMessage = Validator.validationUsername(locale, username)) != null) {
                 return "/faces/index.xhtml?faces-redirect=true";
             }
 
-            if ((upMessage = AuthenticationValidator.validationPassword(locale, password)) != null) {
+            if ((upMessage = Validator.validationPassword(locale, password)) != null) {
                 return "/faces/index.xhtml?faces-redirect=true";
             }
 
-            if ((upMessage = AuthenticationValidator
+            if ((upMessage = Validator
                     .passwordsAreEquals(locale, password, secondPassword)) == null) {
 
                 ProfileEntity user = new ProfileEntity(username, password);
 
-                if ((upMessage = AuthenticationValidator
+                if ((upMessage = Validator
                         .validationSignUpId(locale, id = DAO.addUser(user))) == null) {
 
                     login();
@@ -196,17 +196,17 @@ public class AuthorizationBean implements Serializable {
             }
         } else {
 
-            if ((upMessage = AuthenticationValidator
+            if ((upMessage = Validator
                     .fieldsAreNotBlank(locale, username, password)) != null) {
                 return null;
             }
 
-            if ((upMessage = AuthenticationValidator
+            if ((upMessage = Validator
                     .fieldsAreNotBlank(locale, secondPassword)) != null) {
                 return null;
             }
 
-            upMessage = AuthenticationValidator.unhandledError(locale);
+            upMessage = Validator.unhandledError(locale);
             return null;
         }
     }
@@ -216,16 +216,16 @@ public class AuthorizationBean implements Serializable {
         lastName = lastName.trim();
         photo = photo.trim();
 
-        if ((upMessage = AuthenticationValidator.fieldsAreNotBlank(locale, firstName,
+        if ((upMessage = Validator.fieldsAreNotBlank(locale, firstName,
                 lastName)) == null) {
 
-            if ((upMessage = AuthenticationValidator
+            if ((upMessage = Validator
                     .validationFullName(locale, firstName, lastName)) != null) {
                 return null;
             }
 
-            if (AuthenticationValidator.fieldsAreNotBlank(locale, photo) == null &&
-                    (upMessage = AuthenticationValidator.validationPhoto(locale, photo)) != null) {
+            if (Validator.fieldsAreNotBlank(locale, photo) == null &&
+                    (upMessage = Validator.validationPhoto(locale, photo)) != null) {
 
                 photo = "";
                 return null;

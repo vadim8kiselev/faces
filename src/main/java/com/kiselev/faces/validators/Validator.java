@@ -7,7 +7,7 @@ import java.net.URL;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class AuthenticationValidator {
+public class Validator {
 
     public static String fieldsAreNotBlank(Locale locale, String... fields) {
         for (String field : fields) {
