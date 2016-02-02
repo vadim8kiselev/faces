@@ -32,7 +32,6 @@ input:focus {
     margin: 5% auto;
     width: 90%;
     height: 80%;
-    background-color: rgba(238,238,238,.8);
 }
 
 .settings-body {
@@ -44,12 +43,12 @@ input:focus {
 
 .settings-form {
     margin: 0 auto;
-    width: 450px;
+    width: 420px;
 }
 
 .settings-unit {
-    background-color: rgba(95, 158, 160, .7);
-    width: 400px;
+    background-color: #A8C1C5;
+    width: 96%;
     height: 33px;
     padding: 5px;
     margin-bottom: 10px;
@@ -57,7 +56,7 @@ input:focus {
 
 .settings-unit-label-wrapper {
     float: left;
-    width: 100%;
+    width: 140px;
 }
 
 .settings-unit-label {
@@ -75,9 +74,10 @@ input:focus {
     padding-left: 12px;
 }
 
-.settings-unit-button {
-    width: 260px;
-    margin-top: 25px;
+.settings-button {
+    width: 98%;
+    height: 40px;
+    border: none;
     margin-bottom: 15px;
     background-color: #eaeaea;
 }

@@ -22,9 +22,9 @@
                                       layout="block">
                             <h:outputLabel styleClass="settings-unit-label"
                                            value="First name:"/>
+                        </h:panelGroup>
                             <h:inputText styleClass="settings-unit-field"
                                          value="#{profileBean.firstName}"/>
-                        </h:panelGroup>
                     </h:panelGroup>
 
                     <!-- Last name -->
@@ -35,9 +35,9 @@
                                       layout="block">
                             <h:outputLabel styleClass="settings-unit-label"
                                            value="Last name:"/>
+                        </h:panelGroup>
                             <h:inputText styleClass="settings-unit-field"
                                          value="#{profileBean.lastName}"/>
-                        </h:panelGroup>
                     </h:panelGroup>
 
                     <!-- Birthday -->
@@ -49,10 +49,10 @@
                                       layout="block">
                             <h:outputLabel styleClass="settings-unit-label"
                                            value="Birthday: (fix me)"/>
+                        </h:panelGroup>
                             <h:inputText styleClass="settings-unit-field"
                                          value="#{profileBean.birthday}"
                                          converter="javax.faces.DateTime"/>
-                        </h:panelGroup>
                     </h:panelGroup>
 
                     <!-- Hometown -->
@@ -63,9 +63,9 @@
                                       layout="block">
                             <h:outputLabel styleClass="settings-unit-label"
                                            value="Hometown:"/>
+                        </h:panelGroup>
                             <h:inputText styleClass="settings-unit-field"
                                          value="#{profileBean.hometown}"/>
-                        </h:panelGroup>
                     </h:panelGroup>
 
                     <!-- Email -->
@@ -77,9 +77,9 @@
                                       layout="block">
                             <h:outputLabel styleClass="settings-unit-label"
                                            value="Email: (fix me)"/>
+                        </h:panelGroup>
                             <h:inputText styleClass="settings-unit-field"
                                          value="#{profileBean.email}"/>
-                        </h:panelGroup>
                     </h:panelGroup>
 
                     <!-- Phone -->
@@ -90,9 +90,9 @@
                                       layout="block">
                             <h:outputLabel styleClass="settings-unit-label"
                                            value="Phone:"/>
+                        </h:panelGroup>
                             <h:inputText styleClass="settings-unit-field"
                                          value="#{profileBean.phone}"/>
-                        </h:panelGroup>
                     </h:panelGroup>
 
                     <!-- Photo -->
@@ -104,10 +104,10 @@
                                       layout="block">
                             <h:outputLabel styleClass="settings-unit-label"
                                            value="Photo: (fix me)"/>
+                        </h:panelGroup>
                             <h:inputText styleClass="settings-unit-field"
                                          value="#{profileBean.photo}"/>
                         </h:panelGroup>
-                    </h:panelGroup>
 
                     <h:commandButton styleClass="settings-button" value="Save"
                                      action="#{profileBean.save}"/>
