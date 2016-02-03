@@ -10,16 +10,16 @@ import java.util.Date;
 public class ProfileEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "username", nullable = false)
     private String username;
 
-    @Column(name = "url_name")
-    private String urlname;
-
     @Column(name = "password", nullable = false)
     private String password;
+
+    @Column(name = "url_name")
+    private String urlname;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "creation_date")
@@ -32,22 +32,29 @@ public class ProfileEntity {
     private String lastName;
 
     @Column(name = "birthday")
-    private Date birthday;
+    private String birthday;
 
     @Column(name = "hometown")
     private String hometown;
 
     @Column(name = "email")
     private String email;
-    @Column(name = "phone")
 
+    @Column(name = "phone")
     private String phone;
+
+    @Column(name = "work_phone")
+    private String workPhone;
+
     @Column(name = "photo")
     private String photo;
 
+    @Column(name = "language")
+    private String language;
+
     public ProfileEntity(String username, String password) {
-        this.username = username;
-        this.password = DigestUtils.md5Hex(DigestUtils.md5Hex(password) +
+        this.username = username.trim();
+        this.password = DigestUtils.md5Hex(DigestUtils.md5Hex(password.trim()) +
                 "salt");
         this.creationDate = new Date();
     }
@@ -55,11 +62,11 @@ public class ProfileEntity {
     public ProfileEntity() {
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -68,7 +75,7 @@ public class ProfileEntity {
     }
 
     public void setUserName(String username) {
-        this.username = username;
+        this.username = username.trim();
     }
 
     public String getUrlName() {
@@ -76,7 +83,7 @@ public class ProfileEntity {
     }
 
     public void setUrlName(String urlname) {
-        this.urlname = urlname;
+        this.urlname = urlname.trim();
     }
 
     public String getPassword() {
@@ -84,7 +91,7 @@ public class ProfileEntity {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = password.trim();
     }
 
     public Date getCreationDate() {
@@ -100,7 +107,7 @@ public class ProfileEntity {
     }
 
     public void setFirstName(String firstName) {
-        this.firstName = firstName;
+        this.firstName = firstName.trim();
     }
 
     public String getLastName() {
@@ -108,15 +115,15 @@ public class ProfileEntity {
     }
 
     public void setLastName(String lastName) {
-        this.lastName = lastName;
+        this.lastName = lastName.trim();
     }
 
-    public Date getBirthday() {
+    public String getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
+    public void setBirthday(String birthday) {
+        this.birthday = birthday.trim();
     }
 
     public String getHometown() {
@@ -124,7 +131,7 @@ public class ProfileEntity {
     }
 
     public void setHometown(String hometown) {
-        this.hometown = hometown;
+        this.hometown = hometown.trim();
     }
 
     public String getEmail() {
@@ -132,7 +139,7 @@ public class ProfileEntity {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.email = email.trim();
     }
 
     public String getPhone() {
@@ -140,7 +147,15 @@ public class ProfileEntity {
     }
 
     public void setPhone(String phone) {
-        this.phone = phone;
+        this.phone = phone.trim();
+    }
+
+    public String getWorkPhone() {
+        return workPhone;
+    }
+
+    public void setWorkPhone(String workPhone) {
+        this.workPhone = workPhone.trim();
     }
 
     public String getPhoto() {
@@ -148,6 +163,14 @@ public class ProfileEntity {
     }
 
     public void setPhoto(String photo) {
-        this.photo = photo;
+        this.photo = photo.trim();
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
     }
 }
