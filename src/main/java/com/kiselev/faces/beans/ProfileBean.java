@@ -16,14 +16,14 @@ public class ProfileBean implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;
-    private String username;
     private String urlName;
     private String firstName;
     private String lastName;
-    private java.util.Date birthday;
+    private String birthday;
     private String hometown;
     private String email;
     private String phone;
+    private String workPhone;
     private String photo;
 
     public ProfileBean() {
@@ -44,36 +44,31 @@ public class ProfileBean implements Serializable {
                 redirect("/signin");
 
             } else {
-
-                ProfileEntity model = DAO.getProfile(id);
-                convertEntity(model);
+                convertEntity(DAO.getProfile(id));
             }
 
         } else if (requestUrlName != null) {
-            urlName = requestUrlName;
+            urlName = requestUrlName.trim();
 
             if (!DAO.isValidUrlName(urlName)) {
                 redirect("/error");
-            } else {
 
-                ProfileEntity model = DAO.getProfile(urlName);
-                convertEntity(model);
+            } else {
+                convertEntity(DAO.getProfile(urlName));
             }
         }
     }
 
     private void convertEntity(ProfileEntity profile) {
         if (profile != null) {
-            this.username = profile.getUserName();
-            this.urlName = profile.getUrlName();
             this.firstName = profile.getFirstName();
             this.lastName = profile.getLastName();
             this.birthday = profile.getBirthday();
             this.hometown = profile.getHometown();
             this.email = profile.getEmail();
             this.phone = profile.getPhone();
+            this.workPhone = profile.getWorkPhone();
             this.photo = profile.getPhoto();
-
         } else {
             redirect("/error");
         }
@@ -86,8 +81,16 @@ public class ProfileBean implements Serializable {
                         null, "/faces" + url + ".xhtml?faces-redirect=true");
     }
 
-    public String save() {
-        return null;
+    public boolean informationIsEmpty() {
+        return ((birthday == null || birthday.equals("")) &&
+                (hometown == null || hometown.equals("")) &&
+                (email == null || email.equals("")) &&
+                (phone == null || phone.equals("")) &&
+                (workPhone == null || workPhone.equals("")));
+    }
+
+    public boolean fieldIsNotEmpty(String item) {
+        return item != null && !item.equals("");
     }
 
     public Long getId() {
@@ -96,14 +99,6 @@ public class ProfileBean implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getUrlName() {
@@ -130,11 +125,11 @@ public class ProfileBean implements Serializable {
         this.lastName = lastName;
     }
 
-    public java.util.Date getBirthday() {
+    public String getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(java.util.Date birthday) {
+    public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
 
@@ -162,16 +157,19 @@ public class ProfileBean implements Serializable {
         this.phone = phone;
     }
 
+    public String getWorkPhone() {
+        return workPhone;
+    }
+
+    public void setWorkPhone(String workPhone) {
+        this.workPhone = workPhone;
+    }
+
     public String getPhoto() {
         return photo;
     }
 
     public void setPhoto(String photo) {
         this.photo = photo;
-    }
-
-    public boolean informationIsEmpty() {
-        return ((birthday == null) && (hometown == null) &&
-                (email == null) && (phone == null));
     }
 }
