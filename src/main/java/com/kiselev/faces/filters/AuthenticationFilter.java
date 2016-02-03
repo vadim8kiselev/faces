@@ -69,7 +69,7 @@ public class AuthenticationFilter implements javax.servlet.Filter {
                 chain.doFilter(req, res);
 
             } else if (session.isRegistered()) {
-                if (isRootURL || url.contains("signin")) {
+                if (isRootURL || url.contains("signin") || url.contains("register")) {
                     redirect("/id" + session.getId());
 
                 } else {
