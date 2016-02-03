@@ -4,6 +4,7 @@ import com.kiselev.faces.dao.DAO;
 import com.kiselev.faces.dao.entities.ProfileEntity;
 import com.kiselev.faces.validators.Validator;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -28,51 +29,34 @@ public class AuthorizationBean implements Serializable {
     private String upMessage;
 
     private Long id;
-    private String firstName;
-    private String lastName;
-    private String photo;
 
-    private Locale locale = FacesContext.getCurrentInstance()
-            .getExternalContext().getRequestLocale();
+    private ProfileEntity model;
+
+    private Locale locale;
+
+    @PostConstruct
+    public void init() {
+        if (model != null && model.getLanguage() != null)
+            locale = new Locale(model.getLanguage());
+        else
+            locale = new Locale(System.getProperty("user.language"),
+                    System.getProperty("user.country"));
+    }
 
     public AuthorizationBean() {
 
     }
 
-    public Locale getLocale() {
-        return locale;
+    public boolean isLogged() {
+        return logged;
     }
 
-    public String getLanguage() {
-        return locale.getLanguage();
-    }
-
-    public void setLanguage(String language) {
-        this.locale = new Locale(language);
+    public void setLogged(boolean logged) {
+        this.logged = logged;
     }
 
     public boolean isRegistered() {
         return registered;
-    }
-
-    public void setRegistered(boolean registered) {
-        this.registered = registered;
-    }
-
-    public String getInMessage() {
-        return inMessage;
-    }
-
-    public void setInMessage(String inMessage) {
-        this.inMessage = inMessage;
-    }
-
-    public String getUpMessage() {
-        return upMessage;
-    }
-
-    public void setUpMessage(String upMessage) {
-        this.upMessage = upMessage;
     }
 
     public String getUsername() {
@@ -107,42 +91,43 @@ public class AuthorizationBean implements Serializable {
         this.id = id;
     }
 
-    public boolean isLogged() {
-        return logged;
+    public Locale getLocale() {
+        return locale;
     }
 
-    public void setLogged(boolean logged) {
-        this.logged = logged;
+    public String getLanguage() {
+        return locale.getLanguage();
     }
 
-    public String getFirstName() {
-        return firstName;
+    public void setLanguage(String language) {
+        this.locale = new Locale(language);
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public String getInMessage() {
+        return inMessage;
     }
 
-    public String getLastName() {
-        return lastName;
+    public void setInMessage(String inMessage) {
+        this.inMessage = inMessage;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public String getUpMessage() {
+        return upMessage;
     }
 
-    public String getPhoto() {
-        return photo;
+    public void setUpMessage(String upMessage) {
+        this.upMessage = upMessage;
     }
 
-    public void setPhoto(String photo) {
-        this.photo = photo;
+    public ProfileEntity getModel() {
+        return model;
+    }
+
+    public void setModel(ProfileEntity model) {
+        this.model = model;
     }
 
     public String signin() {
-        username = username.trim();
-        password = password.trim();
-
         if ((inMessage = Validator
                 .fieldsAreNotBlank(locale, username, password)) == null) {
 
@@ -150,11 +135,16 @@ public class AuthorizationBean implements Serializable {
 
             if ((inMessage = Validator
                     .validationSignInId(locale, id = DAO.getId(user))) == null) {
-
+                this.model = DAO.getProfile(id);
                 login();
-                registered = DAO.isRegistered(id);
-                return "/faces/profile.xhtml?faces-redirect=true&id=" + id;
+                registered = model.getFirstName() != null;
+                boolean haveNickname = model.getUrlName() != null && !model.getUrlName().trim().equals("");
+                if (registered && haveNickname)
+                    return "/faces/profile.xhtml?faces-redirect=true&urlname=" + model.getUrlName();
+                else
+                    return "/faces/profile.xhtml?faces-redirect=true&id=" + id;
             } else {
+
                 return null;
             }
         } else {
@@ -163,29 +153,28 @@ public class AuthorizationBean implements Serializable {
     }
 
     public String signup() {
-        username = username.trim();
-        password = password.trim();
-        secondPassword = secondPassword.trim();
 
         if ((upMessage = Validator.fieldsAreNotBlank(locale, username,
                 password, secondPassword)) == null) {
 
             if ((upMessage = Validator.validationUsername(locale, username)) != null) {
-                return "/faces/index.xhtml?faces-redirect=true";
+                return null;
             }
 
             if ((upMessage = Validator.validationPassword(locale, password)) != null) {
-                return "/faces/index.xhtml?faces-redirect=true";
+                return null;
             }
 
             if ((upMessage = Validator
                     .passwordsAreEquals(locale, password, secondPassword)) == null) {
 
                 ProfileEntity user = new ProfileEntity(username, password);
+                user.setLanguage(new Locale(System.getProperty("user.language"),
+                        System.getProperty("user.country")).getLanguage());
 
                 if ((upMessage = Validator
                         .validationSignUpId(locale, id = DAO.addUser(user))) == null) {
-
+                    this.model = DAO.getProfile(id);
                     login();
                     return "/faces/register.xhtml?faces-redirect=true";
                 } else {
@@ -212,56 +201,64 @@ public class AuthorizationBean implements Serializable {
     }
 
     public String register() {
-        firstName = firstName.trim();
-        lastName = lastName.trim();
-        photo = photo.trim();
 
-        if ((upMessage = Validator.fieldsAreNotBlank(locale, firstName,
-                lastName)) == null) {
+        if ((upMessage = Validator.fieldsAreNotBlank(locale, model.getFirstName(),
+                model.getLastName())) == null) {
 
-            if ((upMessage = Validator
-                    .validationFullName(locale, firstName, lastName)) != null) {
+            if (Validator.fieldsAreNotBlank(locale, model.getPhoto()) == null &&
+                    (upMessage = Validator.validationPhoto(locale, model.getPhoto())) != null) {
+
+                model.setPhoto("");
                 return null;
             }
+            DAO.updateProfile(model);
 
-            if (Validator.fieldsAreNotBlank(locale, photo) == null &&
-                    (upMessage = Validator.validationPhoto(locale, photo)) != null) {
-
-                photo = "";
-                return null;
-            }
-
-            DAO.register(id, firstName, lastName, photo);
             registered = true;
             return "/faces/profile.xhtml?faces-redirect=true&id=" + id;
         } else {
             return null;
         }
-
     }
 
     public String homePage() {
+        boolean haveNickname = model.getUrlName() != null && !model.getUrlName().trim().equals("");
         if (logged)
-            return "/faces/profile.xhtml?faces-redirect=true&id=" + id;
+            if (haveNickname)
+                return "/faces/profile.xhtml?faces-redirect=true&urlname=" + model.getUrlName();
+            else
+                return "/faces/profile.xhtml?faces-redirect=true&id=" + id;
         else
             return "/faces/signin.xhtml?faces-redirect=true";
     }
 
     public String settings() {
         if (logged)
-            return "/faces/settings.xhtml?faces-redirect=true&id=" + id;
+            return "/faces/settings.xhtml?faces-redirect=true";
         else
             return "/faces/signin.xhtml?faces-redirect=true";
+    }
 
+    public String save() {
+        locale = new Locale(model.getLanguage());
+        DAO.updateProfile(model);
+        boolean haveNickname = model.getUrlName() != null && !model.getUrlName().trim().equals("");
+        if (haveNickname)
+            return "/faces/profile.xhtml?faces-redirect=true&urlname=" + model.getUrlName();
+        else
+            return "/faces/profile.xhtml?faces-redirect=true&id=" + id;
     }
 
     public String logout() {
         logged = false;
+        boolean haveNickname = model.getUrlName() != null && !model.getUrlName().trim().equals("");
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
                 .getExternalContext().getSession(false);
         session.removeAttribute("authorizationBean");
         session.invalidate();
-        return "/faces/signin.xhtml?faces-redirect=true";
+        if (haveNickname)
+            return "/faces/profile.xhtml?faces-redirect=true&urlname=" + model.getUrlName();
+        else
+            return "/faces/profile.xhtml?faces-redirect=true&id=" + id;
     }
 
     private void login() {
