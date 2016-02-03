@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="1019818699">
+  <component name="DataSourceManagerImpl" format="xml" hash="2834628653">
     <data-source source="LOCAL" name="PostgreSQL - faces_db@localhost" uuid="d42f9358-c3b4-4abe-badf-b8ae4c7ac3c5">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
