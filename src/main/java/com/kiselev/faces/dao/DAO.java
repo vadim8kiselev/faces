@@ -60,7 +60,9 @@ public class DAO {
         EntityManager manager = factory.createEntityManager();
         try {
             return (ProfileEntity) manager
-                    .createQuery("FROM ProfileEntity user " +
+                    .createQuery("" +
+                            "SELECT user " +
+                            "FROM ProfileEntity user " +
                             "WHERE id = :id").setParameter("id", id)
                     .getSingleResult();
 
@@ -75,7 +77,9 @@ public class DAO {
         EntityManager manager = factory.createEntityManager();
         try {
             return (ProfileEntity) manager
-                    .createQuery("FROM ProfileEntity user " +
+                    .createQuery("" +
+                            "SELECT user " +
+                            "FROM ProfileEntity user " +
                             "WHERE urlname = :urlName")
                     .setParameter("urlName", urlName)
                     .getSingleResult();
@@ -87,42 +91,28 @@ public class DAO {
         }
     }
 
-    public static boolean isRegistered(Long id) {
+    public static void updateProfile(ProfileEntity profile) {
         EntityManager manager = factory.createEntityManager();
         try {
-            return manager.createQuery("" +
-                    "SELECT user.firstName " +
-                    "FROM ProfileEntity user " +
-                    "WHERE id = :id").setParameter("id", id)
-                    .getSingleResult() != null;
-        } catch (NoResultException error) {
-            return false;
-        } finally {
-            manager.close();
-        }
-    }
-
-    public static void register(Long id, String firstName, String lastName,
-                                String photo) {
-        EntityManager manager = factory.createEntityManager();
-        try {
-            ProfileEntity profile = getProfile(id);
-            if (profile == null) {
-                return;
-            }
-
-            profile.setFirstName(firstName);
-            profile.setLastName(lastName);
-            if (!photo.equals("")) {
-                profile.setPhoto(photo);
-            }
-
             manager.getTransaction().begin();
             manager.merge(profile);
             manager.getTransaction().commit();
 
         } catch (NoResultException error) {
             error.printStackTrace();
+        } finally {
+            manager.close();
+        }
+    }
+
+    public static void deleteProfile(Long id) {
+        EntityManager manager = factory.createEntityManager();
+        try {
+            manager.createQuery("" +
+                    "DELETE FROM ProfileEntity user" +
+                    " WHERE user.id = :id")
+                    .setParameter("id", id)
+                    .executeUpdate();
         } finally {
             manager.close();
         }
