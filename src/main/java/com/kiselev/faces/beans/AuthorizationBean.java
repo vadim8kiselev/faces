@@ -4,7 +4,6 @@ import com.kiselev.faces.dao.DAO;
 import com.kiselev.faces.dao.entities.ProfileEntity;
 import com.kiselev.faces.validators.Validator;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -32,16 +31,8 @@ public class AuthorizationBean implements Serializable {
 
     private ProfileEntity model;
 
-    private Locale locale;
-
-    @PostConstruct
-    public void init() {
-        if (model != null && model.getLanguage() != null)
-            locale = new Locale(model.getLanguage());
-        else
-            locale = new Locale(System.getProperty("user.language"),
-                    System.getProperty("user.country"));
-    }
+    private Locale locale = new Locale(System.getProperty("user.language"),
+            System.getProperty("user.country"));
 
     public AuthorizationBean() {
 
@@ -137,9 +128,11 @@ public class AuthorizationBean implements Serializable {
                     .validationSignInId(locale, id = DAO.getId(user))) == null) {
                 this.model = DAO.getProfile(id);
                 login();
+                String[] localeArgs = model.getLanguage().split("_");
+                locale = new Locale(localeArgs[0],localeArgs[1]);
                 registered = model.getFirstName() != null;
-                boolean haveNickname = model.getUrlName() != null && !model.getUrlName().trim().equals("");
-                if (registered && haveNickname)
+                if (registered && model.getUrlName() != null &&
+                        !model.getUrlName().trim().equals(""))
                     return "/faces/profile.xhtml?faces-redirect=true&urlname=" + model.getUrlName();
                 else
                     return "/faces/profile.xhtml?faces-redirect=true&id=" + id;
@@ -170,7 +163,7 @@ public class AuthorizationBean implements Serializable {
 
                 ProfileEntity user = new ProfileEntity(username, password);
                 user.setLanguage(new Locale(System.getProperty("user.language"),
-                        System.getProperty("user.country")).getLanguage());
+                        System.getProperty("user.country")).toString());
 
                 if ((upMessage = Validator
                         .validationSignUpId(locale, id = DAO.addUser(user))) == null) {
@@ -221,9 +214,8 @@ public class AuthorizationBean implements Serializable {
     }
 
     public String homePage() {
-        boolean haveNickname = model.getUrlName() != null && !model.getUrlName().trim().equals("");
         if (logged)
-            if (haveNickname)
+            if (model.getUrlName() != null && !model.getUrlName().trim().equals(""))
                 return "/faces/profile.xhtml?faces-redirect=true&urlname=" + model.getUrlName();
             else
                 return "/faces/profile.xhtml?faces-redirect=true&id=" + id;
@@ -239,7 +231,8 @@ public class AuthorizationBean implements Serializable {
     }
 
     public String save() {
-        locale = new Locale(model.getLanguage());
+        String[] localeArgs = model.getLanguage().split("_");
+        locale = new Locale(localeArgs[0],localeArgs[1]);
         DAO.updateProfile(model);
         boolean haveNickname = model.getUrlName() != null && !model.getUrlName().trim().equals("");
         if (haveNickname)
@@ -250,18 +243,14 @@ public class AuthorizationBean implements Serializable {
 
     public String logout() {
         logged = false;
-        boolean haveNickname = model.getUrlName() != null && !model.getUrlName().trim().equals("");
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
                 .getExternalContext().getSession(false);
         session.removeAttribute("authorizationBean");
         session.invalidate();
-        if (haveNickname)
-            return "/faces/profile.xhtml?faces-redirect=true&urlname=" + model.getUrlName();
-        else
-            return "/faces/profile.xhtml?faces-redirect=true&id=" + id;
+        return "/faces/signin.xhtml?faces-redirect=true";
     }
 
-    public String delete(){
+    public String delete() {
         DAO.deleteProfile(id);
         return "/faces/index.xhtml?faces-redirect=true";
     }
