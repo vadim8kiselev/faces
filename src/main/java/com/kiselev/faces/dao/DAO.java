@@ -9,8 +9,6 @@ public class DAO {
     private static EntityManagerFactory factory =
             Persistence.createEntityManagerFactory("faces");
 
-    private static Long count = getCount();
-
     public static Long getId(ProfileEntity user) {
         EntityManager manager = factory.createEntityManager();
         try {
@@ -28,11 +26,11 @@ public class DAO {
         }
     }
 
-    private static Long getCount() {
+    private static Long getLastID() {
         EntityManager manager = factory.createEntityManager();
         try {
             return (Long) manager.createQuery("" +
-                    "SELECT COUNT(*) " +
+                    "SELECT MAX(user.id) " +
                     "FROM ProfileEntity user")
                     .getSingleResult();
         } catch (NoResultException error) {
@@ -48,7 +46,7 @@ public class DAO {
             manager.getTransaction().begin();
             manager.persist(user);
             manager.getTransaction().commit();
-            return count = getCount();
+            return getLastID();
         } catch (PersistenceException error) {
             return null;
         } finally {
@@ -119,7 +117,20 @@ public class DAO {
     }
 
     public static boolean isValidId(Long id) {
-        return id >= 1 && id <= count;
+        EntityManager manager = factory.createEntityManager();
+        try {
+            manager.createQuery("" +
+                    "SELECT user.id " +
+                    "FROM ProfileEntity user " +
+                    "WHERE id = :id")
+                    .setParameter("id", id)
+                    .getSingleResult();
+            return true;
+        } catch (NoResultException error) {
+            return false;
+        } finally {
+            manager.close();
+        }
     }
 
     public static boolean isValidUrlName(String urlName) {
