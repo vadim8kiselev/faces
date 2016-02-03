@@ -1,243 +1,282 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
 
-<h:head>
-    <title>Faces</title>
-    <h:outputStylesheet library="css" name="profile.css"/>
-</h:head>
-<h:body>
-    <!-- Wrapper -->
-    <h:panelGroup styleClass="wrapper" layout="block">
-        <!-- Header -->
-        <h:panelGroup styleClass="header" layout="block">
-            <h:graphicImage styleClass="header-logo"
-                            value="/resources/images/profile-logo.png"
-                            width="90" height="50"/>
-            <h:outputText id="page-name"
-                          styleClass="page-name"
-                          value="The Faces"/>
-            <h:form id="header-form" styleClass="header-form">
-                <h:commandButton id="my-page-button"
-                                 styleClass="header-left-button header-button"
-                                 value="#{message['profile_header_ownpage']}"
-                                 action="#{authorizationBean.homePage}"
-                                 rendered="#{authorizationBean.logged}"/>
-                <h:commandButton id="logout-button"
-                                 styleClass="header-right-button header-button"
-                                 value="#{message['profile_header_logout']}"
-                                 action="#{authorizationBean.logout}"
-                                 rendered="#{authorizationBean.logged}"/>
-                <h:commandButton id="signin-button"
-                                 styleClass="header-right-button header-button"
-                                 value="#{message['profile_header_signin']}"
-                                 action="/faces/signin.xhtml?faces-redirect=true"
-                                 rendered="#{!authorizationBean.logged}"/>
-            </h:form>
-        </h:panelGroup>
+<f:view locale="#{authorizationBean.locale}" encoding="UTF-8"
+        contentType="text/html">
+    <h:head>
+        <title>Faces</title>
+        <h:outputStylesheet library="css" name="profile.css"/>
+        <h:outputScript library="js" name="copy-link.js"/>
+    </h:head>
+    <h:body>
+        <!-- Wrapper -->
+        <h:panelGroup styleClass="wrapper" layout="block">
+            <!-- Header -->
+            <h:panelGroup styleClass="header" layout="block">
+                <h:graphicImage styleClass="header-logo"
+                                value="/resources/images/profile-logo.png"
+                                width="90" height="50"
+                                rendered="#{!profileBean.informationIsEmpty()}"/>
+                <h:outputText id="page-name"
+                              styleClass="page-name"
+                              value="The Faces"/>
+                <h:form id="header-form" styleClass="header-form">
+                    <h:commandButton id="my-page-button"
+                                     styleClass="header-left-button header-button"
+                                     value="#{message['profile_header_ownpage']}"
+                                     action="#{authorizationBean.homePage}"
+                                     rendered="#{authorizationBean.logged}"/>
+                    <h:commandButton id="logout-button"
+                                     styleClass="header-right-button header-button"
+                                     value="#{message['profile_header_logout']}"
+                                     action="#{authorizationBean.logout}"
+                                     rendered="#{authorizationBean.logged}"/>
+                    <h:commandButton id="signin-button"
+                                     styleClass="header-right-button header-button"
+                                     value="#{message['profile_header_signin']}"
+                                     action="/faces/signin.xhtml?faces-redirect=true"
+                                     rendered="#{!authorizationBean.logged}"/>
+                </h:form>
+            </h:panelGroup>
 
-        <!-- Page -->
-        <h:panelGroup styleClass="content" layout="block">
-            <!-- Main block -->
-            <h:panelGroup styleClass="main-block" layout="block">
-                <!-- Photo block -->
-                <h:panelGroup styleClass="photo-block" layout="block">
-                    <!-- Photo -->
-                    <h:panelGroup styleClass="photo" layout="block">
-                        <h:graphicImage id="photo" styleClass="photo-img"
-                                        value="#{profileBean.photo}"
-                                        width="200" height="300"/>
+            <!-- Page -->
+            <h:panelGroup styleClass="content" layout="block">
+                <!-- Main block -->
+                <h:panelGroup styleClass="main-block" layout="block">
+                    <!-- Photo block -->
+                    <h:panelGroup styleClass="photo-block" layout="block">
+                        <!-- Photo -->
+                        <h:panelGroup styleClass="photo" layout="block">
+                            <h:graphicImage id="photo" styleClass="photo-img"
+                                            value="#{profileBean.photo}"
+                                            width="200" height="280" rendered="#{!profileBean.photo.equals('')}"/>
+                        </h:panelGroup>
+                        <!-- Settings -->
+                        <h:panelGroup styleClass="command-button" layout="block"
+                                      rendered="#{profileBean.id.equals(authorizationBean.id) or profileBean.urlName.equals(authorizationBean.model.urlName)}">
+                            <h:form>
+                                <h:commandButton id="settings"
+                                                 styleClass="command-button-link"
+                                                 value="#{message['profile_information_settings']}"
+                                                 action="#{authorizationBean.settings}"/>
+                            </h:form>
+                        </h:panelGroup>
+                        <!-- Copy link -->
+                        <h:panelGroup styleClass="command-button" layout="block"
+                                      rendered="#{!profileBean.id.equals(authorizationBean.id) and !profileBean.urlName.equals(authorizationBean.model.urlName)}">
+                           <h:form>
+                                <h:commandButton id="copy-link"
+                                                 styleClass="command-button-link"
+                                                 value="#{message['copy-link']}"/>
+                            </h:form>
+                        </h:panelGroup>
                     </h:panelGroup>
-                    <!-- Settings -->
-                    <h:panelGroup styleClass="setting" layout="block"
-                                  rendered="#{profileBean.id.equals(authorizationBean.id)}">
-                        <h:form>
-                            <h:commandButton id="settings"
-                                             styleClass="settings-link"
-                                             value="#{message['profile_information_settings']}"
-                                             action="#{authorizationBean.settings}"/>
-                        </h:form>
+
+                    <!-- Information -->
+                    <h:panelGroup styleClass="information-block" layout="block">
+
+                        <!-- Header -->
+                        <h:panelGroup styleClass="information-header"
+                                      layout="block">
+                            <!-- Fullname -->
+                            <h:outputText styleClass="information-unit-value"
+                                          value="#{profileBean.firstName} #{profileBean.lastName}"/>
+                        </h:panelGroup>
+
+                        <!-- Body -->
+                        <h:panelGroup styleClass="information-body"
+                                      layout="block"
+                                      rendered="#{!profileBean.informationIsEmpty()}">
+                            <!-- Birthday -->
+                            <h:panelGroup styleClass="information-unit"
+                                          layout="block"
+                                          rendered="#{profileBean.fieldIsNotEmpty(profileBean.birthday)}">
+                                <h:panelGroup
+                                        styleClass="information-unit-label-wrapper"
+                                        layout="block">
+                                    <h:outputLabel
+                                            styleClass="information-unit-label"
+                                            value="#{message['profile_information_birthday']}"/>
+                                </h:panelGroup>
+                                <h:panelGroup
+                                        styleClass="information-unit-value-wrapper"
+                                        layout="block">
+                                    <h:outputText
+                                            styleClass="information-unit-value"
+                                            value="#{profileBean.birthday}"/>
+                                </h:panelGroup>
+                            </h:panelGroup>
+
+                            <!-- Hometown -->
+                            <h:panelGroup styleClass="information-unit"
+                                          layout="block"
+                                          rendered="#{profileBean.fieldIsNotEmpty(profileBean.hometown)}">
+                                <h:panelGroup
+                                        styleClass="information-unit-label-wrapper"
+                                        layout="block">
+                                    <h:outputLabel
+                                            styleClass="information-unit-label"
+                                            value="#{message['profile_information_hometown']}"/>
+                                </h:panelGroup>
+                                <h:panelGroup
+                                        styleClass="information-unit-value-wrapper"
+                                        layout="block">
+                                    <h:outputText
+                                            styleClass="information-unit-value"
+                                            value="#{profileBean.hometown}"/>
+                                </h:panelGroup>
+                            </h:panelGroup>
+
+                            <!-- Email -->
+                            <h:panelGroup styleClass="information-unit"
+                                          layout="block"
+                                          rendered="#{profileBean.fieldIsNotEmpty(profileBean.email)}">
+                                <h:panelGroup
+                                        styleClass="information-unit-label-wrapper"
+                                        layout="block">
+                                    <h:outputLabel
+                                            styleClass="information-unit-label"
+                                            value="#{message['profile_information_email']}"/>
+                                </h:panelGroup>
+                                <h:panelGroup
+                                        styleClass="information-unit-value-wrapper"
+                                        layout="block">
+                                    <h:outputText
+                                            styleClass="information-unit-value"
+                                            value="#{profileBean.email}"/>
+                                </h:panelGroup>
+                            </h:panelGroup>
+
+                            <!-- Phone -->
+                            <h:panelGroup styleClass="information-unit"
+                                          layout="block"
+                                          rendered="#{profileBean.fieldIsNotEmpty(profileBean.phone)}">
+                                <h:panelGroup
+                                        styleClass="information-unit-label-wrapper"
+                                        layout="block">
+                                    <h:outputLabel
+                                            styleClass="information-unit-label"
+                                            value="#{message['profile_information_phone']}"/>
+                                </h:panelGroup>
+                                <h:panelGroup
+                                        styleClass="information-unit-value-wrapper"
+                                        layout="block">
+                                    <h:outputText
+                                            styleClass="information-unit-value"
+                                            value="#{profileBean.phone}"/>
+                                </h:panelGroup>
+                            </h:panelGroup>
+
+                            <!-- Work phone -->
+                            <h:panelGroup styleClass="information-unit"
+                                          layout="block"
+                                          rendered="#{profileBean.fieldIsNotEmpty(profileBean.workPhone)}">
+                                <h:panelGroup
+                                        styleClass="information-unit-label-wrapper"
+                                        layout="block">
+                                    <h:outputLabel
+                                            styleClass="information-unit-label"
+                                            value="#{message['profile_information_work_phone']}"/>
+                                </h:panelGroup>
+                                <h:panelGroup
+                                        styleClass="information-unit-value-wrapper"
+                                        layout="block">
+                                    <h:outputText
+                                            styleClass="information-unit-value"
+                                            value="#{profileBean.workPhone}"/>
+                                </h:panelGroup>
+                            </h:panelGroup>
+                        </h:panelGroup>
+
+                        <!-- Empty information block -->
+                        <h:panelGroup styleClass="information-body"
+                                      layout="block"
+                                      rendered="#{profileBean.informationIsEmpty()}">
+                            <h:graphicImage styleClass="information-logo"
+                                            value="/resources/images/profile-logo.png"
+                                            width="90%" height="80%"/>
+                        </h:panelGroup>
                     </h:panelGroup>
                 </h:panelGroup>
 
-                <!-- Information -->
-                <h:panelGroup styleClass="information-block" layout="block">
-
-                    <!-- Header -->
-                    <h:panelGroup styleClass="information-header"
-                                  layout="block">
-                        <!-- Fullname -->
-                        <h:outputText styleClass="information-unit-value"
-                                      value="#{profileBean.firstName} #{profileBean.lastName}"/>
-                    </h:panelGroup>
-
-                    <!-- Body -->
-                    <h:panelGroup styleClass="information-body" layout="block"
-                                  rendered="#{!profileBean.informationIsEmpty()}">
-                        <!-- Birthday -->
-                        <h:panelGroup styleClass="information-unit"
-                                      layout="block"
-                                      rendered="#{profileBean.birthday != null}">
-                            <h:panelGroup
-                                    styleClass="information-unit-label-wrapper"
-                                    layout="block">
-                                <h:outputLabel
-                                        styleClass="information-unit-label"
-                                        value="#{message['profile_information_birthday']}"/>
-                            </h:panelGroup>
-                            <h:panelGroup
-                                    styleClass="information-unit-value-wrapper"
-                                    layout="block">
+                <!-- Links block -->
+                <h:panelGroup styleClass="links-block" layout="block">
+                    <h:panelGroup styleClass="links-content" layout="block">
+                        <!-- Emails block -->
+                        <h:panelGroup styleClass="links-unit" layout="block">
+                            <!-- Links content button -->
+                            <h:panelGroup styleClass="links-unit-header emails"
+                                          layout="block">
                                 <h:outputText
-                                        styleClass="information-unit-value"
-                                        value="#{profileBean.birthday}"/>
+                                        styleClass="links-unit-header-value"
+                                        value="#{message['profile_emails']}"/>
+                            </h:panelGroup>
+
+                            <!-- Links content-->
+                            <h:panelGroup styleClass="links-unit-body"
+                                          layout="block">
+                                <!-- Links table -->
                             </h:panelGroup>
                         </h:panelGroup>
 
-                        <!-- Hometown -->
-                        <h:panelGroup styleClass="information-unit"
-                                      layout="block"
-                                      rendered="#{profileBean.hometown != null}">
+                        <!-- Social networks block -->
+                        <h:panelGroup styleClass="links-unit" layout="block">
+                            <!-- Links content button -->
                             <h:panelGroup
-                                    styleClass="information-unit-label-wrapper"
-                                    layout="block">
-                                <h:outputLabel
-                                        styleClass="information-unit-label"
-                                        value="#{message['profile_information_hometown']}"/>
-                            </h:panelGroup>
-                            <h:panelGroup
-                                    styleClass="information-unit-value-wrapper"
+                                    styleClass="links-unit-header social-networks"
                                     layout="block">
                                 <h:outputText
-                                        styleClass="information-unit-value"
-                                        value="#{profileBean.hometown}"/>
+                                        styleClass="links-unit-header-value"
+                                        value="#{message['profile_social_networks']}"/>
+                            </h:panelGroup>
+
+                            <!-- Links content-->
+                            <h:panelGroup styleClass="links-unit-body"
+                                          layout="block">
+                                <!-- Links table -->
                             </h:panelGroup>
                         </h:panelGroup>
 
-                        <!-- Email -->
-                        <h:panelGroup styleClass="information-unit"
-                                      layout="block"
-                                      rendered="#{profileBean.email != null}">
+                        <!-- Multimedia block -->
+                        <h:panelGroup styleClass="links-unit" layout="block">
+                            <!-- Links content button -->
                             <h:panelGroup
-                                    styleClass="information-unit-label-wrapper"
-                                    layout="block">
-                                <h:outputLabel
-                                        styleClass="information-unit-label"
-                                        value="#{message['profile_information_email']}"/>
-                            </h:panelGroup>
-                            <h:panelGroup
-                                    styleClass="information-unit-value-wrapper"
+                                    styleClass="links-unit-header multimedia"
                                     layout="block">
                                 <h:outputText
-                                        styleClass="information-unit-value"
-                                        value="#{profileBean.email}"/>
+                                        styleClass="links-unit-header-value"
+                                        value="#{message['profile_multimedia']}"/>
+                            </h:panelGroup>
+
+                            <!-- Links content-->
+                            <h:panelGroup styleClass="links-unit-body"
+                                          layout="block">
+                                <!-- Links table -->
                             </h:panelGroup>
                         </h:panelGroup>
 
-                        <!-- Phone -->
-                        <h:panelGroup styleClass="information-unit"
-                                      layout="block"
-                                      rendered="#{profileBean.phone != null}">
-                            <h:panelGroup
-                                    styleClass="information-unit-label-wrapper"
-                                    layout="block">
-                                <h:outputLabel
-                                        styleClass="information-unit-label"
-                                        value="#{message['profile_information_phone']}"/>
-                            </h:panelGroup>
-                            <h:panelGroup
-                                    styleClass="information-unit-value-wrapper"
-                                    layout="block">
+                        <!-- Others block -->
+                        <h:panelGroup styleClass="links-unit" layout="block">
+                            <!-- Links content button -->
+                            <h:panelGroup styleClass="links-unit-header others"
+                                          layout="block">
                                 <h:outputText
-                                        styleClass="information-unit-value"
-                                        value="#{profileBean.phone}"/>
+                                        styleClass="links-unit-header-value"
+                                        value="#{message['profile_others']}"/>
                             </h:panelGroup>
-                        </h:panelGroup>
-                    </h:panelGroup>
 
-                    <!-- Empty information block -->
-                    <h:panelGroup styleClass="information-body" layout="block"
-                                  rendered="#{profileBean.informationIsEmpty() and
-                                   profileBean.id.equals(authorizationBean.id)}">
-                        <h:panelGroup styleClass="information-empty-message"
-                                      layout="block">
-                            <h:outputText styleClass=""
-                                          value="#{message['profile_information_empty']}"/>
+                            <!-- Links content-->
+                            <h:panelGroup styleClass="links-unit-body"
+                                          layout="block">
+                                <!-- Links table -->
+                            </h:panelGroup>
                         </h:panelGroup>
                     </h:panelGroup>
                 </h:panelGroup>
             </h:panelGroup>
-
-            <!-- Links block -->
-            <h:panelGroup styleClass="links-block" layout="block">
-                <h:panelGroup styleClass="links-content" layout="block">
-                    <!-- Emails block -->
-                    <h:panelGroup styleClass="links-unit" layout="block">
-                        <!-- Links content button -->
-                        <h:panelGroup styleClass="links-unit-header emails"
-                                      layout="block">
-                            <h:outputText styleClass="links-unit-header-value"
-                                          value="#{message['profile_emails']}"/>
-                        </h:panelGroup>
-
-                        <!-- Links content-->
-                        <h:panelGroup styleClass="links-unit-body"
-                                      layout="block">
-                            <!-- Links table -->
-                        </h:panelGroup>
-                    </h:panelGroup>
-
-                    <!-- Social networks block -->
-                    <h:panelGroup styleClass="links-unit" layout="block">
-                        <!-- Links content button -->
-                        <h:panelGroup
-                                styleClass="links-unit-header social-networks"
-                                layout="block">
-                            <h:outputText styleClass="links-unit-header-value"
-                                          value="#{message['profile_social_networks']}"/>
-                        </h:panelGroup>
-
-                        <!-- Links content-->
-                        <h:panelGroup styleClass="links-unit-body"
-                                      layout="block">
-                            <!-- Links table -->
-                        </h:panelGroup>
-                    </h:panelGroup>
-
-                    <!-- Multimedia block -->
-                    <h:panelGroup styleClass="links-unit" layout="block">
-                        <!-- Links content button -->
-                        <h:panelGroup styleClass="links-unit-header multimedia"
-                                      layout="block">
-                            <h:outputText styleClass="links-unit-header-value"
-                                          value="#{message['profile_multimedia']}"/>
-                        </h:panelGroup>
-
-                        <!-- Links content-->
-                        <h:panelGroup styleClass="links-unit-body"
-                                      layout="block">
-                            <!-- Links table -->
-                        </h:panelGroup>
-                    </h:panelGroup>
-
-                    <!-- Others block -->
-                    <h:panelGroup styleClass="links-unit" layout="block">
-                        <!-- Links content button -->
-                        <h:panelGroup styleClass="links-unit-header others"
-                                      layout="block">
-                            <h:outputText styleClass="links-unit-header-value"
-                                          value="#{message['profile_others']}"/>
-                        </h:panelGroup>
-
-                        <!-- Links content-->
-                        <h:panelGroup styleClass="links-unit-body"
-                                      layout="block">
-                            <!-- Links table -->
-                        </h:panelGroup>
-                    </h:panelGroup>
-                </h:panelGroup>
-            </h:panelGroup>
         </h:panelGroup>
-    </h:panelGroup>
-</h:body>
+    </h:body>
+</f:view>
 </html>
