@@ -72,14 +72,8 @@ public class AuthenticationFilter implements javax.servlet.Filter {
                 if (isRootURL || url.contains("signin")) {
                     redirect("/id" + session.getId());
 
-                } else if (url.contains("id") ||
-                        url.contains("settings") ||
-                        url.contains("error")) {
-
+                } else {
                     chain.doFilter(req, res);
-
-                } else if (!url.contains("error")) {
-                    redirect("/error");
                 }
             }
         }
