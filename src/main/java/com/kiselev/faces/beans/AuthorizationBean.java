@@ -261,6 +261,11 @@ public class AuthorizationBean implements Serializable {
             return "/faces/profile.xhtml?faces-redirect=true&id=" + id;
     }
 
+    public String delete(){
+        DAO.deleteProfile(id);
+        return "/faces/index.xhtml?faces-redirect=true";
+    }
+
     private void login() {
         logged = true;
         username = null;
