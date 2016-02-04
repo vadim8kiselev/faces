@@ -49,9 +49,11 @@
                     <h:panelGroup styleClass="photo-block" layout="block">
                         <!-- Photo -->
                         <h:panelGroup styleClass="photo" layout="block">
-                            <h:graphicImage id="photo" styleClass="photo-img"
+                            <h:graphicImage id="photo"
+                                            styleClass="photo-img"
                                             value="#{profileBean.photo}"
-                                            width="200" height="280" rendered="#{!profileBean.photo.equals('')}"/>
+                                            width="200" height="280"
+                                            rendered="#{!profileBean.photo.equals('')}"/>
                         </h:panelGroup>
                         <!-- Settings -->
                         <h:panelGroup styleClass="command-button" layout="block"
@@ -66,7 +68,7 @@
                         <!-- Copy link -->
                         <h:panelGroup styleClass="command-button" layout="block"
                                       rendered="#{!profileBean.id.equals(authorizationBean.id) and !profileBean.urlName.equals(authorizationBean.model.urlName)}">
-                           <h:form>
+                            <h:form>
                                 <h:commandButton id="copy-link"
                                                  styleClass="command-button-link"
                                                  value="#{message['copy-link']}"/>
