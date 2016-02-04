@@ -8,9 +8,9 @@
     <h:head>
         <title>Faces</title>
         <h:outputStylesheet library="css" name="profile.css"/>
-        <h:outputScript library="js" name="copy-link.js"/>
+        <h:outputScript library="js" name="links.js"/>
     </h:head>
-    <h:body>
+    <h:body onload="slider('slider', 1)">
         <!-- Wrapper -->
         <h:panelGroup styleClass="wrapper" layout="block">
             <!-- Header -->
@@ -65,13 +65,15 @@
                                                  action="#{authorizationBean.settings}"/>
                             </h:form>
                         </h:panelGroup>
-                        <!-- Copy link -->
+                        <!-- Empty block-->
                         <h:panelGroup styleClass="command-button" layout="block"
                                       rendered="#{!profileBean.id.equals(authorizationBean.id) and !profileBean.urlName.equals(authorizationBean.model.urlName)}">
                             <h:form>
-                                <h:commandButton id="copy-link"
+                                <h:commandButton id="signup-button"
                                                  styleClass="command-button-link"
-                                                 value="#{message['copy-link']}"/>
+                                                 value="#{message['signup_button']}"
+                                                 action="/faces/index.xhtml?faces-redirect=true"
+                                                 rendered="#{!authorizationBean.logged}"/>
                             </h:form>
                         </h:panelGroup>
                     </h:panelGroup>
@@ -205,75 +207,75 @@
 
                 <!-- Links block -->
                 <h:panelGroup styleClass="links-block" layout="block">
-                    <h:panelGroup styleClass="links-content" layout="block">
+                    <h:panelGroup id="slider" layout="block">
                         <!-- Emails block -->
-                        <h:panelGroup styleClass="links-unit" layout="block">
-                            <!-- Links content button -->
-                            <h:panelGroup styleClass="links-unit-header emails"
-                                          layout="block">
-                                <h:outputText
-                                        styleClass="links-unit-header-value"
-                                        value="#{message['profile_emails']}"/>
-                            </h:panelGroup>
-
-                            <!-- Links content-->
-                            <h:panelGroup styleClass="links-unit-body"
-                                          layout="block">
-                                <!-- Links table -->
-                            </h:panelGroup>
+                        <h:panelGroup id="emails-header"
+                                      styleClass="links-unit-header emails"
+                                      layout="block">
+                            <h:outputText
+                                    styleClass="links-unit-header-value"
+                                    value="#{message['profile_emails']}"/>
                         </h:panelGroup>
+
+                        <!-- Links content-->
+                        <h:panelGroup id="emails-body"
+                                      styleClass="links-unit-body"
+                                      layout="block">
+                            <!-- Links table -->
+                        </h:panelGroup>
+
+
 
                         <!-- Social networks block -->
-                        <h:panelGroup styleClass="links-unit" layout="block">
-                            <!-- Links content button -->
-                            <h:panelGroup
-                                    styleClass="links-unit-header social-networks"
-                                    layout="block">
-                                <h:outputText
-                                        styleClass="links-unit-header-value"
-                                        value="#{message['profile_social_networks']}"/>
-                            </h:panelGroup>
-
-                            <!-- Links content-->
-                            <h:panelGroup styleClass="links-unit-body"
-                                          layout="block">
-                                <!-- Links table -->
-                            </h:panelGroup>
+                        <h:panelGroup id="snetworks-header"
+                                      styleClass="links-unit-header social-networks"
+                                      layout="block">
+                            <h:outputText
+                                    styleClass="links-unit-header-value"
+                                    value="#{message['profile_social_networks']}"/>
                         </h:panelGroup>
+
+                        <!-- Links content-->
+                        <h:panelGroup id="snetworks-body"
+                                      styleClass="links-unit-body"
+                                      layout="block">
+                            <!-- Links table -->
+                        </h:panelGroup>
+
+
 
                         <!-- Multimedia block -->
-                        <h:panelGroup styleClass="links-unit" layout="block">
-                            <!-- Links content button -->
-                            <h:panelGroup
-                                    styleClass="links-unit-header multimedia"
-                                    layout="block">
-                                <h:outputText
-                                        styleClass="links-unit-header-value"
-                                        value="#{message['profile_multimedia']}"/>
-                            </h:panelGroup>
-
-                            <!-- Links content-->
-                            <h:panelGroup styleClass="links-unit-body"
-                                          layout="block">
-                                <!-- Links table -->
-                            </h:panelGroup>
+                        <h:panelGroup id="media-header"
+                                      styleClass="links-unit-header multimedia"
+                                      layout="block">
+                            <h:outputText
+                                    styleClass="links-unit-header-value"
+                                    value="#{message['profile_multimedia']}"/>
                         </h:panelGroup>
 
-                        <!-- Others block -->
-                        <h:panelGroup styleClass="links-unit" layout="block">
-                            <!-- Links content button -->
-                            <h:panelGroup styleClass="links-unit-header others"
-                                          layout="block">
-                                <h:outputText
-                                        styleClass="links-unit-header-value"
-                                        value="#{message['profile_others']}"/>
-                            </h:panelGroup>
+                        <!-- Links content-->
+                        <h:panelGroup id="media-body"
+                                      styleClass="links-unit-body"
+                                      layout="block">
+                            <!-- Links table -->
+                        </h:panelGroup>
 
-                            <!-- Links content-->
-                            <h:panelGroup styleClass="links-unit-body"
-                                          layout="block">
-                                <!-- Links table -->
-                            </h:panelGroup>
+
+
+                        <!-- Others block -->
+                        <h:panelGroup id="others-header"
+                                      styleClass="links-unit-header others"
+                                      layout="block">
+                            <h:outputText
+                                    styleClass="links-unit-header-value"
+                                    value="#{message['profile_others']}"/>
+                        </h:panelGroup>
+
+                        <!-- Links content-->
+                        <h:panelGroup id="others-body"
+                                      styleClass="links-unit-body"
+                                      layout="block">
+                            <!-- Links table -->
                         </h:panelGroup>
                     </h:panelGroup>
                 </h:panelGroup>
