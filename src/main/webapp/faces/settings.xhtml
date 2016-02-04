@@ -12,8 +12,10 @@
     </h:head>
     <h:body>
         <h:panelGroup styleClass="settings-frame" layout="block">
-            <h:panelGroup styleClass="settings-body" layout="block">
-                <h:form styleClass="settings-form">
+            <h:form styleClass="settings-form">
+
+                <h:panelGroup styleClass="settings-column settings-left-column"
+                              layout="block">
                     <!-- First name -->
                     <h:panelGroup
                             styleClass="settings-unit"
@@ -21,10 +23,13 @@
                         <h:panelGroup styleClass="settings-unit-label-wrapper"
                                       layout="block">
                             <h:outputLabel styleClass="settings-unit-label"
-                                           value="First name:"/>
+                                           value="#{message['setting-label-first-name']}"/>
                         </h:panelGroup>
+                        <h:panelGroup styleClass="settings-unit-field-wrapper" layout="block">
                             <h:inputText styleClass="settings-unit-field"
-                                         value="#{profileBean.firstName}"/>
+                                         autocomplete="off"
+                                         value="#{authorizationBean.model.firstName}"/>
+                        </h:panelGroup>
                     </h:panelGroup>
 
                     <!-- Last name -->
@@ -34,25 +39,29 @@
                         <h:panelGroup styleClass="settings-unit-label-wrapper"
                                       layout="block">
                             <h:outputLabel styleClass="settings-unit-label"
-                                           value="Last name:"/>
+                                           value="#{message['setting-label-last-name']}"/>
                         </h:panelGroup>
+                        <h:panelGroup styleClass="settings-unit-field-wrapper" layout="block">
                             <h:inputText styleClass="settings-unit-field"
-                                         value="#{profileBean.lastName}"/>
+                                         autocomplete="off"
+                                         value="#{authorizationBean.model.lastName}"/>
+                        </h:panelGroup>
                     </h:panelGroup>
 
                     <!-- Birthday -->
-                    <!-- Deprecated -->
                     <h:panelGroup
                             styleClass="settings-unit"
                             layout="block">
                         <h:panelGroup styleClass="settings-unit-label-wrapper"
                                       layout="block">
                             <h:outputLabel styleClass="settings-unit-label"
-                                           value="Birthday: (fix me)"/>
+                                           value="#{message['setting-label-birthday']}"/>
                         </h:panelGroup>
+                        <h:panelGroup styleClass="settings-unit-field-wrapper" layout="block">
                             <h:inputText styleClass="settings-unit-field"
-                                         value="#{profileBean.birthday}"
-                                         converter="javax.faces.DateTime"/>
+                                         autocomplete="off"
+                                         value="#{authorizationBean.model.birthday}"/>
+                        </h:panelGroup>
                     </h:panelGroup>
 
                     <!-- Hometown -->
@@ -62,26 +71,34 @@
                         <h:panelGroup styleClass="settings-unit-label-wrapper"
                                       layout="block">
                             <h:outputLabel styleClass="settings-unit-label"
-                                           value="Hometown:"/>
+                                           value="#{message['setting-label-hometown']}"/>
                         </h:panelGroup>
+                        <h:panelGroup styleClass="settings-unit-field-wrapper" layout="block">
                             <h:inputText styleClass="settings-unit-field"
-                                         value="#{profileBean.hometown}"/>
+                                         autocomplete="off"
+                                         value="#{authorizationBean.model.hometown}"/>
+                        </h:panelGroup>
                     </h:panelGroup>
 
                     <!-- Email -->
-                    <!-- Deprecated -->
                     <h:panelGroup
                             styleClass="settings-unit"
                             layout="block">
                         <h:panelGroup styleClass="settings-unit-label-wrapper"
                                       layout="block">
                             <h:outputLabel styleClass="settings-unit-label"
-                                           value="Email: (fix me)"/>
+                                           value="#{message['setting-label-email']}"/>
                         </h:panelGroup>
+                        <h:panelGroup styleClass="settings-unit-field-wrapper" layout="block">
                             <h:inputText styleClass="settings-unit-field"
-                                         value="#{profileBean.email}"/>
+                                         autocomplete="off"
+                                         value="#{authorizationBean.model.email}"/>
+                        </h:panelGroup>
                     </h:panelGroup>
+                </h:panelGroup>
 
+                <h:panelGroup styleClass="settings-column settings-right-column"
+                              layout="block">
                     <!-- Phone -->
                     <h:panelGroup
                             styleClass="settings-unit"
@@ -89,30 +106,94 @@
                         <h:panelGroup styleClass="settings-unit-label-wrapper"
                                       layout="block">
                             <h:outputLabel styleClass="settings-unit-label"
-                                           value="Phone:"/>
+                                           value="#{message['setting-label-phone']}"/>
                         </h:panelGroup>
+                        <h:panelGroup styleClass="settings-unit-field-wrapper" layout="block">
                             <h:inputText styleClass="settings-unit-field"
-                                         value="#{profileBean.phone}"/>
+                                         autocomplete="off"
+                                         value="#{authorizationBean.model.phone}"/>
+                        </h:panelGroup>
                     </h:panelGroup>
 
-                    <!-- Photo -->
-                    <!-- Deprecated -->
+                    <!-- Work Phone -->
                     <h:panelGroup
                             styleClass="settings-unit"
                             layout="block">
                         <h:panelGroup styleClass="settings-unit-label-wrapper"
                                       layout="block">
                             <h:outputLabel styleClass="settings-unit-label"
-                                           value="Photo: (fix me)"/>
+                                           value="#{message['setting-label-work-phone']}"/>
                         </h:panelGroup>
+                        <h:panelGroup styleClass="settings-unit-field-wrapper" layout="block">
                             <h:inputText styleClass="settings-unit-field"
-                                         value="#{profileBean.photo}"/>
+                                         autocomplete="off"
+                                         value="#{authorizationBean.model.workPhone}"/>
                         </h:panelGroup>
+                    </h:panelGroup>
 
-                    <h:commandButton styleClass="settings-button" value="Save"
-                                     action="#{profileBean.save}"/>
-                </h:form>
-            </h:panelGroup>
+                    <!-- Photo -->
+                    <h:panelGroup
+                            styleClass="settings-unit"
+                            layout="block">
+                        <h:panelGroup styleClass="settings-unit-label-wrapper"
+                                      layout="block">
+                            <h:outputLabel styleClass="settings-unit-label"
+                                           value="#{message['setting-label-photo']}"/>
+                        </h:panelGroup>
+                        <h:panelGroup styleClass="settings-unit-field-wrapper" layout="block">
+                            <h:inputText styleClass="settings-unit-field"
+                                         autocomplete="off"
+                                         value="#{authorizationBean.model.photo}"/>
+                        </h:panelGroup>
+                    </h:panelGroup>
+
+                    <!-- Url name -->
+                    <h:panelGroup
+                            styleClass="settings-unit"
+                            layout="block">
+                        <h:panelGroup styleClass="settings-unit-label-wrapper"
+                                      layout="block">
+                            <h:outputLabel styleClass="settings-unit-label"
+                                           value="#{message['setting-label-nickname']}"/>
+                        </h:panelGroup>
+                        <h:panelGroup styleClass="settings-unit-field-wrapper" layout="block">
+                            <h:inputText id="urlname"
+                                         styleClass="settings-unit-field"
+                                         autocomplete="off"
+                                         value="#{authorizationBean.model.urlName}"/>
+                        </h:panelGroup>
+                    </h:panelGroup>
+
+                    <!-- Language -->
+                    <h:panelGroup
+                            styleClass="settings-unit"
+                            layout="block">
+                        <h:panelGroup styleClass="settings-unit-label-wrapper"
+                                      layout="block">
+                            <h:outputLabel styleClass="settings-unit-label"
+                                           value="#{message['setting-label-language']}"/>
+                        </h:panelGroup>
+                        <h:panelGroup styleClass="settings-unit-field-wrapper" layout="block">
+                            <h:selectOneMenu id="language"
+                                             styleClass="settings-unit-field"
+                                             value="#{authorizationBean.model.language}">
+                                <f:selectItem itemValue="en_US"
+                                              itemLabel="English"/>
+                                <f:selectItem itemValue="ru_RU"
+                                              itemLabel="Russian"/>
+                            </h:selectOneMenu>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </h:panelGroup>
+
+                <h:commandButton styleClass="settings-button settings-button-save"
+                                 value="#{message['setting-label-button-save']}"
+                                 action="#{authorizationBean.save}"/>
+
+                <h:commandButton styleClass="settings-button settings-button-delete"
+                                 value="#{message['setting-label-button-delete']}"
+                                 action="#{authorizationBean.delete}"/>
+            </h:form>
         </h:panelGroup>
     </h:body>
 </f:view>

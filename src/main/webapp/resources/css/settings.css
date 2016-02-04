@@ -24,7 +24,7 @@ body {
     letter-spacing: -0.5px;
 }
 
-input:focus {
+input:focus, select:focus {
     outline-width: 0;
 }
 
@@ -35,55 +35,74 @@ input, textarea {
 
 .settings-frame {
     margin: 5% auto;
-    width: 90%;
-    height: 80%;
-}
-
-.settings-body {
-    padding: 30px;
-    margin: 4% auto;
-    width: 85%;
-    height: 71%;
 }
 
 .settings-form {
+    background-color: rgba(0,0,0,.3);
     margin: 0 auto;
-    width: 420px;
+    width: 720px;
+    padding: 20px;
+}
+
+.settings-column {
+    height: auto;
+}
+
+.settings-left-column {
+    float: left;
+}
+
+.settings-right-column {
+    float: right;
 }
 
 .settings-unit {
-    background-color: #A8C1C5;
-    width: 96%;
-    height: 33px;
-    padding: 5px;
-    margin-bottom: 10px;
+    background-color: rgba(91,91,91,.88);
+    width: 320px;
+    height: 40px;
+    padding: 8px;
+    margin-bottom: 25px;
 }
 
 .settings-unit-label-wrapper {
     float: left;
+    height: 100%;
     width: 140px;
 }
 
 .settings-unit-label {
-    color: #626262;
+    color: #ffffff;
     font-size: 15px;
     letter-spacing: 0;
 }
 
-.settings-unit-field {
+.settings-unit-field-wrapper {
     float: right;
+    height: 100%;
+    width: 180px;
+}
+
+.settings-unit-field {
     background-color: #ffffff;
-    height: 33px;
-    border: none;
-    width: 248px;
+    height: 35px;
+    width: 100%;
     padding-left: 12px;
+    border: none;
 }
 
 .settings-button {
-    width: 98%;
+    width: 100%;
     height: 40px;
     border: none;
+    color: #ffffff;
+}
+
+.settings-button-save {
+    background-color: #5b5b5b;
     margin-bottom: 15px;
-    background-color: #eaeaea;
+}
+
+.settings-button-delete {
+    background-color: #5b4248;
 }
 
