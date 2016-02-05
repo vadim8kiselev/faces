@@ -11,7 +11,7 @@ public class Validator {
 
     public static String fieldsAreNotBlank(Locale locale, String... fields) {
         for (String field : fields) {
-            if (field.equals("")) {
+            if (field.trim().equals("")) {
                 return getMessage(locale, "error_blank");
             }
         }
@@ -19,6 +19,7 @@ public class Validator {
     }
 
     public static String validationUsername(Locale locale, String username) {
+        username = username.trim();
         if (username.length() < 5) {
             return getMessage(locale, "error_username_min");
         }
@@ -30,6 +31,23 @@ public class Validator {
         if (countOfCharacters(username, '.') > 1 ||
                 !username.matches("^[a-zA-Z0-9][a-zA-Z0-9\\.]+[a-zA-Z0-9]$")) {
             return getMessage(locale, "error_incorrect_username");
+        }
+        return null;
+    }
+
+    public static String validationUrlName(Locale locale, String urlname) {
+        urlname = urlname.trim();
+        if (urlname.length() < 3) {
+            return getMessage(locale, "error_urlname_min");
+        }
+
+        if (urlname.length() > 15) {
+            return getMessage(locale, "error_urlname_max");
+        }
+
+        if (countOfCharacters(urlname, '_') > 1 ||
+                !urlname.matches("^[a-zA-Z0-9][a-zA-Z0-9_]+[a-zA-Z0-9]$")) {
+            return getMessage(locale, "error_incorrect_urlname");
         }
         return null;
     }
@@ -49,7 +67,7 @@ public class Validator {
     }
 
     public static String validationPassword(Locale locale, String password) {
-        if (password.length() < 6) {
+        if (password.trim().length() < 6) {
             return getMessage(locale, "error_password_min");
         }
         return null;
@@ -58,7 +76,7 @@ public class Validator {
     public static String passwordsAreEquals(Locale locale,
                                             String password,
                                             String secondPassword) {
-        if (!password.equals(secondPassword)) {
+        if (!password.trim().equals(secondPassword.trim())) {
             return getMessage(locale, "error_password_match");
         }
         return null;
@@ -67,17 +85,16 @@ public class Validator {
     public static String validationFullName(Locale locale,
                                             String firstName,
                                             String lastName) {
+        if (firstName == null || firstName.equals("") ||
+                lastName == null || lastName.equals("")){
+            return getMessage(locale, "error_blank_name");
+        }
+
         if (firstName.length() < 2 || lastName.length() < 2 ||
                 firstName.length() > 35 || lastName.length() > 35) {
             return getMessage(locale, "error_length_name");
         }
 
-        if (!firstName.matches("^[\\u00c0-\\u01ffA-ZА-Я]" +
-                "[\\u00c0-\\u01ffa-zA-Zа-яА-Я'\\-]+$") ||
-                !lastName.matches("^[\\u00c0-\\u01ffA-ZА-Я]" +
-                        "[\\u00c0-\\u01ffa-zA-Zа-яА-Я'\\-]+$")) {
-            return getMessage(locale, "error_real_name");
-        }
         return null;
     }
 
@@ -120,7 +137,7 @@ public class Validator {
         return count;
     }
 
-    private static String getMessage(Locale locale, String key) {
+    public static String getMessage(Locale locale, String key) {
         return ResourceBundle.getBundle("internationalization.messages", locale)
                 .getString(key);
     }

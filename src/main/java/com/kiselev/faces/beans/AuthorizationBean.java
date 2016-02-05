@@ -28,6 +28,7 @@ public class AuthorizationBean implements Serializable {
     private String upMessage;
 
     private Long id;
+    private String urlname;
 
     private ProfileEntity model;
 
@@ -119,6 +120,7 @@ public class AuthorizationBean implements Serializable {
     }
 
     public String signin() {
+
         if ((inMessage = Validator
                 .fieldsAreNotBlank(locale, username, password)) == null) {
 
@@ -127,13 +129,18 @@ public class AuthorizationBean implements Serializable {
             if ((inMessage = Validator
                     .validationSignInId(locale, id = DAO.getId(user))) == null) {
                 this.model = DAO.getProfile(id);
+
                 login();
+
                 String[] localeArgs = model.getLanguage().split("_");
-                locale = new Locale(localeArgs[0],localeArgs[1]);
-                registered = model.getFirstName() != null;
-                if (registered && model.getUrlName() != null &&
-                        !model.getUrlName().trim().equals(""))
-                    return "/faces/profile.xhtml?faces-redirect=true&urlname=" + model.getUrlName();
+                locale = new Locale(localeArgs[0], localeArgs[1]);
+
+                registered = model.getFirstName() != null &&
+                        !model.getFirstName().equals("");
+
+                urlname = model.getUrlName();
+                if (registered && !urlname.equals(""))
+                    return "/faces/profile.xhtml?faces-redirect=true&urlname=" + urlname;
                 else
                     return "/faces/profile.xhtml?faces-redirect=true&id=" + id;
             } else {
@@ -213,6 +220,10 @@ public class AuthorizationBean implements Serializable {
         }
     }
 
+    public void updateModel() {
+        model = DAO.getProfile(id);
+    }
+
     public String homePage() {
         if (logged)
             if (model.getUrlName() != null && !model.getUrlName().trim().equals(""))
@@ -232,17 +243,37 @@ public class AuthorizationBean implements Serializable {
 
     public String save() {
         String[] localeArgs = model.getLanguage().split("_");
-        locale = new Locale(localeArgs[0],localeArgs[1]);
+        locale = new Locale(localeArgs[0], localeArgs[1]);
+
+        if ((inMessage = Validator.validationFullName(locale,
+                model.getFirstName(),
+                model.getLastName())) != null) {
+            return null;
+        }
+
+        if (!"".equals(model.getUrlName()) && !model.getUrlName().equals(urlname)) {
+            if (DAO.isValidUrlName(model.getUrlName())) {
+                inMessage = Validator.getMessage(locale, "error_urlname_taken");
+                return null;
+            }
+
+            if ((inMessage = Validator.validationUrlName(locale, model.getUrlName())) != null) {
+                return null;
+            }
+        }
+
         DAO.updateProfile(model);
-        boolean haveNickname = model.getUrlName() != null && !model.getUrlName().trim().equals("");
-        if (haveNickname)
-            return "/faces/profile.xhtml?faces-redirect=true&urlname=" + model.getUrlName();
+        urlname = model.getUrlName();
+
+        if (!"".equals(urlname))
+            return "/faces/profile.xhtml?faces-redirect=true&urlname=" + urlname;
         else
             return "/faces/profile.xhtml?faces-redirect=true&id=" + id;
     }
 
     public String logout() {
         logged = false;
+        model = null;
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
                 .getExternalContext().getSession(false);
         session.removeAttribute("authorizationBean");
@@ -251,6 +282,7 @@ public class AuthorizationBean implements Serializable {
     }
 
     public String delete() {
+        logout();
         DAO.deleteProfile(id);
         return "/faces/index.xhtml?faces-redirect=true";
     }

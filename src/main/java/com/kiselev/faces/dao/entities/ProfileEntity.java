@@ -79,11 +79,11 @@ public class ProfileEntity {
     }
 
     public String getUrlName() {
-        return urlname;
+        return (urlname == null) ? "" : urlname;
     }
 
     public void setUrlName(String urlname) {
-        this.urlname = urlname.trim();
+        this.urlname = ("".equals(urlname.trim())) ? null : urlname.trim();
     }
 
     public String getPassword() {

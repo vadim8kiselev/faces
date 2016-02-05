@@ -41,10 +41,21 @@ public class ProfileBean implements Serializable {
             id = new Long(requestID);
 
             if (!DAO.isValidId(id)) {
-                redirect("/signin");
+                redirect("/error");
 
             } else {
-                convertEntity(DAO.getProfile(id));
+                ProfileEntity profile = DAO.getProfile(id);
+
+                if (profile != null) {
+                    String firstName = profile.getFirstName();
+                    if (firstName == null || firstName.trim().equals("")) {
+                        redirect("/error");
+                    }
+
+                    convertEntity(profile);
+                } else {
+                    redirect("/error");
+                }
             }
 
         } else if (requestUrlName != null) {

@@ -13,6 +13,12 @@
     <h:body>
         <h:panelGroup styleClass="settings-frame" layout="block">
             <h:form styleClass="settings-form">
+                <h:panelGroup styleClass="settings-error-message"
+                              layout="block"
+                              rendered="#{authorizationBean.inMessage != null}">
+                    <h:outputText styleClass="error-message"
+                                  value="#{authorizationBean.inMessage}"/>
+                </h:panelGroup>
 
                 <h:panelGroup styleClass="settings-column settings-left-column"
                               layout="block">
@@ -25,7 +31,8 @@
                             <h:outputLabel styleClass="settings-unit-label"
                                            value="#{message['setting-label-first-name']}"/>
                         </h:panelGroup>
-                        <h:panelGroup styleClass="settings-unit-field-wrapper" layout="block">
+                        <h:panelGroup styleClass="settings-unit-field-wrapper"
+                                      layout="block">
                             <h:inputText styleClass="settings-unit-field"
                                          autocomplete="off"
                                          value="#{authorizationBean.model.firstName}"/>
@@ -41,7 +48,8 @@
                             <h:outputLabel styleClass="settings-unit-label"
                                            value="#{message['setting-label-last-name']}"/>
                         </h:panelGroup>
-                        <h:panelGroup styleClass="settings-unit-field-wrapper" layout="block">
+                        <h:panelGroup styleClass="settings-unit-field-wrapper"
+                                      layout="block">
                             <h:inputText styleClass="settings-unit-field"
                                          autocomplete="off"
                                          value="#{authorizationBean.model.lastName}"/>
@@ -57,7 +65,8 @@
                             <h:outputLabel styleClass="settings-unit-label"
                                            value="#{message['setting-label-birthday']}"/>
                         </h:panelGroup>
-                        <h:panelGroup styleClass="settings-unit-field-wrapper" layout="block">
+                        <h:panelGroup styleClass="settings-unit-field-wrapper"
+                                      layout="block">
                             <h:inputText styleClass="settings-unit-field"
                                          autocomplete="off"
                                          value="#{authorizationBean.model.birthday}"/>
@@ -73,7 +82,8 @@
                             <h:outputLabel styleClass="settings-unit-label"
                                            value="#{message['setting-label-hometown']}"/>
                         </h:panelGroup>
-                        <h:panelGroup styleClass="settings-unit-field-wrapper" layout="block">
+                        <h:panelGroup styleClass="settings-unit-field-wrapper"
+                                      layout="block">
                             <h:inputText styleClass="settings-unit-field"
                                          autocomplete="off"
                                          value="#{authorizationBean.model.hometown}"/>
@@ -89,7 +99,8 @@
                             <h:outputLabel styleClass="settings-unit-label"
                                            value="#{message['setting-label-email']}"/>
                         </h:panelGroup>
-                        <h:panelGroup styleClass="settings-unit-field-wrapper" layout="block">
+                        <h:panelGroup styleClass="settings-unit-field-wrapper"
+                                      layout="block">
                             <h:inputText styleClass="settings-unit-field"
                                          autocomplete="off"
                                          value="#{authorizationBean.model.email}"/>
@@ -108,7 +119,8 @@
                             <h:outputLabel styleClass="settings-unit-label"
                                            value="#{message['setting-label-phone']}"/>
                         </h:panelGroup>
-                        <h:panelGroup styleClass="settings-unit-field-wrapper" layout="block">
+                        <h:panelGroup styleClass="settings-unit-field-wrapper"
+                                      layout="block">
                             <h:inputText styleClass="settings-unit-field"
                                          autocomplete="off"
                                          value="#{authorizationBean.model.phone}"/>
@@ -124,7 +136,8 @@
                             <h:outputLabel styleClass="settings-unit-label"
                                            value="#{message['setting-label-work-phone']}"/>
                         </h:panelGroup>
-                        <h:panelGroup styleClass="settings-unit-field-wrapper" layout="block">
+                        <h:panelGroup styleClass="settings-unit-field-wrapper"
+                                      layout="block">
                             <h:inputText styleClass="settings-unit-field"
                                          autocomplete="off"
                                          value="#{authorizationBean.model.workPhone}"/>
@@ -140,7 +153,8 @@
                             <h:outputLabel styleClass="settings-unit-label"
                                            value="#{message['setting-label-photo']}"/>
                         </h:panelGroup>
-                        <h:panelGroup styleClass="settings-unit-field-wrapper" layout="block">
+                        <h:panelGroup styleClass="settings-unit-field-wrapper"
+                                      layout="block">
                             <h:inputText styleClass="settings-unit-field"
                                          autocomplete="off"
                                          value="#{authorizationBean.model.photo}"/>
@@ -156,7 +170,8 @@
                             <h:outputLabel styleClass="settings-unit-label"
                                            value="#{message['setting-label-nickname']}"/>
                         </h:panelGroup>
-                        <h:panelGroup styleClass="settings-unit-field-wrapper" layout="block">
+                        <h:panelGroup styleClass="settings-unit-field-wrapper"
+                                      layout="block">
                             <h:inputText id="urlname"
                                          styleClass="settings-unit-field"
                                          autocomplete="off"
@@ -173,7 +188,8 @@
                             <h:outputLabel styleClass="settings-unit-label"
                                            value="#{message['setting-label-language']}"/>
                         </h:panelGroup>
-                        <h:panelGroup styleClass="settings-unit-field-wrapper" layout="block">
+                        <h:panelGroup styleClass="settings-unit-field-wrapper"
+                                      layout="block">
                             <h:selectOneMenu id="language"
                                              styleClass="settings-unit-field"
                                              value="#{authorizationBean.model.language}">
