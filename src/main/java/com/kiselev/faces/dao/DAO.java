@@ -106,11 +106,13 @@ public class DAO {
     public static void deleteProfile(Long id) {
         EntityManager manager = factory.createEntityManager();
         try {
+            manager.getTransaction().begin();
             manager.createQuery("" +
                     "DELETE FROM ProfileEntity user" +
                     " WHERE user.id = :id")
                     .setParameter("id", id)
                     .executeUpdate();
+            manager.getTransaction().commit();
         } finally {
             manager.close();
         }
